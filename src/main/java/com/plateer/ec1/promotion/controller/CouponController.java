@@ -1,10 +1,12 @@
 package com.plateer.ec1.promotion.controller;
 
+import com.plateer.ec1.common.model.promotion.CcCpnBase;
 import com.plateer.ec1.promotion.service.CouponService;
-import com.plateer.ec1.promotion.vo.Promotion;
+import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,21 +21,14 @@ public class CouponController {
     private final CouponService couponService;
 
     @RequestMapping(path = "getDownloadCouponList")
-    public List<Promotion> getDownloadCouponList(RequestPromotionVo requestPromotionVo) {
-        log.info("다운로드 가능한 쿠폰 리스트 조회 시작");
-        return couponService.getDownloadCouponList(requestPromotionVo.getMemberNo());
+    public List<CcCpnBase> getDownloadCouponList() {
+        return couponService.getDownloadCouponList();
     }
 
-    @RequestMapping(path = "checkAvailableDownloadCoupon")
-    public boolean checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo) {
-        log.info("다운로드 가능한 쿠폰 체크 시작");
-        return couponService.checkAvailableDownloadCoupon(requestPromotionVo.getMemberNo(), requestPromotionVo.getPromotion());
-    }
-
-    @RequestMapping("downloadCoupon")
-    public Promotion downloadCoupon(RequestPromotionVo requestPromotionVo) {
+    @PostMapping(path = "downloadCoupon")
+    public PromotionVo downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 시작");
-        return couponService.downloadCoupon(requestPromotionVo.getMemberNo(), requestPromotionVo.getPromotion());
+        return couponService.downloadCoupon(requestPromotionVo);
     }
 
     @RequestMapping(path = "useCoupon")

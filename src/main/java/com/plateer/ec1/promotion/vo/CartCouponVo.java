@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class CartCouponVo {
 
-    private Promotion promotion;
+    private PromotionVo promotionVo;
     private List<Product> productList;
     private String maxBenefitYn;
 

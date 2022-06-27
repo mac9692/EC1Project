@@ -2,7 +2,7 @@ package com.plateer.ec1.promotion.processor.impl;
 
 import com.plateer.ec1.promotion.enums.PromotionType;
 import com.plateer.ec1.promotion.processor.CalProcessor;
-import com.plateer.ec1.promotion.vo.Promotion;
+import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.ResponseBaseVo;
 import com.plateer.ec1.promotion.vo.response.ResponsePriceDcVo;
@@ -19,13 +19,13 @@ public class PriceDiscountCalProcessor implements CalProcessor {
     }
 
     @Override
-    public Promotion getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
+    public PromotionVo getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         log.info("[가격 할인 적용] 회원별 적용 가능한 프로모션 조회");
         return null;
     }
 
     @Override
-    public ResponsePriceDcVo calculateDcAmt(RequestPromotionVo requestPromotionVo, Promotion promotion) {
+    public ResponsePriceDcVo calculateDcAmt(RequestPromotionVo requestPromotionVo, PromotionVo promotionVo) {
         log.info("[가격 할인 적용] 할인 금액 계산");
         return null;
     }
@@ -39,12 +39,12 @@ public class PriceDiscountCalProcessor implements CalProcessor {
     @Override
     public ResponsePriceDcVo getCalculationData(RequestPromotionVo requestPromotionVo) {
         log.info("[가격 할인 적용 계산 시작]");
-        Promotion promotion = getAvailablePromotionData(requestPromotionVo);
-        calculateDcAmt(requestPromotionVo, promotion);
+        PromotionVo promotionVo = getAvailablePromotionData(requestPromotionVo);
+        calculateDcAmt(requestPromotionVo, promotionVo);
         calculateMaxBenefit(null);
         ResponsePriceDcVo responsePriceDcVo = new ResponsePriceDcVo();
-        responsePriceDcVo.setMemberNo(requestPromotionVo.getMemberNo());
-        responsePriceDcVo.setProductList(requestPromotionVo.getProductList());
+//        responsePriceDcVo.setMemberNo(requestPromotionVo.getMemberNo());
+//        responsePriceDcVo.setProductList(requestPromotionVo.getProductList());
         log.info(String.valueOf(responsePriceDcVo));
         return responsePriceDcVo;
     }

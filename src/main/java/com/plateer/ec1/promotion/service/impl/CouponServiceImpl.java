@@ -1,7 +1,11 @@
 package com.plateer.ec1.promotion.service.impl;
 
+import com.plateer.ec1.common.model.promotion.CcCpnBase;
+import com.plateer.ec1.promotion.mapper.CouponMapper;
 import com.plateer.ec1.promotion.service.CouponService;
-import com.plateer.ec1.promotion.vo.Promotion;
+import com.plateer.ec1.promotion.vo.PromotionVo;
+import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,34 +13,49 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CouponServiceImpl implements CouponService {
 
-    private String memberNo;
-    private List<Promotion> promotionList;
-    private Promotion promotion;
-    private Long couponIssueNo;
-    private String saveUseCcd;
-    private int pointAmt;
+    private final CouponMapper couponMapper;
 
+
+
+
+    /*
+    * 1. 프로모션 시작일시, 종료일시 검증
+    * 2. 쿠폰 다운로드 가능 시작일, 종료일 검증
+    * 3. 쿠폰 다운로드 가능수량 검증
+    * */
     @Override
-    public List<Promotion> getDownloadCouponList(String memberNo) {
+    public List<CcCpnBase> getDownloadCouponList() {
         log.info("다운로드 가능 쿠폰 조회");
-        return null;
+        return couponMapper.getDownloadCouponList();
     }
 
     @Override
-    public boolean checkAvailableDownloadCoupon(String memberNo, Promotion promotion) {
+    public boolean checkAvailableDownloadCoupon(String memberNo, PromotionVo promotionVo) {
         log.info("다운로드 가능 여부 확인");
         return false;
     }
 
     @Override
-    public Promotion downloadCoupon(String memberNo, Promotion promotion) {
+    public PromotionVo downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 서비스 시작");
-        getDownloadCouponList(memberNo);
-        checkAvailableDownloadCoupon(memberNo, promotion);
+
+        //다운로드 가능 쿠폰 조회
+        List<CcCpnBase> ccCpnBaseList = getDownloadCouponList();
+
+        //개인별 다운로드 가능수량 검증
+        checkAvailableDownloadCoupon(requestPromotionVo.getMbrNo(), null);
         log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 수정");
-        log.info("다운롣 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
+
+        //쿠폰 발행
+        couponMapper.insertCouponIssue();
+
+        //쿠폰 테이블 다운로드 가능수량 업데이트
+        couponMapper.updateCouponBase();
+
+        log.info("다운로 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
         return null;
     }
 

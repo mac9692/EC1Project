@@ -9,6 +9,6 @@ import java.util.List;
 public class ProductCouponVo {
 
     private Product product;
-    private List<Promotion> promotionList;
+    private List<PromotionVo> promotionVoList;
     private String maxBenefitYn;
 }

@@ -8,7 +8,6 @@ import com.plateer.ec1.claim.helper.MonitoringLogHelper;
 import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.Claim;
-import com.plateer.ec1.common.model.order.ClaimModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,8 +33,8 @@ public class CompleteProcessor implements ClaimProcessor {
         monitoringLogHelper.insertMonitoringLog(claim);
         claimValidator.isValidStatus(claim);
         ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(claim.getCreatorType());
-        claimDataCreator.updateOrderClaim(new ClaimModel());
-        claimDataCreator.getInsertClaimData(claim);
+//        claimDataCreator.updateOrderClaim(new ClaimModel());
+//        claimDataCreator.getInsertClaimData(claim);
         claimValidator.isValidAmount(claim);
         ifCallHelper.callRestoreCoupon(claim);
         ifCallHelper.callPaymentIF(claim);
