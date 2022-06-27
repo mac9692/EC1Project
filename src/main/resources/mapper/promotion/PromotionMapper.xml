@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.plateer.ec1.promotion.mapper.CouponMapper">
+<mapper namespace="com.plateer.ec1.promotion.mapper.PromotionMapper">
     <select id="getDownloadCouponList" resultType="com.plateer.ec1.common.model.promotion.CcPrmBase">
         SELECT a.prm_no, a.prm_nm, a.prm_strt_dt, a.prm_end_dt
           FROM cc_prm_base AS a JOIN cc_cpn_base AS b ON a.prm_no = b.prm_no
@@ -22,25 +22,4 @@
           FROM cc_cpn_issue
          WHERE prm_no = #{prmNo}
     </select>
-
-    <insert id="insertCouponIssue">
-        INSERT INTO public.cc_cpn_issue
-        (
-            mbr_no,
-            sys_reg_dtime,
-            sys_regr_id,
-            sys_mod_dtime,
-            sys_modr_id,
-            prm_no
-        )
-        VALUES
-        (
-            #{mbrNo},
-            now(),
-            'admin',
-            now(),
-            'admin',
-            #{prmNo}
-        );
-    </insert>
 </mapper>

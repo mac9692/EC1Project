@@ -25,16 +25,11 @@ public class CouponController {
 
     @GetMapping(path = "getDownloadCouponList")
     public List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo) {
-        log.info("다운로드 가능 쿠폰 조회 시작");
-        requestPromotionVo.setMbrNo("test01");
-        requestPromotionVo.setPrmNo(1L);
         return couponService.getDownloadCouponList(requestPromotionVo);
     }
 
     @GetMapping(path = "checkAvailableDownloadCoupon")
     public Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo) {
-        requestPromotionVo.setMbrNo("test01");
-        requestPromotionVo.setPrmNo(1L);
         return couponService.checkAvailableDownloadCoupon(requestPromotionVo);
     }
 
@@ -45,9 +40,9 @@ public class CouponController {
     }
 
     @PostMapping(path = "useCoupon")
-    public Long useCoupon() {
+    public Long useCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 시작");
-        return couponService.useCoupon();
+        return couponService.useCoupon(requestPromotionVo);
     }
 
     @PostMapping(path = "cancelCoupon")

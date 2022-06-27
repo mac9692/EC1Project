@@ -1,10 +1,9 @@
 package com.plateer.ec1.promotion.service.impl;
 
-import com.plateer.ec1.common.model.promotion.CcCpnBase;
 import com.plateer.ec1.common.model.promotion.CcPrmBase;
-import com.plateer.ec1.promotion.mapper.CouponMapper;
+import com.plateer.ec1.promotion.mapper.PromotionMapper;
+import com.plateer.ec1.promotion.mapper.PromotionTrxMapper;
 import com.plateer.ec1.promotion.service.CouponService;
-import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CouponServiceImpl implements CouponService {
 
-    private final CouponMapper couponMapper;
+    private final PromotionMapper promotionMapper;
+    private final PromotionTrxMapper promotionTrxMapper;
 
     /*
     * 1. 프로모션 시작일시, 종료일시 검증
@@ -28,7 +28,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo) {
         log.info("다운로드 가능 쿠폰 조회");
-        return couponMapper.getDownloadCouponList(requestPromotionVo);
+        return promotionMapper.getDownloadCouponList(requestPromotionVo);
     }
 
     /*
@@ -38,7 +38,7 @@ public class CouponServiceImpl implements CouponService {
     @Override
     public Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("다운로드 가능 여부 확인");
-        return couponMapper.checkAvailableDownloadCoupon(requestPromotionVo);
+        return promotionMapper.checkAvailableDownloadCoupon(requestPromotionVo);
     }
 
     /*
@@ -46,7 +46,7 @@ public class CouponServiceImpl implements CouponService {
     * 다운로드 버튼을 누르는 것
     * 다운로드를 하는 것까지 일련의 로직으로 작성
     * 결과가 성공하거나 실패하거나 모두 다운로드 가능한 쿠폰 목록을 조회
-    * */
+  성 * */
     @Override
     public List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 서비스 시작");
@@ -57,7 +57,7 @@ public class CouponServiceImpl implements CouponService {
         if (checkAvailableDownloadCoupon(requestPromotionVo) > 0) {
             log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 데이터 삽입");
             //쿠폰 발행
-            couponMapper.insertCouponIssue(requestPromotionVo);
+            promotionTrxMapper.downloadCoupon(requestPromotionVo);
 
         } else {
             log.info("다운로 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
@@ -67,7 +67,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public Long useCoupon() {
+    public Long useCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 서비스 시작");
         log.info("쿠폰 사용일시 처리 프로세스 진행");
         log.info("쿠폰 발급 회원 테이블 수정");

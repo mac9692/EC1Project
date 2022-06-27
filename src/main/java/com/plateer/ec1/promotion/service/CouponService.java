@@ -15,7 +15,7 @@ public interface CouponService {
 
     List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo);
 
-    Long useCoupon();
+    Long useCoupon(RequestPromotionVo requestPromotionVo);
 
     Long cancelCoupon();
 
