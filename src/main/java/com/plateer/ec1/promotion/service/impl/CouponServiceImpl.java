@@ -1,6 +1,7 @@
 package com.plateer.ec1.promotion.service.impl;
 
 import com.plateer.ec1.common.model.promotion.CcCpnBase;
+import com.plateer.ec1.common.model.promotion.CcPrmBase;
 import com.plateer.ec1.promotion.mapper.CouponMapper;
 import com.plateer.ec1.promotion.service.CouponService;
 import com.plateer.ec1.promotion.vo.PromotionVo;
@@ -18,45 +19,51 @@ public class CouponServiceImpl implements CouponService {
 
     private final CouponMapper couponMapper;
 
-
-
-
     /*
     * 1. 프로모션 시작일시, 종료일시 검증
     * 2. 쿠폰 다운로드 가능 시작일, 종료일 검증
-    * 3. 쿠폰 다운로드 가능수량 검증
+    * 3. 프로모션 사용여부 검증
+    * 4. 개인별 다운로드 가능 제한 검증
     * */
     @Override
-    public List<CcCpnBase> getDownloadCouponList() {
+    public List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo) {
         log.info("다운로드 가능 쿠폰 조회");
-        return couponMapper.getDownloadCouponList();
+        return couponMapper.getDownloadCouponList(requestPromotionVo);
     }
 
+    /*
+    * 1. 다운로드 클릭 시 쿠폰 다운로드 가능 수량 확인
+    * 리턴 값 : 쿠폰 다운로드 남은 개수 리턴
+    * */
     @Override
-    public boolean checkAvailableDownloadCoupon(String memberNo, PromotionVo promotionVo) {
+    public Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("다운로드 가능 여부 확인");
-        return false;
+        return couponMapper.checkAvailableDownloadCoupon(requestPromotionVo);
     }
 
+    /*
+    * 실제 사용자가 다운로드 가능한 쿠폰 목록을 보는 것부터
+    * 다운로드 버튼을 누르는 것
+    * 다운로드를 하는 것까지 일련의 로직으로 작성
+    * 결과가 성공하거나 실패하거나 모두 다운로드 가능한 쿠폰 목록을 조회
+    * */
     @Override
-    public PromotionVo downloadCoupon(RequestPromotionVo requestPromotionVo) {
+    public List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 서비스 시작");
+        //개인별 다운로드 가능 쿠폰 조회
+        getDownloadCouponList(requestPromotionVo);
 
-        //다운로드 가능 쿠폰 조회
-        List<CcCpnBase> ccCpnBaseList = getDownloadCouponList();
+        //쿠폰 다운로드 가능수량 검증
+        if (checkAvailableDownloadCoupon(requestPromotionVo) > 0) {
+            log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 데이터 삽입");
+            //쿠폰 발행
+            couponMapper.insertCouponIssue(requestPromotionVo);
 
-        //개인별 다운로드 가능수량 검증
-        checkAvailableDownloadCoupon(requestPromotionVo.getMbrNo(), null);
-        log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 수정");
-
-        //쿠폰 발행
-        couponMapper.insertCouponIssue();
-
-        //쿠폰 테이블 다운로드 가능수량 업데이트
-        couponMapper.updateCouponBase();
-
-        log.info("다운로 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
-        return null;
+        } else {
+            log.info("다운로 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
+            log.info("다운로드 가능 횟수가 초과했습니다.");
+        }
+        return getDownloadCouponList(requestPromotionVo);
     }
 
     @Override

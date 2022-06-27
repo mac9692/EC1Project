@@ -54,12 +54,25 @@ public class PromotionTest {
     }
 
     @Test
-    @DisplayName("4. 쿠폰 다운로드 테스트")
-    void downloadAvailableCouponTest() {
-        log.info("4. 쿠폰 다운로드 테스트 시작");
+    @DisplayName("4-1. 쿠폰 다운로드 테스트 - 성공 케이스")
+    void downloadCouponTest() {
+        log.info("4-1. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setPrmNo(1L);
+        requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
-        log.info("4. 쿠폰 다운로드 테스트 종료");
+        log.info("4-1. 쿠폰 다운로드 테스트 종료");
+    }
+
+    @Test
+    @DisplayName("4-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 다운로드 가능 횟수 초과")
+    void downloadCouponTest2() {
+        log.info("4-2. 쿠폰 다운로드 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setPrmNo(5L);
+        requestPromotionVo.setMbrNo("test01");
+        couponController.downloadCoupon(requestPromotionVo);
+        log.info("4-2. 쿠폰 다운로드 테스트 종료");
     }
 
     @Test

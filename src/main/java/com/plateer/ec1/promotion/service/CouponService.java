@@ -1,6 +1,7 @@
 package com.plateer.ec1.promotion.service;
 
 import com.plateer.ec1.common.model.promotion.CcCpnBase;
+import com.plateer.ec1.common.model.promotion.CcPrmBase;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 
@@ -8,11 +9,11 @@ import java.util.List;
 
 public interface CouponService {
 
-    List<CcCpnBase> getDownloadCouponList();
+    List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo);
 
-    boolean checkAvailableDownloadCoupon(String memberNo, PromotionVo promotionVo);
+    Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo);
 
-    PromotionVo downloadCoupon(RequestPromotionVo requestPromotionVo);
+    List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo);
 
     Long useCoupon();
 

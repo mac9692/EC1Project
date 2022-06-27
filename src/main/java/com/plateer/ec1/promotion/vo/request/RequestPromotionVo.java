@@ -10,6 +10,5 @@ import java.util.List;
 public class RequestPromotionVo {
 
     private String mbrNo;
-    private Long cpnIssNo;
     private Long prmNo;
 }

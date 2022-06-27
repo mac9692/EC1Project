@@ -3,14 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.promotion.mapper.CouponMapper">
-    <select id="getDownloadCouponList" resultType="com.plateer.ec1.common.model.promotion.CcCpnBase">
-        select b.*
-          from cc_prm_base as a join cc_cpn_base as b on a.prm_no = b.prm_no
-         where a.prm_strt_dt &lt; current_date
-           and current_date &lt; a.prm_end_dt
-           and b.dwl_avl_strt_dd::date &lt; current_date
-           and  current_date &lt; b.dwl_avl_end_dd ::date
-           and b.dwl_psb_cnt > 0
+    <select id="getDownloadCouponList" resultType="com.plateer.ec1.common.model.promotion.CcPrmBase">
+        SELECT a.prm_no, a.prm_nm, a.prm_strt_dt, a.prm_end_dt
+          FROM cc_prm_base AS a JOIN cc_cpn_base AS b ON a.prm_no = b.prm_no
+         WHERE a.use_yn = 'Y'
+           AND a.prm_strt_dt &lt; current_date
+           AND current_date &lt; a.prm_end_dt
+           AND b.dwl_avl_strt_dd::date  &lt; current_date
+           AND  current_date &lt; b.dwl_avl_end_dd ::date
+           AND b.psn_dwl_psb_cnt > (SELECT COUNT(prm_no)
+                                      FROM cc_cpn_issue cci
+                                     WHERE mbr_no=#{mbrNo})
+    </select>
+
+
+    <select id="checkAvailableDownloadCoupon" resultType="integer">
+        SELECT ((SELECT dwl_psb_cnt FROM cc_cpn_base WHERE prm_no = #{prmNo}) - COUNT(mbr_no))
+          FROM cc_cpn_issue
+         WHERE prm_no = #{prmNo}
     </select>
 
     <insert id="insertCouponIssue">
@@ -23,20 +33,14 @@
             sys_modr_id,
             prm_no
         )
-        values
+        VALUES
         (
-            'test01',
+            #{mbrNo},
             now(),
             'admin',
             now(),
             'admin',
-            1
+            #{prmNo}
         );
     </insert>
-
-    <update id="updateCouponBase">
-        update cc_cpn_base
-           set dwl_psb_cnt = dwl_psb_cnt -1
-         where prm_no = 1 and dwl_psb_cnt &gt; 0;
-    </update>
 </mapper>
