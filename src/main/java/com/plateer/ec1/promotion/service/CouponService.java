@@ -8,12 +8,8 @@ import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import java.util.List;
 
 public interface CouponService {
-
-    List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo);
-
-    Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo);
-
-    List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo);
+    Boolean validateCoupon(RequestPromotionVo requestPromotionVo);
+    void downloadCoupon(RequestPromotionVo requestPromotionVo);
 
     Long useCoupon(RequestPromotionVo requestPromotionVo);
 

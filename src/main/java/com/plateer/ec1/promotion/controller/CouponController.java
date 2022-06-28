@@ -23,20 +23,10 @@ public class CouponController {
 
     private final CouponService couponService;
 
-    @GetMapping(path = "getDownloadCouponList")
-    public List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo) {
-        return couponService.getDownloadCouponList(requestPromotionVo);
-    }
-
-    @GetMapping(path = "checkAvailableDownloadCoupon")
-    public Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo) {
-        return couponService.checkAvailableDownloadCoupon(requestPromotionVo);
-    }
-
     @PostMapping(path = "downloadCoupon")
-    public List<CcPrmBase> downloadCoupon(RequestPromotionVo requestPromotionVo) {
+    public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 시작");
-        return couponService.downloadCoupon(requestPromotionVo);
+        couponService.downloadCoupon(requestPromotionVo);
     }
 
     @PostMapping(path = "useCoupon")

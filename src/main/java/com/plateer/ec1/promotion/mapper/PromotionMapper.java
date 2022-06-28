@@ -9,7 +9,5 @@ import java.util.List;
 @Mapper
 public interface PromotionMapper {
 
-    List<CcPrmBase> getDownloadCouponList(RequestPromotionVo requestPromotionVo);
-
-    Integer checkAvailableDownloadCoupon(RequestPromotionVo requestPromotionVo);
+    Boolean validateCoupon(RequestPromotionVo requestPromotionVo);
 }

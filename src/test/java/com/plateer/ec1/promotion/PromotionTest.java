@@ -3,6 +3,8 @@ package com.plateer.ec1.promotion;
 import com.plateer.ec1.promotion.controller.CouponController;
 import com.plateer.ec1.promotion.controller.PointController;
 import com.plateer.ec1.promotion.controller.PromotionController;
+import com.plateer.ec1.promotion.service.CouponService;
+import com.plateer.ec1.promotion.service.PromotionService;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +27,9 @@ public class PromotionTest {
 
     @Autowired
     PointController pointController;
+
+    @Autowired
+    CouponService couponService;
 
     @Test
     @DisplayName("1. 가격할인금액 계산 테스트")
@@ -65,11 +70,11 @@ public class PromotionTest {
     }
 
     @Test
-    @DisplayName("4-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 다운로드 가능 횟수 초과")
+    @DisplayName("4-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 총 다운로드 가능 횟수 초과")
     void downloadCouponTest2() {
         log.info("4-2. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        requestPromotionVo.setPrmNo(5L);
+        requestPromotionVo.setPrmNo(6L);
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
         log.info("4-2. 쿠폰 다운로드 테스트 종료");
