@@ -4,35 +4,36 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.promotion.mapper.PromotionMapper">
     <select id="validateCoupon" resultType="boolean">
-        SELECT b.dwl_psb_cnt > (SELECT COUNT(mbr_no)
-                                  FROM cc_cpn_issue
-                                 WHERE prm_no = #{prmNo})
-          FROM cc_prm_base AS a JOIN cc_cpn_base AS b ON a.prm_no = b.prm_no
-         WHERE a.prm_No = #{prmNo}
-           AND a.use_yn = 'Y'
-           AND current_date BETWEEN a.prm_strt_dt AND a.prm_end_dt
-           AND current_date BETWEEN b.dwl_avl_Strt_dd::date AND b.dwl_avl_end_dd::date
-           AND b.psn_dwl_psb_cnt > (SELECT COUNT(prm_no)
-                                      FROM cc_cpn_issue
-                                     WHERE mbr_no=#{mbrNo})
+        SELECT EXISTS(SELECT b.dwl_psb_cnt > (SELECT COUNT(mbr_no)
+                                              FROM cc_cpn_issue
+                                              WHERE prm_no = #{prmNo})
+                        FROM cc_prm_base AS a JOIN cc_cpn_base AS b ON a.prm_no = b.prm_no
+                       WHERE a.prm_No = #{prmNo}
+                         AND a.use_yn = 'Y'
+                         AND current_date BETWEEN a.prm_strt_dt AND a.prm_end_dt
+                         AND current_date BETWEEN b.dwl_avl_Strt_dd::date AND b.dwl_avl_end_dd::date
+                         AND b.psn_dwl_psb_cnt > (SELECT COUNT(prm_no)
+                                                   FROM cc_cpn_issue
+                                                   WHERE mbr_no=#{mbrNo}
+                                                     AND prm_no=#{prmNo}))
     </select>
 
     <select id="verifyUseCoupon" resultType="boolean">
-        SELECT current_date BETWEEN prm_strt_dt AND prm_end_dt
-          FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
-         WHERE b.cpn_iss_no = #{cpnIssNo}
-           AND b.cpn_use_dt IS NULL
-           AND b.ord_no IS NULL
+        SELECT EXISTS(SELECT current_date BETWEEN prm_strt_dt AND prm_end_dt
+                        FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
+                       WHERE b.cpn_iss_no = #{cpnIssNo}
+                         AND b.cpn_use_dt IS NULL
+                         AND b.ord_no IS NULL)
     </select>
 
     <select id="verifyCancelCoupon" resultType="boolean">
-        SELECT current_date BETWEEN a.prm_strt_dt AND a.prm_end_dt
-          FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
-         WHERE b.cpn_iss_no = #{cpnIssNo}
-           AND b.cpn_use_dt IS NOT NULL
-           AND b.ord_no = #{ordNo}
-           AND NOT EXISTS (SELECT 1
-                             FROM cc_cpn_issue
-                            WHERE org_cpn_iss_no = #{cpnIssNo})
+        SELECT EXISTS(SELECT current_date BETWEEN a.prm_strt_dt AND a.prm_end_dt
+                        FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
+                       WHERE b.cpn_iss_no = #{cpnIssNo}
+                         AND b.cpn_use_dt IS NOT NULL
+                         AND b.ord_no = #{ordNo}
+                         AND NOT EXISTS (SELECT 1
+                                        FROM cc_cpn_issue
+                                        WHERE org_cpn_iss_no = #{cpnIssNo}))
     </select>
 </mapper>

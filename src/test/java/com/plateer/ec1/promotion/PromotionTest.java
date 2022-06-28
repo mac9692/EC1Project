@@ -63,7 +63,7 @@ public class PromotionTest {
     void downloadCouponTest() {
         log.info("4-1. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        requestPromotionVo.setPrmNo(4L);
+        requestPromotionVo.setPrmNo(2L);
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
         log.info("4-1. 쿠폰 다운로드 테스트 종료");
