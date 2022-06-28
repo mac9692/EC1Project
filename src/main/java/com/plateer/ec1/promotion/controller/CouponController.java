@@ -30,20 +30,14 @@ public class CouponController {
     }
 
     @PostMapping(path = "useCoupon")
-    public Long useCoupon(RequestPromotionVo requestPromotionVo) {
+    public void useCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 시작");
-        return couponService.useCoupon(requestPromotionVo);
+        couponService.useCoupon(requestPromotionVo);
     }
 
     @PostMapping(path = "cancelCoupon")
-    public Long cancelCoupon() {
+    public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 취소 시작");
-        return couponService.cancelCoupon();
-    }
-
-    @PostMapping(path = "verifyCoupon")
-    public boolean verifyCoupon() {
-        log.info("쿠폰 검증");
-        return couponService.verifyCoupon();
+        couponService.cancelCoupon(requestPromotionVo);
     }
 }

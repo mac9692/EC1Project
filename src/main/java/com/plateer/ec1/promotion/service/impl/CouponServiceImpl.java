@@ -36,42 +36,57 @@ public class CouponServiceImpl implements CouponService {
     public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 서비스 시작");
 
-        //프로모션 및 쿠폰 유효성 검사
         if (validateCoupon(requestPromotionVo)) {
             log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 데이터 삽입");
-            //쿠폰 발행
             promotionTrxMapper.downloadCoupon(requestPromotionVo);
         } else {
-            log.info("다운로 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
+            log.info("다운로드 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
             log.info("다운로드 가능 횟수가 초과했습니다.");
         }
     }
 
+    /*
+    * 쿠폰 사용 시 유효성 검사 항목과 쿠폰 취소 시 유효성 검사 항목이 다른 것 같아서 유효성 검사를 개별적으로 진행했습니다.
+    * 쿠폰 사용 시 유효성 검사 항목
+    * 1. 쿠폰사용일시 null 여부(쿠폰 사용여부)
+    * 2. 주문번호 null 여부(쿠폰 사용여부)
+    * 3. 프로모션 기간 검증
+    * */
     @Override
-    public Long useCoupon(RequestPromotionVo requestPromotionVo) {
+    public void useCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 서비스 시작");
-        log.info("쿠폰 사용일시 처리 프로세스 진행");
-        log.info("쿠폰 발급 회원 테이블 수정");
+        boolean result = promotionMapper.verifyUseCoupon(requestPromotionVo);
+        if (result) {
+            log.info("쿠폰 사용일시 처리 프로세스 진행");
+            log.info("쿠폰 발급 회원 테이블 수정");
+            promotionTrxMapper.useCoupon(requestPromotionVo);
+        } else {
+            log.info("쿠폰 사용 실패");
+            log.info("유효하지 않은 쿠폰입니다.");
+        }
         log.info("쿠폰 사용 서비스 종료");
-        return null;
     }
 
+    /*
+    * 쿠폰 취소 시 유효성 검사 항목
+    * 1. 쿠폰사용일시 not null 여부(쿠폰 사용여부)
+    * 2. Request 주문번호와 사용이력 주문번호 일치 여부
+    * 3. 원쿠폰발행번호와 쿠폰발행번호를 비교하여 복원 여부 검증
+    * 4. 프로모션 기간 검증
+    * */
     @Override
-    public Long cancelCoupon() {
+    public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 취소 서비스 시작");
-        verifyCoupon();
-        log.info("검증 성공 시 : 신규 쿠폰 발급 데이터 생성, 원쿠폰 발급번호 등록 처리 프로세스");
-        log.info("검증 실패 시 : 종료");
-        log.info("쿠폰 발급 회원 테이블 수정");
+
+        boolean result = promotionMapper.verifyCancelCoupon(requestPromotionVo);
+        if (result) {
+            log.info("검증 성공 시 : 신규 쿠폰 발급 데이터 생성, 원쿠폰 발급번호 등록 처리 프로세스");
+            promotionTrxMapper.restoreCoupon(requestPromotionVo);
+        } else {
+            log.info("검증 실패 시 : 종료");
+            log.info("유효하지 않은 쿠폰입니다.");
+        }
         log.info("쿠폰 취소 서비스 종료");
-        return null;
     }
 
-    @Override
-    public boolean verifyCoupon() {
-        log.info("쿠폰 검증 시작");
-        log.info("취소일시 < 프로모션 종료 일시 검증 프로세스");
-        log.info("쿠폰 검증 종료");
-        return false;
-    }
 }

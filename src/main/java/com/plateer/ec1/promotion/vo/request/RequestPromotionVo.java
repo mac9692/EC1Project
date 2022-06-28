@@ -11,4 +11,6 @@ public class RequestPromotionVo {
 
     private String mbrNo;
     private Long prmNo;
+    private String ordNo;
+    private Long cpnIssNo;
 }

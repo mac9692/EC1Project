@@ -16,4 +16,23 @@
                                       FROM cc_cpn_issue
                                      WHERE mbr_no=#{mbrNo})
     </select>
+
+    <select id="verifyUseCoupon" resultType="boolean">
+        SELECT current_date BETWEEN prm_strt_dt AND prm_end_dt
+          FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
+         WHERE b.cpn_iss_no = #{cpnIssNo}
+           AND b.cpn_use_dt IS NULL
+           AND b.ord_no IS NULL
+    </select>
+
+    <select id="verifyCancelCoupon" resultType="boolean">
+        SELECT current_date BETWEEN a.prm_strt_dt AND a.prm_end_dt
+          FROM cc_prm_base AS a JOIN cc_cpn_issue AS b ON a.prm_no = b.prm_no
+         WHERE b.cpn_iss_no = #{cpnIssNo}
+           AND b.cpn_use_dt IS NOT NULL
+           AND b.ord_no = #{ordNo}
+           AND NOT EXISTS (SELECT 1
+                             FROM cc_cpn_issue
+                            WHERE org_cpn_iss_no = #{cpnIssNo})
+    </select>
 </mapper>

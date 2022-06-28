@@ -63,7 +63,7 @@ public class PromotionTest {
     void downloadCouponTest() {
         log.info("4-1. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        requestPromotionVo.setPrmNo(1L);
+        requestPromotionVo.setPrmNo(4L);
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
         log.info("4-1. 쿠폰 다운로드 테스트 종료");
@@ -78,6 +78,32 @@ public class PromotionTest {
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
         log.info("4-2. 쿠폰 다운로드 테스트 종료");
+    }
+
+    @Test
+    @DisplayName("4-3. 쿠폰 사용 테스트")
+    void useCouponTest() {
+        log.info("4-3. 쿠폰 사용 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setPrmNo(2L);
+        requestPromotionVo.setMbrNo("test01");
+        requestPromotionVo.setCpnIssNo(11L);
+        requestPromotionVo.setOrdNo("2020");
+        couponController.useCoupon(requestPromotionVo);
+        log.info("4-3. 쿠폰 사용 테스트 종료");
+    }
+
+    @Test
+    @DisplayName("4-4. 쿠폰 취소 테스트")
+    void cancelCouponTest() {
+        log.info("4-4. 쿠폰 취소 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setPrmNo(1L);
+        requestPromotionVo.setMbrNo("test01");
+        requestPromotionVo.setCpnIssNo(13L);
+        requestPromotionVo.setOrdNo("213");
+        couponController.cancelCoupon(requestPromotionVo);
+        log.info("4-4. 쿠폰 취소 테스트 종료");
     }
 
     @Test

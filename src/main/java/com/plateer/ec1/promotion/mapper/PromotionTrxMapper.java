@@ -11,5 +11,7 @@ public interface PromotionTrxMapper {
 
     Integer downloadCoupon(RequestPromotionVo requestPromotionVo);
 
-    Long useCoupon(RequestPromotionVo requestPromotionVo);
+    void useCoupon(RequestPromotionVo requestPromotionVo);
+
+    void restoreCoupon(RequestPromotionVo requestPromotionVo);
 }
