@@ -45,6 +45,7 @@ public class PromotionTest {
     void productCouponCalculationTest() {
         log.info("2. 상품쿠폰할인 계산 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setMbrNo("test01");
         promotionController.getProductCouponApplyData(requestPromotionVo);
         log.info("2. 상품쿠폰할인 계산 테스트 종료");
     }

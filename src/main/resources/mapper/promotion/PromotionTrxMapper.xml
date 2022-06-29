@@ -44,7 +44,7 @@
         )
         VALUES
         (
-            'test01',
+            #{mbrNo},
             now(),
             'admin',
             now(),

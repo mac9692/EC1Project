@@ -1,17 +1,23 @@
 package com.plateer.ec1.promotion.processor.impl;
 
 import com.plateer.ec1.promotion.enums.PromotionType;
+import com.plateer.ec1.promotion.mapper.PromotionMapper;
 import com.plateer.ec1.promotion.processor.CalProcessor;
+import com.plateer.ec1.promotion.vo.CartCouponVo;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.ResponseBaseVo;
 import com.plateer.ec1.promotion.vo.response.ResponseCartCouponVo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class CartCouponCalProcessor implements CalProcessor {
+
+    private final PromotionMapper promotionMapper;
 
     @Override
     public PromotionType getType() {

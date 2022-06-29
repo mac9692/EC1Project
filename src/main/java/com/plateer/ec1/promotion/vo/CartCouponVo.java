@@ -1,15 +1,17 @@
 package com.plateer.ec1.promotion.vo;
 
-import com.plateer.ec1.product.vo.Product;
 import lombok.Data;
 
-import java.util.List;
+import java.sql.Timestamp;
 
 @Data
 public class CartCouponVo {
 
-    private PromotionVo promotionVo;
-    private List<Product> productList;
-    private String maxBenefitYn;
+    private Long prmNo;
+    private String cpnKindCd;
+    private String degrCcd;
+    private Long cpnIssNo;
+    private String mbrNo;
+    private Timestamp cpnUseDt;
 
 }

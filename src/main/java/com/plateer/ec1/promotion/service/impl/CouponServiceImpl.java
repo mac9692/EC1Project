@@ -8,6 +8,7 @@ import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class CouponServiceImpl implements CouponService {
         return promotionMapper.validateCoupon(requestPromotionVo);
     }
 
-
+    @Transactional
     @Override
     public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 다운로드 서비스 시작");
@@ -52,6 +53,7 @@ public class CouponServiceImpl implements CouponService {
     * 2. 주문번호 null 여부(쿠폰 사용여부)
     * 3. 프로모션 기간 검증
     * */
+    @Transactional
     @Override
     public void useCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 사용 서비스 시작");
@@ -74,6 +76,7 @@ public class CouponServiceImpl implements CouponService {
     * 3. 원쿠폰발행번호와 쿠폰발행번호를 비교하여 복원 여부 검증
     * 4. 프로모션 기간 검증
     * */
+    @Transactional
     @Override
     public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
         log.info("쿠폰 취소 서비스 시작");

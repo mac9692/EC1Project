@@ -36,4 +36,17 @@
                                         FROM cc_cpn_issue
                                         WHERE org_cpn_iss_no = #{cpnIssNo}))
     </select>
+
+
+    <select id="getCartCouponInfo" resultType="com.plateer.ec1.promotion.vo.ProductCouponVo">
+        SELECT cpb.prm_no , cpb.prm_nm , cpb.prm_kind_cd , cpb.prm_strt_dt , cpb.prm_end_dt , cpb.dc_ccd , cpb.dc_val , cpb.min_pur_amt , cpb.max_dc_amt , cpb.use_yn ,
+               cpat.aply_tgt_ccd , cpat.aply_tgt_no ,
+               ccb.prm_no , ccb.cpn_kind_cd , ccb.degr_ccd , ccb.mda_gb , ccb.ent_chn_gb ,
+            cci.cpn_iss_no , cci.mbr_no , cci.cpn_use_dt
+          FROM cc_prm_base cpb , cc_prm_aply_tgt cpat , cc_cpn_base ccb , cc_cpn_issue cci
+         WHERE cci.mbr_no = #{mbrNo}
+           AND cpb.prm_no = cpat.prm_no
+           AND cpb.prm_no = ccb.prm_no
+           AND cpb .prm_no = cci.prm_no
+    </select>
 </mapper>
