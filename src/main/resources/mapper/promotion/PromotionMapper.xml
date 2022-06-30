@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.promotion.mapper.PromotionMapper">
     <select id="validateCoupon" resultType="boolean">
-        SELECT EXISTS(SELECT b.dwl_psb_cnt > (SELECT COUNT(mbr_no)
+        SELECT b.dwl_psb_cnt > (SELECT COUNT(mbr_no)
                                               FROM cc_cpn_issue
                                               WHERE prm_no = #{prmNo})
                         FROM cc_prm_base AS a JOIN cc_cpn_base AS b ON a.prm_no = b.prm_no
@@ -15,7 +15,7 @@
                          AND b.psn_dwl_psb_cnt > (SELECT COUNT(prm_no)
                                                    FROM cc_cpn_issue
                                                    WHERE mbr_no=#{mbrNo}
-                                                     AND prm_no=#{prmNo}))
+                                                     AND prm_no=#{prmNo})
     </select>
 
     <select id="verifyUseCoupon" resultType="boolean">
@@ -48,5 +48,13 @@
            AND cpb.prm_no = cpat.prm_no
            AND cpb.prm_no = ccb.prm_no
            AND cpb .prm_no = cci.prm_no
+    </select>
+
+    <select id="getProductInfo" resultType="com.plateer.ec1.product.vo.ProductVo">
+        SELECT pgb.goods_no , pgb.goods_nm , pgb.goods_tp_cd , pgb.sale_prc , pgb.prm_prc ,pgb.prgs_stat_cd , pgb.goods_dlv_tp_cd ,
+               pii.item_no , pii.item_nm
+          FROM pr_goods_base pgb , pr_item_info pii
+         WHERE pgb.goods_no = pii.goods_no
+           AND pgb.goods_no = #{goodsNo}
     </select>
 </mapper>

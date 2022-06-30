@@ -46,6 +46,9 @@ public class PromotionTest {
         log.info("2. 상품쿠폰할인 계산 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setMbrNo("test01");
+        requestPromotionVo.setPrmNo(10L);
+        requestPromotionVo.setGoodsNo("P001");
+        requestPromotionVo.setItemNo("1");
         promotionController.getProductCouponApplyData(requestPromotionVo);
         log.info("2. 상품쿠폰할인 계산 테스트 종료");
     }
@@ -62,49 +65,41 @@ public class PromotionTest {
     @Test
     @DisplayName("4-1. 쿠폰 다운로드 테스트 - 성공 케이스")
     void downloadCouponTest() {
-        log.info("4-1. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(2L);
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
-        log.info("4-1. 쿠폰 다운로드 테스트 종료");
     }
 
     @Test
     @DisplayName("4-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 총 다운로드 가능 횟수 초과")
     void downloadCouponTest2() {
-        log.info("4-2. 쿠폰 다운로드 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(6L);
         requestPromotionVo.setMbrNo("test01");
         couponController.downloadCoupon(requestPromotionVo);
-        log.info("4-2. 쿠폰 다운로드 테스트 종료");
     }
 
     @Test
     @DisplayName("4-3. 쿠폰 사용 테스트")
     void useCouponTest() {
-        log.info("4-3. 쿠폰 사용 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(2L);
         requestPromotionVo.setMbrNo("test01");
         requestPromotionVo.setCpnIssNo(11L);
         requestPromotionVo.setOrdNo("2020");
         couponController.useCoupon(requestPromotionVo);
-        log.info("4-3. 쿠폰 사용 테스트 종료");
     }
 
     @Test
     @DisplayName("4-4. 쿠폰 취소 테스트")
     void cancelCouponTest() {
-        log.info("4-4. 쿠폰 취소 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(1L);
         requestPromotionVo.setMbrNo("test01");
         requestPromotionVo.setCpnIssNo(13L);
         requestPromotionVo.setOrdNo("213");
         couponController.cancelCoupon(requestPromotionVo);
-        log.info("4-4. 쿠폰 취소 테스트 종료");
     }
 
     @Test

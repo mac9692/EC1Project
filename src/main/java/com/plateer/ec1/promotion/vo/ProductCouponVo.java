@@ -1,10 +1,9 @@
 package com.plateer.ec1.promotion.vo;
 
-import com.plateer.ec1.product.vo.Product;
+import com.plateer.ec1.product.vo.ProductVo;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 public class ProductCouponVo {
@@ -30,4 +29,12 @@ public class ProductCouponVo {
     private String mbrNo;
     private Timestamp cpnUseDt;
 
+
+    public boolean validateMinPurAmt(ProductVo productVo) {
+        return productVo.validatePrmPrc() > minPurAmt;
+    }
+
+    public boolean validateMaxDcAmt(ProductVo productVo) {
+        return productVo.validatePrmPrc() < maxDcAmt;
+    }
 }

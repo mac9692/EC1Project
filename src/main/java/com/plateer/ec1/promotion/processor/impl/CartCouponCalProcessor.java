@@ -3,7 +3,7 @@ package com.plateer.ec1.promotion.processor.impl;
 import com.plateer.ec1.promotion.enums.PromotionType;
 import com.plateer.ec1.promotion.mapper.PromotionMapper;
 import com.plateer.ec1.promotion.processor.CalProcessor;
-import com.plateer.ec1.promotion.vo.CartCouponVo;
+import com.plateer.ec1.promotion.vo.ProductCouponVo;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.ResponseBaseVo;
@@ -11,6 +11,8 @@ import com.plateer.ec1.promotion.vo.response.ResponseCartCouponVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Slf4j
@@ -25,7 +27,7 @@ public class CartCouponCalProcessor implements CalProcessor {
     }
 
     @Override
-    public PromotionVo getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
+    public List<ProductCouponVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         log.info("[장바구니 쿠폰] 회원별 적용 가능한 쿠폰 조회 서비스 시작");
         log.info("쿠폰 적용 대상 여부 검증");
         log.info("매체 구분 일치 여부 검증");
@@ -35,11 +37,11 @@ public class CartCouponCalProcessor implements CalProcessor {
         log.info("할인이 아니면 포인트 적립");
         log.info("[장바구니 쿠폰] 회원별 적용 가능한 쿠폰 조회 서비스 종료");
         PromotionVo promotionVo = new PromotionVo();
-        return promotionVo;
+        return null;
     }
 
     @Override
-    public ResponseCartCouponVo calculateDcAmt(RequestPromotionVo requestPromotionVo, PromotionVo promotionVo) {
+    public ResponseCartCouponVo calculateDcAmt(RequestPromotionVo requestPromotionVo, List<ProductCouponVo> productCouponVoList) {
         log.info("[장바구니 쿠폰] 할인 금액 계산 서비스 시작");
         log.info("기 적용된 가격조정 확인");
         log.info("확인 성공 시 : 가격조정 금액 리턴");
@@ -62,7 +64,7 @@ public class CartCouponCalProcessor implements CalProcessor {
     @Override
     public ResponseCartCouponVo getCalculationData(RequestPromotionVo requestPromotionVo) {
         log.info("[장바구니 쿠폰 계산 시작]");
-        ResponseCartCouponVo responseCartCouponVo = calculateMaxBenefit(calculateDcAmt(requestPromotionVo, getAvailablePromotionData(requestPromotionVo)));
+        ResponseCartCouponVo responseCartCouponVo = calculateMaxBenefit(calculateDcAmt(requestPromotionVo, null));
         log.info("[장바구니 쿠폰 계산 종료]");
         return null;
     }

@@ -1,11 +1,10 @@
 package com.plateer.ec1.promotion.processor.impl;
 
+import com.plateer.ec1.product.vo.ProductVo;
 import com.plateer.ec1.promotion.enums.PromotionType;
 import com.plateer.ec1.promotion.mapper.PromotionMapper;
 import com.plateer.ec1.promotion.processor.CalProcessor;
-import com.plateer.ec1.promotion.vo.CartCouponVo;
 import com.plateer.ec1.promotion.vo.ProductCouponVo;
-import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.ResponseBaseVo;
 import com.plateer.ec1.promotion.vo.response.ResponseProductCouponVo;
@@ -13,9 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
@@ -40,24 +38,35 @@ public class ProductCouponCalProcessor implements CalProcessor {
     * 6. 쿠폰 종류 코드 검증 : 상품
     * */
     @Override
-    public PromotionVo getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
-        log.info("[상품 쿠폰] 회원별 적용 가능 쿠폰 조회 서비스 시작");
-        List<ProductCouponVo> productCouponVoList = promotionMapper.getCartCouponInfo(requestPromotionVo);
-        productCouponVoList.stream()
+    public List<ProductCouponVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
+        List<ProductCouponVo> productCouponVoList = promotionMapper.getCartCouponInfo(requestPromotionVo)
+                .parallelStream()
                 .filter(c -> c.getUseYn().toString().equals("Y"))
                 .filter(c -> c.getCpnUseDt() == null)
                 .filter(c -> c.getAplyTgtCcd().toString().equals("10"))
                 .filter(c -> c.getMdaGb().toString().equals(""))
                 .filter(c -> c.getEntChnGb().toString().equals(""))
                 .filter(c -> c.getCpnKindCd().toString().equals("10"))
-                .forEach(System.out::println);
-        PromotionVo promotionVo = new PromotionVo();
-        return promotionVo;
+                .collect(Collectors.toList());
+        return productCouponVoList;
     }
 
     @Override
-    public ResponseProductCouponVo calculateDcAmt(RequestPromotionVo requestPromotionVo, PromotionVo promotionVo) {
-        log.info("[상품 쿠폰] 할인 금액 계산 서비스 시작");
+    public ResponseProductCouponVo calculateDcAmt(RequestPromotionVo requestPromotionVo, List<ProductCouponVo> productCouponVoList) {
+
+        ResponseProductCouponVo responseProductCouponVo = new ResponseProductCouponVo();
+
+        List<ProductVo> productVoList =
+                promotionMapper.getProductInfo(requestPromotionVo)
+                        .parallelStream()
+                        .filter(c -> c.getItemNo().toString().equals(requestPromotionVo.getItemNo()))
+                        .collect(Collectors.toList());
+
+        responseProductCouponVo.setProductVoList(productVoList);
+        responseProductCouponVo.setProductCouponVoList(productCouponVoList);
+        System.out.println(responseProductCouponVo);
+
+
         log.info("기 적용된 가격조정 확인");
         log.info("확인 성공 시 : 가격조정 금액 리턴");
         log.info("확인 실패 시 : 상품가격 리턴");
@@ -66,7 +75,6 @@ public class ProductCouponCalProcessor implements CalProcessor {
         log.info("확인되면 한번 더 쿠폰 할인금액 계산 반복");
         log.info("확인되지 않으면 계산 값 전달");
         log.info("[상품 쿠폰] 할인 금액 계산 서비스 시작");
-        ResponseProductCouponVo responseProductCouponVo = new ResponseProductCouponVo();
         return responseProductCouponVo;
     }
 

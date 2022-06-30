@@ -1,6 +1,5 @@
 package com.plateer.ec1.promotion.service.impl;
 
-import com.plateer.ec1.common.model.promotion.CcPrmBase;
 import com.plateer.ec1.promotion.mapper.PromotionMapper;
 import com.plateer.ec1.promotion.mapper.PromotionTrxMapper;
 import com.plateer.ec1.promotion.service.CouponService;
@@ -9,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -35,10 +32,7 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     @Override
     public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
-        log.info("쿠폰 다운로드 서비스 시작");
-
         if (validateCoupon(requestPromotionVo)) {
-            log.info("다운로드 가능 여부 확인 성공 시 : 쿠폰 발급 회원 테이블 데이터 삽입");
             promotionTrxMapper.downloadCoupon(requestPromotionVo);
         } else {
             log.info("다운로드 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
@@ -56,11 +50,8 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     @Override
     public void useCoupon(RequestPromotionVo requestPromotionVo) {
-        log.info("쿠폰 사용 서비스 시작");
         boolean result = promotionMapper.verifyUseCoupon(requestPromotionVo);
         if (result) {
-            log.info("쿠폰 사용일시 처리 프로세스 진행");
-            log.info("쿠폰 발급 회원 테이블 수정");
             promotionTrxMapper.useCoupon(requestPromotionVo);
         } else {
             log.info("쿠폰 사용 실패");
@@ -79,11 +70,8 @@ public class CouponServiceImpl implements CouponService {
     @Transactional
     @Override
     public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
-        log.info("쿠폰 취소 서비스 시작");
-
         boolean result = promotionMapper.verifyCancelCoupon(requestPromotionVo);
         if (result) {
-            log.info("검증 성공 시 : 신규 쿠폰 발급 데이터 생성, 원쿠폰 발급번호 등록 처리 프로세스");
             promotionTrxMapper.restoreCoupon(requestPromotionVo);
         } else {
             log.info("검증 실패 시 : 종료");
