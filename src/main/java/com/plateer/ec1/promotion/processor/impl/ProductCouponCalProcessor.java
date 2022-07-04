@@ -62,11 +62,13 @@ public class ProductCouponCalProcessor implements CalProcessor {
     }
 
     public ProductCouponVo calculateDcAmt(ProductCouponVo productCouponVo) {
-        List<PromotionVo> promotionVoList = productCouponVo.getPromotionVoList();
-
-        for (PromotionVo promotionVo : promotionVoList) {
-            promotionVo.calculateDcAmt(productCouponVo);
-        }
+        List<PromotionVo> promotionVoList = productCouponVo.getPromotionVoList()
+                .parallelStream()
+                .map(promotionVo -> {
+                    promotionVo.calculateDcAmt(productCouponVo);
+                    return promotionVo;
+                })
+                .collect(Collectors.toList());
         return productCouponVo;
     }
 
