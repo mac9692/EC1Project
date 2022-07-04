@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,19 +74,24 @@ public class ProductCouponCalProcessor implements CalProcessor {
     }
 
     public ProductCouponVo calculateMaxBenefit(ProductCouponVo productCouponVo) {
-        log.info("[상품 쿠폰] 최대 할인 혜택 적용 서비스 시작");
-        System.out.println(productCouponVo);
-        log.info("[상품 쿠폰] 최대 할인 혜택 적용 서비스 종료");
+        List<PromotionVo> promotionVoList = productCouponVo.getPromotionVoList();
+        promotionVoList
+                .parallelStream()
+                .sorted(Comparator.comparing(promotionVo -> promotionVo.getDcAmt()))
+                .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
+                .collect(Collectors.toList());
+        promotionVoList.get(0).setMaxBenefitYn("Y");
         return productCouponVo;
     }
+
     @Override
     public ProductCouponResponseVo getCalculationData(RequestPromotionVo requestPromotionVo) {
-        log.info("[상품 쿠폰 계산 시작]");
-        ProductCouponVo productCouponVo = calculateMaxBenefit(calculateDcAmt(getAvailablePromotionData(requestPromotionVo)));
+        ProductCouponVo productCouponVo =
+                calculateMaxBenefit(calculateDcAmt(getAvailablePromotionData(requestPromotionVo)));
         ProductCouponResponseVo productCouponResponseVo = new ProductCouponResponseVo();
         productCouponResponseVo.setMemberNo(requestPromotionVo.getMbrNo());
         productCouponResponseVo.setProductCouponVo(productCouponVo);
-        log.info("[상품 쿠폰 계산 종료]");
+        System.out.println(productCouponVo);
         return productCouponResponseVo;
     }
 }

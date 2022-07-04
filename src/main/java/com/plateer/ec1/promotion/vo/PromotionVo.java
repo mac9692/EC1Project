@@ -1,7 +1,6 @@
 package com.plateer.ec1.promotion.vo;
 
 import com.plateer.ec1.common.code.promotion.PRM0003;
-import com.plateer.ec1.product.vo.ProductVo;
 import lombok.Data;
 
 import java.sql.Timestamp;

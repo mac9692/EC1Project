@@ -5,8 +5,11 @@ import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.BaseResponseVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,20 +19,18 @@ public class PromotionController {
 
     private final PromotionService promotionService;
 
-    @RequestMapping(value = "priceDiscount")
+    @GetMapping(value = "priceDiscount")
     public BaseResponseVo getPriceDiscountApplyData(RequestPromotionVo requestPromotionVo) {
-        log.info("가격 할인 적용 시작");
         return promotionService.getPriceDiscountData(requestPromotionVo);
     }
 
-    @RequestMapping(value = "productCoupon")
-    public BaseResponseVo getProductCouponApplyData(RequestPromotionVo requestPromotionVo) {
-        log.info("상품쿠폰 적용 시작");
+    @GetMapping(value = "productCoupon")
+    public BaseResponseVo getProductCouponApplyData(@Valid RequestPromotionVo requestPromotionVo) {
         return promotionService.getProductCouponDiscountData(requestPromotionVo);
     }
-    @RequestMapping(value = "cartCoupon")
+
+    @GetMapping(value = "cartCoupon")
     public BaseResponseVo getCartCouponApplyData(RequestPromotionVo requestPromotionVo) {
-        log.info("장바구니 쿠폰 적용 시작");
         return promotionService.getCartCouponDiscountData(requestPromotionVo);
     }
 
