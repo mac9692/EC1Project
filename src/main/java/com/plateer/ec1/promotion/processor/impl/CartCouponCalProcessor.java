@@ -6,8 +6,8 @@ import com.plateer.ec1.promotion.processor.CalProcessor;
 import com.plateer.ec1.promotion.vo.ProductCouponVo;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
-import com.plateer.ec1.promotion.vo.response.ResponseBaseVo;
-import com.plateer.ec1.promotion.vo.response.ResponseCartCouponVo;
+import com.plateer.ec1.promotion.vo.response.BaseResponseVo;
+import com.plateer.ec1.promotion.vo.response.CartCouponResponseVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -26,7 +26,6 @@ public class CartCouponCalProcessor implements CalProcessor {
         return PromotionType.CART_COUPON;
     }
 
-    @Override
     public List<ProductCouponVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         log.info("[장바구니 쿠폰] 회원별 적용 가능한 쿠폰 조회 서비스 시작");
         log.info("쿠폰 적용 대상 여부 검증");
@@ -40,8 +39,7 @@ public class CartCouponCalProcessor implements CalProcessor {
         return null;
     }
 
-    @Override
-    public ResponseCartCouponVo calculateDcAmt(RequestPromotionVo requestPromotionVo, List<ProductCouponVo> productCouponVoList) {
+    public CartCouponResponseVo calculateDcAmt(RequestPromotionVo requestPromotionVo, List<ProductCouponVo> productCouponVoList) {
         log.info("[장바구니 쿠폰] 할인 금액 계산 서비스 시작");
         log.info("기 적용된 가격조정 확인");
         log.info("확인 성공 시 : 가격조정 금액 리턴");
@@ -51,20 +49,21 @@ public class CartCouponCalProcessor implements CalProcessor {
         log.info("확인되면 한번 더 쿠폰 할인금액 계산 반복");
         log.info("확인되지 않으면 계산 값 전달");
         log.info("[장바구니 쿠폰] 할인 금액 계산 서비스 종료");
-        ResponseCartCouponVo responseCartCouponVo = new ResponseCartCouponVo();
+        CartCouponResponseVo responseCartCouponVo = new CartCouponResponseVo();
         return responseCartCouponVo;
     }
-    @Override
-    public ResponseCartCouponVo calculateMaxBenefit(ResponseBaseVo responseBaseVo) {
+
+    public CartCouponResponseVo calculateMaxBenefit(BaseResponseVo baseResponseVo) {
         log.info("[장바구니 쿠폰] 최대 할인 혜택 적용 서비스 시작");
-        ResponseCartCouponVo responseCartCouponVo = new ResponseCartCouponVo();
+        CartCouponResponseVo responseCartCouponVo = new CartCouponResponseVo();
         log.info("[장바구니 쿠폰] 최대 할인 혜택 적용 서비스 종료");
         return responseCartCouponVo;
     }
+
     @Override
-    public ResponseCartCouponVo getCalculationData(RequestPromotionVo requestPromotionVo) {
+    public CartCouponResponseVo getCalculationData(RequestPromotionVo requestPromotionVo) {
         log.info("[장바구니 쿠폰 계산 시작]");
-        ResponseCartCouponVo responseCartCouponVo = calculateMaxBenefit(calculateDcAmt(requestPromotionVo, null));
+        CartCouponResponseVo responseCartCouponVo = calculateMaxBenefit(calculateDcAmt(requestPromotionVo, null));
         log.info("[장바구니 쿠폰 계산 종료]");
         return null;
     }

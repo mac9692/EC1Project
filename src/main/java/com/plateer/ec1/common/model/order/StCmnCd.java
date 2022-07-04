@@ -1,4 +1,4 @@
-package com.plateer.ec1.common.code.order;
+package com.plateer.ec1.common.model.order;
 
 import lombok.Data;
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ResponseCartCouponVo extends ResponseBaseVo {
+public class CartCouponResponseVo extends BaseResponseVo {
 
     private String memberNo;
     private List<String> promotionProductList;

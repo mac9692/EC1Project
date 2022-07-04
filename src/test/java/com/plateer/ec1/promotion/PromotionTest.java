@@ -1,5 +1,6 @@
 package com.plateer.ec1.promotion;
 
+import com.plateer.ec1.product.vo.ProductVo;
 import com.plateer.ec1.promotion.controller.CouponController;
 import com.plateer.ec1.promotion.controller.PointController;
 import com.plateer.ec1.promotion.controller.PromotionController;
@@ -13,6 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @SpringBootTest
@@ -32,38 +36,7 @@ public class PromotionTest {
     CouponService couponService;
 
     @Test
-    @DisplayName("1. 가격할인금액 계산 테스트")
-    void priceDiscountCalculationTest() {
-        log.info("1. 가격할인금액 계산 테스트 시작");
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        promotionController.getPriceDiscountApplyData(requestPromotionVo);
-        log.info("1. 가격할인금액 계산 테스트 종료");
-    }
-
-    @Test
-    @DisplayName("2. 상품쿠폰할인 계산 테스트")
-    void productCouponCalculationTest() {
-        log.info("2. 상품쿠폰할인 계산 테스트 시작");
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        requestPromotionVo.setMbrNo("test01");
-        requestPromotionVo.setPrmNo(10L);
-        requestPromotionVo.setGoodsNo("P001");
-        requestPromotionVo.setItemNo("1");
-        promotionController.getProductCouponApplyData(requestPromotionVo);
-        log.info("2. 상품쿠폰할인 계산 테스트 종료");
-    }
-
-    @Test
-    @DisplayName("3. 장바구니쿠폰할인 계산 테스트")
-    void cartCouponCalculationTest() {
-        log.info("3. 장바구니쿠폰할인 계산 테스트 시작");
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        promotionController.getCartCouponApplyData(requestPromotionVo);
-        log.info("3. 장바구니쿠폰할인 계산 테스트 종료");
-    }
-
-    @Test
-    @DisplayName("4-1. 쿠폰 다운로드 테스트 - 성공 케이스")
+    @DisplayName("1-1. 쿠폰 다운로드 테스트 - 성공 케이스")
     void downloadCouponTest() {
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(2L);
@@ -72,7 +45,7 @@ public class PromotionTest {
     }
 
     @Test
-    @DisplayName("4-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 총 다운로드 가능 횟수 초과")
+    @DisplayName("1-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 총 다운로드 가능 횟수 초과")
     void downloadCouponTest2() {
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(6L);
@@ -81,7 +54,7 @@ public class PromotionTest {
     }
 
     @Test
-    @DisplayName("4-3. 쿠폰 사용 테스트")
+    @DisplayName("1-3. 쿠폰 사용 테스트")
     void useCouponTest() {
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(2L);
@@ -92,7 +65,7 @@ public class PromotionTest {
     }
 
     @Test
-    @DisplayName("4-4. 쿠폰 취소 테스트")
+    @DisplayName("1-4. 쿠폰 취소 테스트")
     void cancelCouponTest() {
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
         requestPromotionVo.setPrmNo(1L);
@@ -103,6 +76,35 @@ public class PromotionTest {
     }
 
     @Test
+    @DisplayName("2. 상품쿠폰할인 계산 테스트")
+    void productCouponCalculationTest() {
+        log.info("2. 상품쿠폰할인 계산 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        requestPromotionVo.setMbrNo("test01");
+        requestPromotionVo.setGoodsNo("P001");
+        requestPromotionVo.setItemNo("1");
+
+        promotionController.getProductCouponApplyData(requestPromotionVo);
+        log.info("2. 상품쿠폰할인 계산 테스트 종료");
+    }
+
+
+
+
+
+
+/*
+    프로토타입 구현 기간 테스트
+    @Test
+    @DisplayName("1. 가격할인금액 계산 테스트")
+    void priceDiscountCalculationTest() {
+        log.info("1. 가격할인금액 계산 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        promotionController.getPriceDiscountApplyData(requestPromotionVo);
+        log.info("1. 가격할인금액 계산 테스트 종료");
+    }
+
+    @Test
     @DisplayName("5. 포인트 정보 조회 테스트")
     void getPointInfoTest() {
         log.info("5. 포인트 정보 조회 테스트 시작");
@@ -110,5 +112,14 @@ public class PromotionTest {
         pointController.getPointInfo(requestPromotionVo);
         log.info("5. 포인트 정보 조회 테스트 종료");
     }
+
+    @Test
+    @DisplayName("3. 장바구니쿠폰할인 계산 테스트")
+    void cartCouponCalculationTest() {
+        log.info("3. 장바구니쿠폰할인 계산 테스트 시작");
+        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        promotionController.getCartCouponApplyData(requestPromotionVo);
+        log.info("3. 장바구니쿠폰할인 계산 테스트 종료");
+    }*/
 
 }

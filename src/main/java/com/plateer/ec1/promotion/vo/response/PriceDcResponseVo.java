@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ResponsePriceDcVo extends ResponseBaseVo {
+public class PriceDcResponseVo extends BaseResponseVo {
 
     private String memberNo;
     private List<ProductVo> productVoList;
