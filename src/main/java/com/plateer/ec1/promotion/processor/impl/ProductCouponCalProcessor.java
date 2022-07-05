@@ -43,22 +43,28 @@ public class ProductCouponCalProcessor implements CalProcessor {
     * 7. 쿠폰 종류 코드 검증 : 상품
     * */
     public ProductCouponVo getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
-        List<PromotionVo> promotionVoList = promotionMapper.getCartCouponInfo(requestPromotionVo)
-                .parallelStream()
-                .filter(PromotionVo::validateUseYn)
-                .filter(PromotionVo::validateCouponUseDt)
-                .filter(PromotionVo::validatePromotionDate)
-                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
-                .filter(promotionVo -> promotionVo.getMdaGb().equals(""))
-                .filter(promotionVo -> promotionVo.getEntChnGb().equals(""))
-                .filter(promotionVo -> promotionVo.getCpnKindCd().equals(PRM0004.PRODUCT_COUPON.getType()))
-                .collect(Collectors.toList());
+        List<ProductVo> productVoList = requestPromotionVo.getProductVoList();
+        productVoList.parallelStream().forEach(c -> c.setPromotionVoList(promotionMapper.getCartCouponInfo(requestPromotionVo)));
 
-        ProductVo productVo = promotionMapper.getProductInfo(requestPromotionVo);
+        productVoList.forEach(ProductVo::validatePromotionList);
+        productVoList.parallelStream().forEach(System.out::println);
+
+//        List<PromotionVo> promotionVoList = promotionMapper.getCartCouponInfo(requestPromotionVo)
+//                .parallelStream()
+//                .filter(PromotionVo::validateUseYn)
+//                .filter(PromotionVo::validateCouponUseDt)
+////                .filter(PromotionVo::validatePromotionDate)
+//                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
+////                .filter(promotionVo -> promotionVo.getMdaGb().equals(""))
+////                .filter(promotionVo -> promotionVo.getEntChnGb().equals(""))
+//                .filter(promotionVo -> promotionVo.getCpnKindCd().equals(PRM0004.PRODUCT_COUPON.getType()))
+//                .collect(Collectors.toList());
+
 
         ProductCouponVo productCouponVo = new ProductCouponVo();
-        productCouponVo.setProductVo(productVo);
-        productCouponVo.setPromotionVoList(promotionVoList);
+        List<ProductVo> productVo = requestPromotionVo.getProductVoList();
+//        productCouponVo.setProductVo(productVo);
+//        productCouponVo.setPromotionVoList(promotionVoList);
         return productCouponVo;
     }
 
@@ -78,7 +84,7 @@ public class ProductCouponCalProcessor implements CalProcessor {
         promotionVoList
                 .parallelStream()
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getDcAmt()))
-                .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
+//                .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
                 .collect(Collectors.toList());
         promotionVoList.get(0).setMaxBenefitYn("Y");
         return productCouponVo;

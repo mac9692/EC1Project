@@ -1,6 +1,7 @@
 package com.plateer.ec1.promotion.vo;
 
 import com.plateer.ec1.common.code.promotion.PRM0003;
+import com.plateer.ec1.common.code.promotion.PRM0004;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -15,6 +16,7 @@ public class PromotionVo {
     private String prmPriodCcd;
     private Timestamp prmStrtDt;
     private Timestamp prmEndDt;
+    private String empYn;
     private Long couponIssueNo;
     private String dcCcd;
     private Integer dcVal;
@@ -34,7 +36,7 @@ public class PromotionVo {
 
     //프로모션 사용여부 검증
     public boolean validateUseYn() {
-        return useYn.equals("Y");
+        return "Y".equals(useYn);
     }
 
     //쿠폰 사용일자 검증(쿠폰 사용여부 검증)
@@ -46,6 +48,10 @@ public class PromotionVo {
     public boolean validatePromotionDate() {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return prmStrtDt.before(timestamp) && prmEndDt.after(timestamp);
+    }
+
+    public boolean validateProductCoupon() {
+        return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
     }
 
     public void calculateDcAmt(ProductCouponVo productCouponVo) {

@@ -38,7 +38,7 @@
     </select>
 
     <select id="getCartCouponInfo" resultType="com.plateer.ec1.promotion.vo.PromotionVo">
-        SELECT cpb.prm_no , cpb.prm_nm , cpb.prm_kind_cd , cpb.prm_strt_dt , cpb.prm_end_dt , cpb.dc_ccd , cpb.dc_val , cpb.min_pur_amt , cpb.max_dc_amt , cpb.use_yn ,
+        SELECT cpb.prm_no , cpb.prm_nm , cpb.prm_kind_cd , cpb.prm_strt_dt , cpb.prm_end_dt , cpb.emp_yn, cpb.dc_ccd , cpb.dc_val , cpb.min_pur_amt , cpb.max_dc_amt , cpb.use_yn ,
                cpat.aply_tgt_ccd , cpat.aply_tgt_no ,
                ccb.prm_no , ccb.cpn_kind_cd , ccb.degr_ccd , ccb.mda_gb , ccb.ent_chn_gb ,
             cci.cpn_iss_no , cci.mbr_no , cci.cpn_use_dt
@@ -47,14 +47,5 @@
            AND cpb.prm_no = cpat.prm_no
            AND cpb.prm_no = ccb.prm_no
            AND cpb .prm_no = cci.prm_no
-    </select>
-
-    <select id="getProductInfo" resultType="com.plateer.ec1.product.vo.ProductVo">
-        SELECT pgb.goods_no , pgb.goods_nm , pgb.goods_tp_cd , pgb.sale_prc , pgb.prm_prc ,pgb.prgs_stat_cd , pgb.goods_dlv_tp_cd ,
-               pii.item_no , pii.item_nm
-          FROM pr_goods_base pgb , pr_item_info pii
-         WHERE pgb.goods_no = pii.goods_no
-           AND pgb.goods_no = #{goodsNo}
-           AND pii.item_no = #{itemNo}
     </select>
 </mapper>

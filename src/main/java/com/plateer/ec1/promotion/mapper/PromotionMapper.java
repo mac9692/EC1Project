@@ -18,6 +18,4 @@ public interface PromotionMapper {
     Boolean verifyCancelCoupon(RequestPromotionVo requestPromotionVo);
 
     List<PromotionVo> getCartCouponInfo(RequestPromotionVo requestPromotionVo);
-
-    ProductVo getProductInfo(RequestPromotionVo requestPromotionVo);
 }
