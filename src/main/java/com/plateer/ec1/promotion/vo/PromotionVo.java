@@ -59,6 +59,10 @@ public class PromotionVo {
         return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
     }
 
+    public boolean validateCartCoupon() {
+        return cpnKindCd.equals(PRM0004.CART_COUPON.getType());
+    }
+
     public void calculateDcAmt(Long price) {
         if (dcCcd.equals(PRM0003.FIXED_DISCOUNT.getType())) {
             dcAmt = dcVal;

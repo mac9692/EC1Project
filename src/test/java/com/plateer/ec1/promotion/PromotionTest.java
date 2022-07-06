@@ -142,38 +142,20 @@ public class PromotionTest {
         log.info(String.valueOf(baseResponseVo));
     }
 
-
-
-
-
-
-/*
-    프로토타입 구현 기간 테스트
     @Test
-    @DisplayName("1. 가격할인금액 계산 테스트")
-    void priceDiscountCalculationTest() {
-        log.info("1. 가격할인금액 계산 테스트 시작");
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        promotionController.getPriceDiscountApplyData(requestPromotionVo);
-        log.info("1. 가격할인금액 계산 테스트 종료");
-    }
-
-    @Test
-    @DisplayName("5. 포인트 정보 조회 테스트")
-    void getPointInfoTest() {
-        log.info("5. 포인트 정보 조회 테스트 시작");
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-        pointController.getPointInfo(requestPromotionVo);
-        log.info("5. 포인트 정보 조회 테스트 종료");
-    }
-
-    @Test
-    @DisplayName("3. 장바구니쿠폰할인 계산 테스트")
+    @DisplayName("3.1 장바구니쿠폰할인 계산 테스트")
     void cartCouponCalculationTest() {
-        log.info("3. 장바구니쿠폰할인 계산 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
+        ProductVo productVo1 = ProductVo.builder().goodsNo("P001").goodsNm("라운드반팔티").itemNo("1").salePrc(28000L).orderCount(2L).orderPrice(58000L).build();
+        ProductVo productVo2 = ProductVo.builder().goodsNo("P002").goodsNm("마스크대형").itemNo("1").salePrc(10900L).prmNo(10250L).orderCount(1L).orderPrice(10250L).build();
+
+        List<ProductVo> productVoList = new ArrayList<>();
+        productVoList.add(productVo1);
+        productVoList.add(productVo2);
+
+        requestPromotionVo.setMbrNo("test01");
+        requestPromotionVo.setProductVoList(productVoList);
         promotionController.getCartCouponApplyData(requestPromotionVo);
-        log.info("3. 장바구니쿠폰할인 계산 테스트 종료");
-    }*/
+    }
 
 }

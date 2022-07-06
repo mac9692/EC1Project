@@ -46,15 +46,17 @@ public class ProductCouponCalProcessor implements CalProcessor {
         List<ProductVo> productVoList = requestPromotionVo.getProductVoList();
         requestPromotionVo.getProductVoList()
                 .parallelStream()
-                .forEach(c -> c.setPromotionVoList(promotionMapper.getCartCouponInfo(requestPromotionVo)));
-        productVoList.forEach(ProductVo::validatePromotionList);
+                .forEach(productVo -> productVo.setPromotionVoList(promotionMapper.getCouponInfo(requestPromotionVo)));
+        productVoList.forEach(ProductVo::validateProductCoupon);
+
+
         return productVoList;
     }
 
     public List<ProductVo> calculateDcAmt(List<ProductVo> productVoList) {
         productVoList
                 .parallelStream()
-                .forEach(ProductVo::calCartCouponDcAmt);
+                .forEach(ProductVo::calProductCouponDcAmt);
         return productVoList;
     }
 

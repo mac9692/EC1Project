@@ -41,7 +41,7 @@ public class ProductVo {
         }
     }
 
-    public void validatePromotionList() {
+    public void validateCommonPromotionList() {
         promotionVoList = promotionVoList
                 .parallelStream()
                 .filter(PromotionVo::validateUseYn)
@@ -49,21 +49,40 @@ public class ProductVo {
 //                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
 //                .filter(promotionVo -> "".equals(promotionVo.getMdaGb()))
 //                .filter(promotionVo -> "".equals(promotionVo.getEntChnGb()))
-                .filter(PromotionVo::validateProductCoupon)
                 .filter(promotionVo -> promotionVo.validateMinPurAmt(validatePrmPrc()))
                 .collect(Collectors.toList());
     }
 
-    public void calCartCouponDcAmt() {
-        promotionVoList.parallelStream()
+    public void validateProductCoupon() {
+        validateCommonPromotionList();
+        promotionVoList = promotionVoList
+                .parallelStream()
+                .filter(PromotionVo::validateProductCoupon)
+                .collect(Collectors.toList());
+    }
+
+    public void validateCartCoupon() {
+        validateCommonPromotionList();
+        promotionVoList = promotionVoList
+                .parallelStream()
+                .filter(PromotionVo::validateCartCoupon)
+                .collect(Collectors.toList());
+    }
+
+    public void calProductCouponDcAmt() {
+        promotionVoList = promotionVoList.parallelStream()
                 .map(promotionVo -> {
                     promotionVo.calculateDcAmt(validatePrmPrc());
                             return promotionVo;
                 }).collect(Collectors.toList());
     }
 
+    public void calCartCouponDcAmt() {
+        promotionVoList =
+    }
+
     public void calculateMaxBenefit() {
-        promotionVoList.parallelStream()
+        promotionVoList = promotionVoList.parallelStream()
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getDcAmt()))
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmNo()))
