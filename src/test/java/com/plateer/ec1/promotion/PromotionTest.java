@@ -7,6 +7,7 @@ import com.plateer.ec1.promotion.controller.PromotionController;
 import com.plateer.ec1.promotion.service.CouponService;
 import com.plateer.ec1.promotion.service.PromotionService;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
+import com.plateer.ec1.promotion.vo.response.BaseResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -78,25 +79,27 @@ public class PromotionTest {
     @Test
     @DisplayName("2. 상품쿠폰할인 계산 테스트")
     void productCouponCalculationTest() {
-        log.info("2. 상품쿠폰할인 계산 테스트 시작");
         RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
 
         ProductVo productVo = new ProductVo();
 
         productVo.setGoodsNo("P001");
+        productVo.setGoodsNm("라운드반팔티");
         productVo.setItemNo("1");
-        productVo.setSalePrc(29000L);
-        productVo.setPrmNo(1L);
-        productVo.setCpnIssNo(1L);
+        productVo.setSalePrc(29900L);
+        productVo.setPrmPrc(29000L);
+        productVo.setOrderCount(2L);
+        productVo.setOrderPrice(58000L);
 
         ProductVo productVo2 = new ProductVo();
 
         productVo2.setGoodsNo("P002");
+        productVo2.setGoodsNm("마스크대형");
         productVo2.setItemNo("1");
-        productVo2.setSalePrc(10250L);
-        productVo2.setPrmNo(null);
-        productVo2.setCpnIssNo(null);
-
+        productVo2.setSalePrc(10900L);
+        productVo2.setPrmPrc(10250L);
+        productVo2.setOrderPrice(3L);
+        productVo2.setOrderPrice(30750L);
 
         List<ProductVo> productVoList = new ArrayList<>();
         productVoList.add(productVo);
@@ -105,8 +108,8 @@ public class PromotionTest {
         requestPromotionVo.setMbrNo("test01");
         requestPromotionVo.setProductVoList(productVoList);
 
-        promotionController.getProductCouponApplyData(requestPromotionVo);
-        log.info("2. 상품쿠폰할인 계산 테스트 종료");
+        BaseResponseVo baseResponseVo = promotionController.getProductCouponApplyData(requestPromotionVo);
+        log.info(String.valueOf(baseResponseVo));
     }
 
 

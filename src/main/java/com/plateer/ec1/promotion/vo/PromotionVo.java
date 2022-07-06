@@ -2,6 +2,7 @@ package com.plateer.ec1.promotion.vo;
 
 import com.plateer.ec1.common.code.promotion.PRM0003;
 import com.plateer.ec1.common.code.promotion.PRM0004;
+import com.plateer.ec1.product.vo.ProductVo;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -50,15 +51,16 @@ public class PromotionVo {
         return prmStrtDt.before(timestamp) && prmEndDt.after(timestamp);
     }
 
+    //쿠푼종류코드 - 상품코드 검증
     public boolean validateProductCoupon() {
         return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
     }
 
-    public void calculateDcAmt(ProductCouponVo productCouponVo) {
+    public void calculateDcAmt(Long price) {
         if (dcCcd.equals(PRM0003.FIXED_DISCOUNT.getType())) {
-            dcAmt = productCouponVo.getProductVo().validatePrmPrc() - dcVal;
+            dcAmt = Long.valueOf(dcVal);
         } else if (dcCcd.equals(PRM0003.RATE_DISCOUNT.getType())) {
-            dcAmt = productCouponVo.getProductVo().validatePrmPrc() / dcVal;
+            dcAmt = price / dcVal;
         } else {
             System.out.println("ERROR");
         }

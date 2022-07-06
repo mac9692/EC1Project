@@ -42,62 +42,36 @@ public class ProductCouponCalProcessor implements CalProcessor {
     * 6. 채널 일치 여부 검증
     * 7. 쿠폰 종류 코드 검증 : 상품
     * */
-    public ProductCouponVo getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
+    public List<ProductVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         List<ProductVo> productVoList = requestPromotionVo.getProductVoList();
-        productVoList.parallelStream().forEach(c -> c.setPromotionVoList(promotionMapper.getCartCouponInfo(requestPromotionVo)));
-
+        requestPromotionVo.getProductVoList()
+                .parallelStream()
+                .forEach(c -> c.setPromotionVoList(promotionMapper.getCartCouponInfo(requestPromotionVo)));
         productVoList.forEach(ProductVo::validatePromotionList);
-        productVoList.parallelStream().forEach(System.out::println);
-
-//        List<PromotionVo> promotionVoList = promotionMapper.getCartCouponInfo(requestPromotionVo)
-//                .parallelStream()
-//                .filter(PromotionVo::validateUseYn)
-//                .filter(PromotionVo::validateCouponUseDt)
-////                .filter(PromotionVo::validatePromotionDate)
-//                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
-////                .filter(promotionVo -> promotionVo.getMdaGb().equals(""))
-////                .filter(promotionVo -> promotionVo.getEntChnGb().equals(""))
-//                .filter(promotionVo -> promotionVo.getCpnKindCd().equals(PRM0004.PRODUCT_COUPON.getType()))
-//                .collect(Collectors.toList());
-
-
-        ProductCouponVo productCouponVo = new ProductCouponVo();
-        List<ProductVo> productVo = requestPromotionVo.getProductVoList();
-//        productCouponVo.setProductVo(productVo);
-//        productCouponVo.setPromotionVoList(promotionVoList);
-        return productCouponVo;
+        return productVoList;
     }
 
-    public ProductCouponVo calculateDcAmt(ProductCouponVo productCouponVo) {
-        List<PromotionVo> promotionVoList = productCouponVo.getPromotionVoList()
+    public List<ProductVo> calculateDcAmt(List<ProductVo> productVoList) {
+        productVoList
                 .parallelStream()
-                .map(promotionVo -> {
-                    promotionVo.calculateDcAmt(productCouponVo);
-                    return promotionVo;
-                })
-                .collect(Collectors.toList());
-        return productCouponVo;
+                .forEach(ProductVo::calCartCouponDcAmt);
+        return productVoList;
     }
 
-    public ProductCouponVo calculateMaxBenefit(ProductCouponVo productCouponVo) {
-        List<PromotionVo> promotionVoList = productCouponVo.getPromotionVoList();
-        promotionVoList
+    public List<ProductVo> calculateMaxBenefit(List<ProductVo> productVoList) {
+        productVoList
                 .parallelStream()
-                .sorted(Comparator.comparing(promotionVo -> promotionVo.getDcAmt()))
-//                .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
-                .collect(Collectors.toList());
-        promotionVoList.get(0).setMaxBenefitYn("Y");
-        return productCouponVo;
+                .forEach(ProductVo::calculateMaxBenefit);
+        return productVoList;
     }
 
     @Override
     public ProductCouponResponseVo getCalculationData(RequestPromotionVo requestPromotionVo) {
-        ProductCouponVo productCouponVo =
+        List<ProductVo> productVoList =
                 calculateMaxBenefit(calculateDcAmt(getAvailablePromotionData(requestPromotionVo)));
         ProductCouponResponseVo productCouponResponseVo = new ProductCouponResponseVo();
         productCouponResponseVo.setMemberNo(requestPromotionVo.getMbrNo());
-        productCouponResponseVo.setProductCouponVo(productCouponVo);
-        System.out.println(productCouponVo);
+        productCouponResponseVo.setProductVoList(productVoList);
         return productCouponResponseVo;
     }
 }
