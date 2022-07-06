@@ -5,6 +5,7 @@ import com.plateer.ec1.common.code.promotion.PRM0010;
 import com.plateer.ec1.promotion.vo.ProductCouponVo;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@Builder
 public class ProductVo {
 
     @NotNull(message = "상품번호는 필수값입니다.")
@@ -25,7 +27,6 @@ public class ProductVo {
     private String prgsStatCd;
     private String goodsDlvTpCd;
     private String itemNo;
-    private String itemNm;
     private Long prmNo;
     private Long cpnIssNo;
     private Long orderCount;
@@ -49,6 +50,7 @@ public class ProductVo {
 //                .filter(promotionVo -> "".equals(promotionVo.getMdaGb()))
 //                .filter(promotionVo -> "".equals(promotionVo.getEntChnGb()))
                 .filter(PromotionVo::validateProductCoupon)
+                .filter(promotionVo -> promotionVo.validateMinPurAmt(validatePrmPrc()))
                 .collect(Collectors.toList());
     }
 
@@ -65,7 +67,6 @@ public class ProductVo {
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getDcAmt()))
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmEndDt()))
                 .sorted(Comparator.comparing(promotionVo -> promotionVo.getPrmNo()))
-                .sorted(Comparator.comparing(promotionVo -> promotionVo.getCouponIssueNo()))
                 .collect(Collectors.toList());
         promotionVoList.get(0).setMaxBenefitYn("Y");
     }

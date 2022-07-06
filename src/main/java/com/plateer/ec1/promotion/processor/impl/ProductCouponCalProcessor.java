@@ -59,6 +59,7 @@ public class ProductCouponCalProcessor implements CalProcessor {
     }
 
     public List<ProductVo> calculateMaxBenefit(List<ProductVo> productVoList) {
+        System.out.println(productVoList);
         productVoList
                 .parallelStream()
                 .forEach(ProductVo::calculateMaxBenefit);

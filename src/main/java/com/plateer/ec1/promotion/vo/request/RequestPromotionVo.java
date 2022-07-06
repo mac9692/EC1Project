@@ -1,6 +1,7 @@
 package com.plateer.ec1.promotion.vo.request;
 
 import com.plateer.ec1.product.vo.ProductVo;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;

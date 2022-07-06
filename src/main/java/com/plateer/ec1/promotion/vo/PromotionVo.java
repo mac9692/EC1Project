@@ -2,7 +2,6 @@ package com.plateer.ec1.promotion.vo;
 
 import com.plateer.ec1.common.code.promotion.PRM0003;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.product.vo.ProductVo;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -20,7 +19,7 @@ public class PromotionVo {
     private String empYn;
     private Long couponIssueNo;
     private String dcCcd;
-    private Integer dcVal;
+    private Long dcVal;
     private Integer minPurAmt;
     private Integer maxDcAmt;
     private String useYn;
@@ -51,6 +50,10 @@ public class PromotionVo {
         return prmStrtDt.before(timestamp) && prmEndDt.after(timestamp);
     }
 
+    public boolean validateMinPurAmt(Long price) {
+        return price >= minPurAmt;
+    }
+
     //쿠푼종류코드 - 상품코드 검증
     public boolean validateProductCoupon() {
         return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
@@ -58,9 +61,9 @@ public class PromotionVo {
 
     public void calculateDcAmt(Long price) {
         if (dcCcd.equals(PRM0003.FIXED_DISCOUNT.getType())) {
-            dcAmt = Long.valueOf(dcVal);
+            dcAmt = dcVal;
         } else if (dcCcd.equals(PRM0003.RATE_DISCOUNT.getType())) {
-            dcAmt = price / dcVal;
+            dcAmt = price * (dcVal / 100);
         } else {
             System.out.println("ERROR");
         }
