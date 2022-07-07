@@ -37,15 +37,24 @@
                                         WHERE org_cpn_iss_no = #{cpnIssNo}))
     </select>
 
-    <select id="getCouponInfo" resultType="com.plateer.ec1.promotion.vo.PromotionVo">
+    <select id="getProductInfo" resultType="com.plateer.ec1.product.vo.ProductVo">
+        SELECT pgb.goods_no , pgb.goods_nm , pgb.sale_prc , pgb.prm_prc , pgb.prgs_stat_cd , pgb.goods_dlv_tp_cd ,
+               pii.item_no , pii.item_nm ,
+               cpat.prm_no, cpat.aply_tgt_seq , cpat.aply_tgt_ccd , cpat.aply_tgt_no , cpat.use_yn
+         FROM cc_prm_aply_tgt cpat , pr_goods_base pgb , pr_item_info pii
+        WHERE pgb.goods_no = 'P001'
+          AND pii.item_no = '1'
+          AND cpat.aply_tgt_no = pgb.goods_no
+          AND pgb.goods_no = pii.goods_no ;
+    </select>
+
+    <select id="getPromotionInfo" resultType="com.plateer.ec1.promotion.vo.PromotionVo">
         SELECT cpb.prm_no , cpb.prm_nm , cpb.prm_kind_cd , cpb.prm_strt_dt , cpb.prm_end_dt , cpb.emp_yn, cpb.dc_ccd , cpb.dc_val , cpb.min_pur_amt , cpb.max_dc_amt , cpb.use_yn ,
-               cpat.aply_tgt_ccd , cpat.aply_tgt_no ,
                ccb.prm_no , ccb.cpn_kind_cd , ccb.degr_ccd , ccb.mda_gb , ccb.ent_chn_gb ,
             cci.cpn_iss_no , cci.mbr_no , cci.cpn_use_dt
-          FROM cc_prm_base cpb , cc_prm_aply_tgt cpat , cc_cpn_base ccb , cc_cpn_issue cci
+          FROM cc_prm_base cpb , cc_cpn_base ccb , cc_cpn_issue cci
          WHERE cci.mbr_no = #{mbrNo}
-           AND cpb.prm_no = cpat.prm_no
            AND cpb.prm_no = ccb.prm_no
-           AND cpb .prm_no = cci.prm_no
+           AND ccb.prm_no = cci.prm_no
     </select>
 </mapper>

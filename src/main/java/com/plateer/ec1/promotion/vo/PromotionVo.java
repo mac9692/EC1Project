@@ -5,6 +5,7 @@ import com.plateer.ec1.common.code.promotion.PRM0004;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.util.stream.Collectors;
 
 @Data
 public class PromotionVo {
@@ -23,8 +24,6 @@ public class PromotionVo {
     private Integer minPurAmt;
     private Integer maxDcAmt;
     private String useYn;
-    private String aplyTgtCcd;
-    private String aplyTgtNo;
     private String cpnKindCd;
     private String degrCcd;
     private String mdaGb;
@@ -56,10 +55,12 @@ public class PromotionVo {
 
     //쿠푼종류코드 - 상품코드 검증
     public boolean validateProductCoupon() {
+        validateCommonPromotionList();
         return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
     }
 
     public boolean validateCartCoupon() {
+        validateCommonPromotionList();
         return cpnKindCd.equals(PRM0004.CART_COUPON.getType());
     }
 
@@ -72,4 +73,16 @@ public class PromotionVo {
             System.out.println("ERROR");
         }
     }
+
+    public void validateCommonPromotionList() {
+        validateUseYn();
+        validateCouponUseDt();
+//                .filter(PromotionVo::validateCouponUseDt)
+//                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
+//                .filter(promotionVo -> "".equals(promotionVo.getMdaGb()))
+//                .filter(promotionVo -> "".equals(promotionVo.getEntChnGb()))
+//                .filter(promotionVo -> promotionVo.validateMinPurAmt(validatePrmPrc()))
+//                .collect(Collectors.toList());
+    }
+
 }

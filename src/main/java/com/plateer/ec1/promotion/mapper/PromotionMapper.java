@@ -1,7 +1,6 @@
 package com.plateer.ec1.promotion.mapper;
 
 import com.plateer.ec1.product.vo.ProductVo;
-import com.plateer.ec1.promotion.vo.ProductCouponVo;
 import com.plateer.ec1.promotion.vo.PromotionVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,5 +16,5 @@ public interface PromotionMapper {
 
     Boolean verifyCancelCoupon(RequestPromotionVo requestPromotionVo);
 
-    List<PromotionVo> getCouponInfo(RequestPromotionVo requestPromotionVo);
+    List<PromotionVo> getPromotionInfo(RequestPromotionVo requestPromotionVo);
 }
