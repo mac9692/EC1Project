@@ -53,14 +53,12 @@ public class PromotionVo {
         return price >= minPurAmt;
     }
 
-    //쿠푼종류코드 - 상품코드 검증
+    //쿠폰종류코드 - 상품코드 검증
     public boolean validateProductCoupon() {
-        validateCommonPromotionList();
         return cpnKindCd.equals(PRM0004.PRODUCT_COUPON.getType());
     }
 
     public boolean validateCartCoupon() {
-        validateCommonPromotionList();
         return cpnKindCd.equals(PRM0004.CART_COUPON.getType());
     }
 
@@ -68,9 +66,19 @@ public class PromotionVo {
         if (dcCcd.equals(PRM0003.FIXED_DISCOUNT.getType())) {
             dcAmt = dcVal;
         } else if (dcCcd.equals(PRM0003.RATE_DISCOUNT.getType())) {
-            dcAmt = price * (dcVal / 100);
+            double calPrice = (price * (dcVal / (double)100L));
+            dcAmt = (long)calPrice;
+            validateDcAmt(dcAmt);
         } else {
             System.out.println("ERROR");
+        }
+    }
+
+    public void validateDcAmt(long dcAmt) {
+        if (dcAmt > maxDcAmt) {
+            this.dcAmt = Long.valueOf(maxDcAmt);
+        } else {
+            return;
         }
     }
 

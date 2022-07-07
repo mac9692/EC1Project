@@ -26,4 +26,12 @@ public class ProductVo {
     private Long cpnIssNo;
     private Long orderCount;
     private Long orderPrice;
+
+    public Long validatePrmPrc() {
+        if (prmPrc == null) {
+            return salePrc;
+        } else {
+            return prmPrc;
+        }
+    }
 }

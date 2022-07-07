@@ -17,13 +17,7 @@ public class ProductCouponVo {
     private ProductVo productVo;
     private List<PromotionVo> promotionVoList;
 
-//    public Long validatePrmPrc() {
-//        if (prmPrc == null) {
-//            return salePrc;
-//        } else {
-//            return prmPrc;
-//        }
-//    }
+
     public void validateCommonPromotionList() {
         promotionVoList = promotionVoList
                 .parallelStream()
@@ -54,10 +48,7 @@ public class ProductCouponVo {
 
     public void calProductCouponDcAmt() {
         promotionVoList = promotionVoList.parallelStream()
-                .map(promotionVo -> {
-//                    promotionVo.calculateDcAmt(validatePrmPrc());
-                            return promotionVo;
-                }).collect(Collectors.toList());
+                .peek(promotionVo -> promotionVo.calculateDcAmt(productVo.validatePrmPrc())).collect(Collectors.toList());
     }
 
     public void calculateMaxBenefit() {

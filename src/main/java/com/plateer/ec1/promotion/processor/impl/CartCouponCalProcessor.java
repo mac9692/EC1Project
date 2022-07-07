@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,12 @@ public class CartCouponCalProcessor implements CalProcessor {
     public List<CartCouponVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         List<ProductVo> productVoList = requestPromotionVo.getProductVoList();
         List<PromotionVo> promotionVoList = promotionMapper.getPromotionInfo(requestPromotionVo);
+        promotionVoList = promotionVoList.stream()
+                .filter(PromotionVo::validateUseYn)
+                .filter(PromotionVo::validateCouponUseDt)
+                .filter(PromotionVo::validateCartCoupon)
+                .collect(Collectors.toList());
+
         List<CartCouponVo> cartCouponVoList = new ArrayList<>();
 
         promotionVoList.forEach(promotionVo -> {
@@ -42,29 +49,31 @@ public class CartCouponCalProcessor implements CalProcessor {
             cartCouponVo.setProductVoList(productVoList);
             cartCouponVoList.add(cartCouponVo);
         });
-        cartCouponVoList.stream().filter(cartCouponVo -> cartCouponVo.getPromotionVo().validateCartCoupon()).forEach(System.out::println);
         return cartCouponVoList;
     }
 
     public List<CartCouponVo> calculateDcAmt(List<CartCouponVo> cartCouponVoList) {
+        cartCouponVoList.forEach(CartCouponVo::calCartCouponDcAmt);
         return cartCouponVoList;
     }
 
     public List<CartCouponVo> calculateMaxBenefit(List<CartCouponVo> cartCouponVoList) {
-        log.info("[장바구니 쿠폰] 최대 할인 혜택 적용 서비스 시작");
-        log.info("[장바구니 쿠폰] 최대 할인 혜택 적용 서비스 종료");
+        cartCouponVoList.stream()
+                .sorted(Comparator.comparing(cartCouponVo -> cartCouponVo.getPromotionVo().getDcAmt()))
+                .sorted(Comparator.comparing(cartCouponVo -> cartCouponVo.getPromotionVo().getPrmEndDt()))
+                .sorted(Comparator.comparing(cartCouponVo -> cartCouponVo.getPromotionVo().getPrmNo()))
+                .collect(Collectors.toList());
+        cartCouponVoList.get(0).getPromotionVo().setMaxBenefitYn("Y");
         return cartCouponVoList;
     }
 
     @Override
     public BaseResponseVo getCalculationData(RequestPromotionVo requestPromotionVo) {
-        log.info("[장바구니 쿠폰 계산 시작]");
         List<CartCouponVo> cartCouponVoList =
                 calculateMaxBenefit(calculateDcAmt(getAvailablePromotionData(requestPromotionVo)));
         CartCouponResponseVo cartCouponResponseVo = new CartCouponResponseVo();
         cartCouponResponseVo.setMemberNo(requestPromotionVo.getMbrNo());
         cartCouponResponseVo.setCartCouponVoList(cartCouponVoList);
-        log.info("[장바구니 쿠폰 계산 종료]");
         return cartCouponResponseVo;
     }
 }
