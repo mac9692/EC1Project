@@ -5,7 +5,6 @@ import com.plateer.ec1.common.code.promotion.PRM0004;
 import lombok.Data;
 
 import java.sql.Timestamp;
-import java.util.stream.Collectors;
 
 @Data
 public class PromotionVo {
@@ -63,11 +62,11 @@ public class PromotionVo {
     }
 
     public void calculateDcAmt(Long price) {
-        if (dcCcd.equals(PRM0003.FIXED_DISCOUNT.getType())) {
+        if (PRM0003.FIXED_DISCOUNT.getType().equals(dcCcd)) {
             dcAmt = dcVal;
-        } else if (dcCcd.equals(PRM0003.RATE_DISCOUNT.getType())) {
-            double calPrice = (price * (dcVal / (double)100L));
-            dcAmt = (long)calPrice;
+        } else if (PRM0003.RATE_DISCOUNT.getType().equals(dcCcd)) {
+            double calPrice = (price * (dcVal / (double) 100L));
+            dcAmt = (long) calPrice;
             validateDcAmt(dcAmt);
         } else {
             System.out.println("ERROR");
@@ -77,20 +76,6 @@ public class PromotionVo {
     public void validateDcAmt(long dcAmt) {
         if (dcAmt > maxDcAmt) {
             this.dcAmt = Long.valueOf(maxDcAmt);
-        } else {
-            return;
         }
     }
-
-    public void validateCommonPromotionList() {
-        validateUseYn();
-        validateCouponUseDt();
-//                .filter(PromotionVo::validateCouponUseDt)
-//                .filter(promotionVo -> promotionVo.getAplyTgtCcd().equals(PRM0010.PRODUCT.getType()))
-//                .filter(promotionVo -> "".equals(promotionVo.getMdaGb()))
-//                .filter(promotionVo -> "".equals(promotionVo.getEntChnGb()))
-//                .filter(promotionVo -> promotionVo.validateMinPurAmt(validatePrmPrc()))
-//                .collect(Collectors.toList());
-    }
-
 }

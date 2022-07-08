@@ -17,8 +17,17 @@ public class ProductCouponVo {
     private ProductVo productVo;
     private List<PromotionVo> promotionVoList;
 
-
-    public void validateCommonPromotionList() {
+    /*
+     * 회원별 적용 가능 쿠폰 조회
+     * 1. 프로모션 사용여부 검증
+     * 2. 쿠폰 사용일자 검증(쿠폰 사용여부 검증)
+     * 3. 프로모션 기간 유효성 검증
+     * 4. 적용 대상 구분 코드 검증 : 상품
+     * 5. 매체 구분 일치 여부 검증
+     * 6. 채널 일치 여부 검증
+     * 7. 쿠폰 종류 코드 검증 : 상품
+     * */
+    public void validateProductCoupon() {
         promotionVoList = promotionVoList
                 .parallelStream()
                 .filter(PromotionVo::validateUseYn)
@@ -27,22 +36,7 @@ public class ProductCouponVo {
 //                .filter(promotionVo -> "".equals(promotionVo.getMdaGb()))
 //                .filter(promotionVo -> "".equals(promotionVo.getEntChnGb()))
 //                .filter(promotionVo -> promotionVo.validateMinPurAmt(validatePrmPrc()))
-                .collect(Collectors.toList());
-    }
-
-    public void validateProductCoupon() {
-        validateCommonPromotionList();
-        promotionVoList = promotionVoList
-                .parallelStream()
                 .filter(PromotionVo::validateProductCoupon)
-                .collect(Collectors.toList());
-    }
-
-    public void validateCartCoupon() {
-        validateCommonPromotionList();
-        promotionVoList = promotionVoList
-                .parallelStream()
-                .filter(PromotionVo::validateCartCoupon)
                 .collect(Collectors.toList());
     }
 

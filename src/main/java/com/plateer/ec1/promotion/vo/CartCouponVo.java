@@ -17,9 +17,8 @@ public class CartCouponVo {
     public void calCartCouponDcAmt() {
         productVoList = productVoList.stream()
                 .peek(productVo -> promotionVo.calculateDcAmt(productVo.validatePrmPrc())).collect(Collectors.toList());
-    }
 
-    public void calculateMaxBenefit() {
-
+        //장바구니 쿠폰 할인값 계산
+//    산   long dcPrice = productVoList.stream().mapToLong(ProductVo::validatePrmPrc).sum();
     }
 }

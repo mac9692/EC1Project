@@ -30,16 +30,6 @@ public class ProductCouponCalProcessor implements CalProcessor {
         return PromotionType.PRODUCT_COUPON;
     }
 
-    /*
-     * 회원별 적용 가능 쿠폰 조회
-     * 1. 프로모션 사용여부 검증
-     * 2. 쿠폰 사용일자 검증(쿠폰 사용여부 검증)
-     * 3. 프로모션 기간 유효성 검증
-     * 4. 적용 대상 구분 코드 검증 : 상품
-     * 5. 매체 구분 일치 여부 검증
-     * 6. 채널 일치 여부 검증
-     * 7. 쿠폰 종류 코드 검증 : 상품
-     * */
     public List<ProductCouponVo> getAvailablePromotionData(RequestPromotionVo requestPromotionVo) {
         List<ProductVo> productVoList = requestPromotionVo.getProductVoList();
         List<PromotionVo> promotionVoList = promotionMapper.getPromotionInfo(requestPromotionVo);
