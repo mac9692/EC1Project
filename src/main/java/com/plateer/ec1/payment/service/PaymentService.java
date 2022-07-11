@@ -1,18 +1,23 @@
 package com.plateer.ec1.payment.service;
 
 import com.plateer.ec1.payment.enums.PaymentType;
-import com.plateer.ec1.payment.vo.ApproveResponseVo;
-import com.plateer.ec1.payment.vo.CancelRequestVo;
-import com.plateer.ec1.payment.vo.PayInfo;
+import com.plateer.ec1.payment.vo.OrderInfoVo;
+import com.plateer.ec1.payment.vo.PayApproveResponseVo;
+import com.plateer.ec1.payment.vo.request.CancelRequestVo;
+import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.NetCancelRequestVo;
+import com.plateer.ec1.payment.vo.request.PaymentRequestVo;
+
+import java.util.List;
 
 public interface PaymentService {
 
     PaymentType getType();
-    void validateAuth(PayInfo payInfo);
+    boolean validateAuth(PayInfoVo payInfoVo);
 
-    ApproveResponseVo approvePay(PayInfo payInfo);
+    List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo);
 
     void cancelPay(CancelRequestVo cancelRequestVo);
 
-    void netCancel(CancelRequestVo cancelRequestVo);
+    void netCancel(NetCancelRequestVo netCancelRequestVo);
 }

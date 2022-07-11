@@ -33,7 +33,7 @@ public class OrderContextImpl implements OrderContext {
         Order order = dataStrategy.create(orderRequest, new OrderProductView());
 
         //결제
-        payService.approve(orderRequest.getPayInfo());
+//        payService.approve(orderRequest.getPayInfo());
 
         //주문 데이터 등록
         insertOrderData(order);

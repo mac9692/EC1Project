@@ -2,11 +2,15 @@ package com.plateer.ec1.payment.service.impl;
 
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.service.PaymentService;
-import com.plateer.ec1.payment.vo.ApproveResponseVo;
-import com.plateer.ec1.payment.vo.CancelRequestVo;
-import com.plateer.ec1.payment.vo.PayInfo;
+import com.plateer.ec1.payment.vo.OrderInfoVo;
+import com.plateer.ec1.payment.vo.PayApproveResponseVo;
+import com.plateer.ec1.payment.vo.request.CancelRequestVo;
+import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.NetCancelRequestVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -17,21 +21,24 @@ public class Point implements PaymentService {
     }
 
     @Override
-    public void validateAuth(PayInfo payInfo) {
+    public boolean validateAuth(PayInfoVo payInfo) {
         log.info("결제 : 포인트 인증 성공 여부 검증");
+        return true;
     }
 
     @Override
-    public ApproveResponseVo approvePay(PayInfo payInfo) {
+    public List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         log.info("결제 : 포인트 결제 승인 서비스 시작");
-        validateAuth(payInfo);
-        log.info("검증 성공 시 : 승인 요청 IF 전문 생성");
-        log.info("검증 실패 시 : 종료");
-        log.info("승인 요청 이력 저장");
-        log.info("승인 요청 IF 시작");
-        log.info("승인 요청 IF 성공 시 : 주문 결제 승인 데이터 저장");
-        log.info("승인 요청 IF 실패 시 : 승인 요청 결과 이력 업데이트");
-        log.info("승인 요청 결과 이력 업데이트");
+        if (validateAuth(payInfoVo)) {
+            log.info("검증 성공 시 : 승인 요청 IF 전문 생성");
+            log.info("승인 요청 이력 저장");
+            log.info("승인 요청 IF 시작");
+            log.info("승인 요청 IF 성공 시 : 주문 결제 승인 데이터 저장");
+            log.info("승인 요청 IF 실패 시 : 승인 요청 결과 이력 업데이트");
+            log.info("승인 요청 결과 이력 업데이트");
+        } else {
+            log.info("검증 실패 시 : 종료");
+        }
         log.info("결제 : 포인트 결제 승인 서비스 종료");
         return null;
     }
@@ -53,7 +60,7 @@ public class Point implements PaymentService {
     }
 
     @Override
-    public void netCancel(CancelRequestVo cancelRequestVo) {
+    public void netCancel(NetCancelRequestVo netCancelRequestVo) {
         log.info("결제 : 포인트 망취소 서비스 시작");
         log.info("승인 취소 IF 전문 생성");
         log.info("승인 취소 요청 이력 저장(망취소)");

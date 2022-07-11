@@ -1,6 +1,7 @@
 package com.plateer.ec1.promotion.controller;
 
 import com.plateer.ec1.promotion.service.CouponService;
+import com.plateer.ec1.promotion.vo.request.RequestCouponVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,17 +18,17 @@ public class CouponController {
     private final CouponService couponService;
 
     @PostMapping(path = "downloadCoupon")
-    public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
-        couponService.downloadCoupon(requestPromotionVo);
+    public void downloadCoupon(RequestCouponVo requestCouponVo) {
+        couponService.downloadCoupon(requestCouponVo);
     }
 
     @PostMapping(path = "useCoupon")
-    public void useCoupon(RequestPromotionVo requestPromotionVo) {
-        couponService.useCoupon(requestPromotionVo);
+    public void useCoupon(RequestCouponVo requestCouponVo) {
+        couponService.useCoupon(requestCouponVo);
     }
 
     @PostMapping(path = "cancelCoupon")
-    public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
-        couponService.cancelCoupon(requestPromotionVo);
+    public void cancelCoupon(RequestCouponVo requestCouponVo) {
+        couponService.cancelCoupon(requestCouponVo);
     }
 }

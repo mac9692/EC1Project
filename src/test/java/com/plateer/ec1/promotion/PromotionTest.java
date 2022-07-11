@@ -6,6 +6,7 @@ import com.plateer.ec1.promotion.controller.CouponController;
 import com.plateer.ec1.promotion.controller.PointController;
 import com.plateer.ec1.promotion.controller.PromotionController;
 import com.plateer.ec1.promotion.service.CouponService;
+import com.plateer.ec1.promotion.vo.request.RequestCouponVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import com.plateer.ec1.promotion.vo.response.BaseResponseVo;
 import lombok.extern.slf4j.Slf4j;
@@ -39,41 +40,41 @@ public class PromotionTest {
     @Test
     @DisplayName("1-1. 쿠폰 다운로드 테스트 - 성공 케이스")
     void downloadCouponTest() {
-//        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-//        requestPromotionVo.setPrmNo(2L);
-//        requestPromotionVo.setMbrNo("test01");
-//        couponController.downloadCoupon(requestPromotionVo);
+        RequestCouponVo requestCouponVo = new RequestCouponVo();
+        requestCouponVo.setPrmNo(2L);
+        requestCouponVo.setMbrNo("test01");
+        couponController.downloadCoupon(requestCouponVo);
     }
 
     @Test
     @DisplayName("1-2. 쿠폰 다운로드 테스트 - 실패 케이스 : 총 다운로드 가능 횟수 초과")
     void downloadCouponTest2() {
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-//        requestPromotionVo.setPrmNo(6L);
-//        requestPromotionVo.setMbrNo("test01");
-        couponController.downloadCoupon(requestPromotionVo);
+        RequestCouponVo requestCouponVo = new RequestCouponVo();
+        requestCouponVo.setPrmNo(2L);
+        requestCouponVo.setMbrNo("test01");
+        couponController.downloadCoupon(requestCouponVo);
     }
 
     @Test
     @DisplayName("1-3. 쿠폰 사용 테스트")
     void useCouponTest() {
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-//        requestPromotionVo.setPrmNo(2L);
-//        requestPromotionVo.setMbrNo("test01");
-//        requestPromotionVo.setCpnIssNo(11L);
-//        requestPromotionVo.setOrdNo("2020");
-        couponController.useCoupon(requestPromotionVo);
+        RequestCouponVo requestCouponVo = new RequestCouponVo();
+        requestCouponVo.setPrmNo(1L);
+        requestCouponVo.setMbrNo("test01");
+        requestCouponVo.setCpnIssNo(1L);
+        requestCouponVo.setOrdNo("2020");
+        couponController.useCoupon(requestCouponVo);
     }
 
     @Test
     @DisplayName("1-4. 쿠폰 취소 테스트")
     void cancelCouponTest() {
-        RequestPromotionVo requestPromotionVo = new RequestPromotionVo();
-//        requestPromotionVo.setPrmNo(1L);
-//        requestPromotionVo.setMbrNo("test01");
-//        requestPromotionVo.setCpnIssNo(13L);
-//        requestPromotionVo.setOrdNo("213");
-        couponController.cancelCoupon(requestPromotionVo);
+        RequestCouponVo requestCouponVo = new RequestCouponVo();
+        requestCouponVo.setPrmNo(1L);
+        requestCouponVo.setMbrNo("test01");
+        requestCouponVo.setCpnIssNo(1L);
+        requestCouponVo.setOrdNo("2020");
+        couponController.cancelCoupon(requestCouponVo);
     }
 
     @Test

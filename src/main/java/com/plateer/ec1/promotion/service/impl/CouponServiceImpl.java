@@ -3,6 +3,7 @@ package com.plateer.ec1.promotion.service.impl;
 import com.plateer.ec1.promotion.mapper.PromotionMapper;
 import com.plateer.ec1.promotion.mapper.PromotionTrxMapper;
 import com.plateer.ec1.promotion.service.CouponService;
+import com.plateer.ec1.promotion.vo.request.RequestCouponVo;
 import com.plateer.ec1.promotion.vo.request.RequestPromotionVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,19 +26,19 @@ public class CouponServiceImpl implements CouponService {
     * 5. 총 다운로드 가능 수량 검증
     * */
     @Override
-    public Boolean validateCoupon(RequestPromotionVo requestPromotionVo) {
-        return promotionMapper.validateCoupon(requestPromotionVo);
+    public Boolean validateCoupon(RequestCouponVo requestCouponVo) {
+        return promotionMapper.validateCoupon(requestCouponVo);
     }
 
     @Transactional
     @Override
-    public void downloadCoupon(RequestPromotionVo requestPromotionVo) {
-        if (validateCoupon(requestPromotionVo)) {
-            promotionTrxMapper.downloadCoupon(requestPromotionVo);
-        } else {
-            log.info("다운로드 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
-            log.info("다운로드 가능 횟수가 초과했습니다.");
-        }
+    public void downloadCoupon(RequestCouponVo requestCouponVo) {
+//        if (validateCoupon(requestCouponVo)) {
+//            promotionTrxMapper.downloadCoupon(requestCouponVo);
+//        } else {
+//            log.info("다운로드 가능 여부 확인 실패 시 : 쿠폰 다운로드 서비스 종료");
+//            log.info("다운로드 가능 횟수가 초과했습니다.");
+//        }
     }
 
     /*
@@ -49,15 +50,15 @@ public class CouponServiceImpl implements CouponService {
     * */
     @Transactional
     @Override
-    public void useCoupon(RequestPromotionVo requestPromotionVo) {
-        boolean result = promotionMapper.verifyUseCoupon(requestPromotionVo);
-        if (result) {
-            promotionTrxMapper.useCoupon(requestPromotionVo);
-        } else {
-            log.info("쿠폰 사용 실패");
-            log.info("유효하지 않은 쿠폰입니다.");
-        }
-        log.info("쿠폰 사용 서비스 종료");
+    public void useCoupon(RequestCouponVo requestCouponVo) {
+//        boolean result = promotionMapper.verifyUseCoupon(requestCouponVo);
+//        if (result) {
+//            promotionTrxMapper.useCoupon(requestCouponVo);
+//        } else {
+//            log.info("쿠폰 사용 실패");
+//            log.info("유효하지 않은 쿠폰입니다.");
+//        }
+//        log.info("쿠폰 사용 서비스 종료");
     }
 
     /*
@@ -69,15 +70,15 @@ public class CouponServiceImpl implements CouponService {
     * */
     @Transactional
     @Override
-    public void cancelCoupon(RequestPromotionVo requestPromotionVo) {
-        boolean result = promotionMapper.verifyCancelCoupon(requestPromotionVo);
-        if (result) {
-            promotionTrxMapper.restoreCoupon(requestPromotionVo);
-        } else {
-            log.info("검증 실패 시 : 종료");
-            log.info("유효하지 않은 쿠폰입니다.");
-        }
-        log.info("쿠폰 취소 서비스 종료");
+    public void cancelCoupon(RequestCouponVo requestCouponVo) {
+//        boolean result = promotionMapper.verifyCancelCoupon(requestCouponVo);
+//        if (result) {
+//            promotionTrxMapper.restoreCoupon(requestCouponVo);
+//        } else {
+//            log.info("검증 실패 시 : 종료");
+//            log.info("유효하지 않은 쿠폰입니다.");
+//        }
+//        log.info("쿠폰 취소 서비스 종료");
     }
 
 }

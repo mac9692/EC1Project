@@ -10,7 +10,7 @@ import com.plateer.ec1.claim.vo.Claim;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.factory.PaymentServiceFactory;
 import com.plateer.ec1.payment.service.PaymentService;
-import com.plateer.ec1.payment.vo.PayInfo;
+import com.plateer.ec1.payment.vo.PayInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +40,7 @@ public class SpringTest {
     void testBean() {
         log.info("1. 빈 싱글톤 확인 테스트 시작");
         log.info("결제 팩토리 테스트");
-        PayInfo payInfo = new PayInfo();
+        PayInfoVo payInfo = new PayInfoVo();
         payInfo.setPaymentType(PaymentType.POINT);
 
         PaymentService paymentService1 = paymentServiceFactory.getPaymentService(payInfo.getPaymentType());

@@ -1,14 +1,18 @@
 package com.plateer.ec1.payment.service;
 
-import com.plateer.ec1.payment.vo.ApproveResponseVo;
-import com.plateer.ec1.payment.vo.CancelRequestVo;
-import com.plateer.ec1.payment.vo.PayInfo;
+import com.plateer.ec1.payment.vo.PayApproveResponseVo;
+import com.plateer.ec1.payment.vo.request.CancelRequestVo;
+import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.NetCancelRequestVo;
+import com.plateer.ec1.payment.vo.request.PaymentRequestVo;
+
+import java.util.List;
 
 public interface PayService {
 
-    public ApproveResponseVo approve(PayInfo payInfo);
+    public List<PayApproveResponseVo> approve(PaymentRequestVo paymentRequestVo);
 
     public void cancel(CancelRequestVo cancelRequestVo);
 
-    public void netCancel(CancelRequestVo cancelRequestVo);
+    public void netCancel(NetCancelRequestVo netCancelRequestVo);
 }
