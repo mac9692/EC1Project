@@ -2,65 +2,52 @@ package com.plateer.ec1.payment.service.impl;
 
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.service.PaymentService;
-import com.plateer.ec1.payment.util.ContextCreator;
+import com.plateer.ec1.payment.processor.PaymentProcessor;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
-import com.plateer.ec1.payment.vo.request.CancelRequestVo;
+import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
-import com.plateer.ec1.payment.vo.request.NetCancelRequestVo;
+import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import java.net.InetAddress;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
 @Service
 @Primary
+@RequiredArgsConstructor
 public class Inicis implements PaymentService {
+
+    private final PaymentProcessor paymentProcessor;
+
     @Override
     public PaymentType getType() {
         return PaymentType.INICIS;
     }
 
+
+    //PG 사 결제 인터페이스에서 인증을 거치는 과정
+    //PG 사 인증 return 값을 받아서 validate 진행을 하지만 현재 배제하고 무조건 true 반환
     @Override
-    public boolean validateAuth(PayInfoVo payInfo) {
-        log.info("결제사 : 이니시스 인증 성공 여부 검증");
+    public boolean validatePGAuth(PayInfoVo payInfoVo) {
         return true;
     }
 
     @Override
     public List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        log.info("결제사 : 이니시스 결제 승인 서비스 시작");
-        if (validateAuth(payInfoVo)) {
-            ContextCreator contextCreator = new ContextCreator();
-            contextCreator.createContext();
-
-            log.info("검증 성공 시 : 승인 요청 IF 전문 생성");
-            log.info("승인 요청 이력 저장");
-            log.info("승인 요청 IF 시작");
-            log.info("승인 요청 IF 성공 시 : 주문 결제 승인 데이터 저장");
-            log.info("승인 요청 IF 실패 시 : 승인 요청 결과 이력 업데이트");
-            log.info("승인 요청 결과 이력 업데이트");
+        if (validatePGAuth(payInfoVo)) {
+            paymentProcessor.doPaymentProcess(orderInfoVo, payInfoVo);
         } else {
             log.info("검증 실패 시 : 종료");
         }
-        log.info("결제사 : 이니시스 결제 승인 서비스 종료");
         return null;
     }
 
     @Override
-    public void cancelPay(CancelRequestVo cancelRequestVo) {
+    public void cancelPay(RequestCancelVo requestCancelVo) {
         log.info("결제사 : 이니시스 결제 취소 서비스 시작");
         log.info("원 주문결제 데이터 조회 -> 취소 할 완료된 주문 데이터");
         log.info("취소 요청 금액 및 환불 가능 금액 검증");
@@ -76,7 +63,7 @@ public class Inicis implements PaymentService {
     }
 
     @Override
-    public void netCancel(NetCancelRequestVo netCancelRequestVo) {
+    public void netCancel(RequestNetCancelVo requestNetCancelVo) {
         log.info("결제사 : 이니시스 망취소 서비스 시작");
         log.info("승인 취소 IF 전문 생성");
         log.info("승인 취소 요청 이력 저장(망취소)");

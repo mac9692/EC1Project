@@ -26,7 +26,6 @@ public class PaymentServiceFactory {
         paymentServiceList.forEach(c -> paymentTypeMap.put(c.getType(),c));
     }
     public PaymentService getPaymentService(PaymentType paymentType) {
-        log.info("결제 서비스 타입에 맞는 서비스 호출");
         return paymentTypeMap.get(paymentType);
     }
 

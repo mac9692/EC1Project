@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class PayInfoVo {
 
-    private long payAmount;
+    private Long payAmount;
     private String bankCode;
     private PaymentType paymentType;
     private String depositorName;

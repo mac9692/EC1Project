@@ -1,11 +1,11 @@
 package com.plateer.ec1.payment;
 
+import com.plateer.ec1.common.code.order.OPT0013;
 import com.plateer.ec1.payment.controller.PaymentController;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
-import com.plateer.ec1.payment.vo.request.CancelRequestVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
-import com.plateer.ec1.payment.vo.request.PaymentRequestVo;
+import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -28,7 +28,6 @@ public class PaymentTest {
     @Test
     @DisplayName("1. 결제 승인 테스트")
     void approveTest() {
-        log.info("1. 결제 승인 테스트 시작");
 //        //POINT 테스트
 //        PaymentRequestVo paymentRequestVo = new PaymentRequestVo();
 //        paymentRequestVo.getPayInfoVoList().get(0).setPaymentType(PaymentType.POINT);
@@ -36,23 +35,37 @@ public class PaymentTest {
 //        paymentController.approve(paymentRequestVo);
 
         //ININCIS 테스트
-        PaymentRequestVo paymentRequestVo = new PaymentRequestVo();
+        RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrdNo("1");
+        orderInfoVo.setBuyerName("박진성");
+        orderInfoVo.setBuyerEmail("박진성 이메일");
+        orderInfoVo.setGoodName("새우깡");
+        orderInfoVo.setMoid("192938127892-2328382");
+        orderInfoVo.setStoreUrl("https://abc.com");
 
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
-        PayInfoVo payInfoVo = new PayInfoVo();
-        payInfoVo.setPaymentType(PaymentType.INICIS);
-        payInfoVoList.add(payInfoVo);
+        PayInfoVo payInfoVo1 = new PayInfoVo();
+        payInfoVo1.setPaymentType(PaymentType.INICIS);
+        payInfoVo1.setPayAmount(200000L);
+        payInfoVo1.setBankCode(OPT0013.NH.getType());
+        payInfoVo1.setDepositorName("박진성");
 
-        paymentRequestVo.setOrderInfoVo(orderInfoVo);
-        paymentRequestVo.setPayInfoVoList(payInfoVoList);
+        PayInfoVo payInfoVo2 = new PayInfoVo();
+        payInfoVo2.setPaymentType(PaymentType.INICIS);
+        payInfoVo2.setPayAmount(15000L);
+        payInfoVo2.setBankCode(OPT0013.NH.getType());
+        payInfoVo2.setDepositorName("박진숭");
 
-        System.out.println(paymentRequestVo);
+        payInfoVoList.add(payInfoVo1);
+        payInfoVoList.add(payInfoVo2);
 
-        paymentController.approve(paymentRequestVo);
+        requestPaymentVo.setOrderInfoVo(orderInfoVo);
+        requestPaymentVo.setPayInfoVoList(payInfoVoList);
 
-        log.info("1. 결제 승인 테스트 종료");
+        System.out.println(requestPaymentVo);
+
+        paymentController.approve(requestPaymentVo);
     }
 
 //    @Test

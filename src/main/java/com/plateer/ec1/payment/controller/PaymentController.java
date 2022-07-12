@@ -2,9 +2,9 @@ package com.plateer.ec1.payment.controller;
 
 import com.plateer.ec1.payment.service.PayService;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
-import com.plateer.ec1.payment.vo.request.CancelRequestVo;
-import com.plateer.ec1.payment.vo.request.NetCancelRequestVo;
-import com.plateer.ec1.payment.vo.request.PaymentRequestVo;
+import com.plateer.ec1.payment.vo.request.RequestCancelVo;
+import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
+import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,21 +22,18 @@ public class PaymentController {
     private final PayService payService;
 
     @PostMapping(path = "approve")
-    public List<PayApproveResponseVo> approve(PaymentRequestVo paymentRequestVo) {
-        log.info("결제 요청 승인 시작");
-        return payService.approve(paymentRequestVo);
+    public List<PayApproveResponseVo> approve(RequestPaymentVo requestPaymentVo) {
+        return payService.approve(requestPaymentVo);
     }
 
     @RequestMapping(path = "cancel")
-    public void cancel(CancelRequestVo cancelRequestVo) {
-        log.info("결제 취소 시작");
-        payService.cancel(cancelRequestVo);
+    public void cancel(RequestCancelVo requestCancelVo) {
+        payService.cancel(requestCancelVo);
     }
 
     @RequestMapping(path = "netcancel")
-    public void netCancel(NetCancelRequestVo netCancelRequestVo) {
-        log.info("결제 망취소 시작");
-        payService.netCancel(netCancelRequestVo);
+    public void netCancel(RequestNetCancelVo requestNetCancelVo) {
+        payService.netCancel(requestNetCancelVo);
     }
 
 }

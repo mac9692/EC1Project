@@ -5,7 +5,7 @@ import com.plateer.ec1.payment.enums.PaymentType;
 import lombok.Data;
 
 @Data
-public class CancelRequestVo {
+public class RequestCancelVo {
 
     private PaymentType paymentType;
 }

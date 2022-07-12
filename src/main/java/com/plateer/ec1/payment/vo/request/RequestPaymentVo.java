@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class PaymentRequestVo {
+public class RequestPaymentVo {
 
     private OrderInfoVo orderInfoVo;
     private List<PayInfoVo> payInfoVoList;
