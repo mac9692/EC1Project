@@ -1,10 +1,12 @@
 package com.plateer.ec1.common.model.order;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
+@Builder
 public class OpPayInfo {
 
     private String payNo;

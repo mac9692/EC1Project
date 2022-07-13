@@ -1,17 +1,25 @@
 package com.plateer.ec1.payment.service.impl;
 
+import com.plateer.ec1.common.code.order.OPT0009;
+import com.plateer.ec1.common.code.order.OPT0010;
+import com.plateer.ec1.common.code.order.OPT0011;
+import com.plateer.ec1.common.model.order.OpPayInfo;
 import com.plateer.ec1.payment.enums.PaymentType;
+import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
 import com.plateer.ec1.payment.service.PaymentService;
-import com.plateer.ec1.payment.processor.PaymentProcessor;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
-import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.RequestCancelVo;
+import com.plateer.ec1.payment.vo.request.RequestContextVo;
 import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
+import com.plateer.ec1.payment.vo.response.ResponseContextVo;
+import com.plateer.ec1.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Inicis implements PaymentService {
 
-    private final PaymentProcessor paymentProcessor;
+    private final PaymentTrxMapper paymentTrxMapper;
 
     @Override
     public PaymentType getType() {
@@ -37,9 +45,18 @@ public class Inicis implements PaymentService {
     }
 
     @Override
+    @Transactional
     public List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         if (validatePGAuth(payInfoVo)) {
-            paymentProcessor.doPaymentProcess(orderInfoVo, payInfoVo);
+            RequestContextVo requestContextVo = new RequestContextVo();
+            ResponseContextVo responseContextVo = requestContextVo.createContext(orderInfoVo, payInfoVo);
+            boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseContextVo.getResultCode());
+            if (value) {
+                insertOpPayInfo(responseContextVo, orderInfoVo, payInfoVo);
+                log.info("승인 요청 결과 성공 이력 업데이트");
+            } else {
+                log.info("승인 요청 결과 실패 이력 업데이트");
+            }
         } else {
             log.info("검증 실패 시 : 종료");
         }
@@ -70,5 +87,27 @@ public class Inicis implements PaymentService {
         log.info("승인 취소 IF");
         log.info("승인 취소 요청 결과 이력(망취소) 업데이트");
         log.info("결제사 : 이니시스 망취소 서비스 종료");
+    }
+
+    @Transactional
+    public void insertOpPayInfo(ResponseContextVo responseContextVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+        OpPayInfo opPayInfo = OpPayInfo.builder()
+                .payNo(Constants.PAY_NO_S + responseContextVo.getValidDate() + (int)(Math.random()*100))
+                .ordNo(orderInfoVo.getOrdNo())
+                .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
+                .payCcd(OPT0010.PAYMENT.getType())
+                .payPrgsScd(OPT0011.PAYMENT_REQUEST.getType())
+                .payAmt(Long.valueOf(responseContextVo.getPrice()))
+                .cnclAmt(0L)
+                .rfndAvlAmt(0L)
+                .trsnId(responseContextVo.getTid())
+                .vrValDt(responseContextVo.getValidDate())
+                .vrValTt(responseContextVo.getValidTime())
+                .vrAcct(responseContextVo.getVacct())
+                .vrAcctNm(responseContextVo.getVacctName())
+                .vrBnkCd(responseContextVo.getVacctBankCode())
+                .build();
+
+        paymentTrxMapper.insertOpPayInfo(opPayInfo);
     }
 }

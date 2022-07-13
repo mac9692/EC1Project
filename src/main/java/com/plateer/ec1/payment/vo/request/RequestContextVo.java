@@ -2,6 +2,7 @@ package com.plateer.ec1.payment.vo.request;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.plateer.ec1.common.model.order.OpPayInfo;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.response.ResponseContextVo;
@@ -60,7 +61,6 @@ public class RequestContextVo {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(URL_POST, request, String.class);
-
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseContextVo responseContextVo = new ResponseContextVo();
         try {
