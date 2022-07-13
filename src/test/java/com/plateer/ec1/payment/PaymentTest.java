@@ -5,6 +5,7 @@ import com.plateer.ec1.payment.controller.PaymentController;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
 import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -26,15 +27,8 @@ public class PaymentTest {
     PaymentController paymentController;
 
     @Test
-    @DisplayName("1. 결제 승인 테스트")
+    @DisplayName("1. 이니시스 - 결제 승인 테스트")
     void approveTest() {
-//        //POINT 테스트
-//        PaymentRequestVo paymentRequestVo = new PaymentRequestVo();
-//        paymentRequestVo.getPayInfoVoList().get(0).setPaymentType(PaymentType.POINT);
-//
-//        paymentController.approve(paymentRequestVo);
-
-        //ININCIS 테스트
         RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
         OrderInfoVo orderInfoVo = new OrderInfoVo();
         orderInfoVo.setOrdNo("1");
@@ -47,15 +41,15 @@ public class PaymentTest {
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();
         payInfoVo1.setPaymentType(PaymentType.INICIS);
-        payInfoVo1.setPayAmount(200000L);
+        payInfoVo1.setPayAmount(1L);
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
 
         PayInfoVo payInfoVo2 = new PayInfoVo();
         payInfoVo2.setPaymentType(PaymentType.INICIS);
-        payInfoVo2.setPayAmount(15000L);
+        payInfoVo2.setPayAmount(1L);
         payInfoVo2.setBankCode(OPT0013.NH.getType());
-        payInfoVo2.setDepositorName("박진숭");
+        payInfoVo2.setDepositorName("박진성");
 
         payInfoVoList.add(payInfoVo1);
         payInfoVoList.add(payInfoVo2);
@@ -66,6 +60,12 @@ public class PaymentTest {
         System.out.println(requestPaymentVo);
 
         paymentController.approve(requestPaymentVo);
+    }
+
+    @Test
+    @DisplayName("2. 입금 완료 테스트")
+    void approveCompleteTest() {
+
     }
 
 //    @Test

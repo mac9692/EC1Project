@@ -3,7 +3,7 @@ package com.plateer.ec1.payment.vo.response;
 import lombok.Data;
 
 @Data
-public class ResponseContextVo {
+public class ResponseApproveVo {
     private String resultMsg;
     private String resultCode;
     private String authDate;

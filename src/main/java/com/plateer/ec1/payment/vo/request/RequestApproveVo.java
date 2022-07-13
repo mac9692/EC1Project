@@ -2,10 +2,9 @@ package com.plateer.ec1.payment.vo.request;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.plateer.ec1.common.model.order.OpPayInfo;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
-import com.plateer.ec1.payment.vo.response.ResponseContextVo;
+import com.plateer.ec1.payment.vo.response.ResponseApproveVo;
 import lombok.Data;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
-public class RequestContextVo {
+public class RequestApproveVo {
     private final String TYPE = "Pay";
     private final String PAY_METHOD = "Vacct";
     private final String MID = "INIpayTest";
@@ -36,7 +35,7 @@ public class RequestContextVo {
     private String tmInput = now.plusHours(24).format(DateTimeFormatter.ofPattern("hhmm"));
     private String clientIp = getIpAddress();
 
-    public ResponseContextVo createContext(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+    public ResponseApproveVo createContext(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -62,14 +61,14 @@ public class RequestContextVo {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(URL_POST, request, String.class);
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseContextVo responseContextVo = new ResponseContextVo();
+        ResponseApproveVo responseApproveVo = new ResponseApproveVo();
         try {
-            responseContextVo = objectMapper.readValue(response.getBody(), ResponseContextVo.class);
+            responseApproveVo = objectMapper.readValue(response.getBody(), ResponseApproveVo.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
 
-        return responseContextVo;
+        return responseApproveVo;
     }
 
     public String getIpAddress() {

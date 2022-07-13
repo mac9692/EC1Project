@@ -1,4 +1,4 @@
-package com.plateer.ec1.util;
+package com.plateer.ec1.utils;
 
 public class Constants {
     public static final String Y = "Y";

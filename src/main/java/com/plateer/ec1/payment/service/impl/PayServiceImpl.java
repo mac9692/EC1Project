@@ -5,6 +5,7 @@ import com.plateer.ec1.payment.service.PayService;
 import com.plateer.ec1.payment.service.PaymentService;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
 import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
@@ -28,6 +29,11 @@ public class PayServiceImpl implements PayService {
             PaymentService paymentService = paymentServiceFactory.getPaymentService(payInfoVo.getPaymentType());
             paymentService.approvePay(requestPaymentVo.getOrderInfoVo(), payInfoVo);
         }
+        return null;
+    }
+
+    @Override
+    public String approveComplete(RequestApproveCompleteVo requestApproveCompleteVo) {
         return null;
     }
 

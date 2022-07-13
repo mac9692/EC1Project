@@ -11,10 +11,10 @@ import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
-import com.plateer.ec1.payment.vo.request.RequestContextVo;
+import com.plateer.ec1.payment.vo.request.RequestApproveVo;
 import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
-import com.plateer.ec1.payment.vo.response.ResponseContextVo;
-import com.plateer.ec1.util.Constants;
+import com.plateer.ec1.payment.vo.response.ResponseApproveVo;
+import com.plateer.ec1.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
@@ -48,11 +48,11 @@ public class Inicis implements PaymentService {
     @Transactional
     public List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         if (validatePGAuth(payInfoVo)) {
-            RequestContextVo requestContextVo = new RequestContextVo();
-            ResponseContextVo responseContextVo = requestContextVo.createContext(orderInfoVo, payInfoVo);
-            boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseContextVo.getResultCode());
+            RequestApproveVo requestApproveVo = new RequestApproveVo();
+            ResponseApproveVo responseApproveVo = requestApproveVo.createContext(orderInfoVo, payInfoVo);
+            boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseApproveVo.getResultCode());
             if (value) {
-                insertOpPayInfo(responseContextVo, orderInfoVo, payInfoVo);
+                insertOpPayInfo(responseApproveVo, orderInfoVo, payInfoVo);
                 log.info("승인 요청 결과 성공 이력 업데이트");
             } else {
                 log.info("승인 요청 결과 실패 이력 업데이트");
@@ -90,22 +90,22 @@ public class Inicis implements PaymentService {
     }
 
     @Transactional
-    public void insertOpPayInfo(ResponseContextVo responseContextVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+    public void insertOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         OpPayInfo opPayInfo = OpPayInfo.builder()
-                .payNo(Constants.PAY_NO_S + responseContextVo.getValidDate() + (int)(Math.random()*100))
+                .payNo(Constants.PAY_NO_S + responseApproveVo.getValidDate() + (int)(Math.random()*100))
                 .ordNo(orderInfoVo.getOrdNo())
                 .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
                 .payCcd(OPT0010.PAYMENT.getType())
                 .payPrgsScd(OPT0011.PAYMENT_REQUEST.getType())
-                .payAmt(Long.valueOf(responseContextVo.getPrice()))
+                .payAmt(Long.valueOf(responseApproveVo.getPrice()))
                 .cnclAmt(0L)
                 .rfndAvlAmt(0L)
-                .trsnId(responseContextVo.getTid())
-                .vrValDt(responseContextVo.getValidDate())
-                .vrValTt(responseContextVo.getValidTime())
-                .vrAcct(responseContextVo.getVacct())
-                .vrAcctNm(responseContextVo.getVacctName())
-                .vrBnkCd(responseContextVo.getVacctBankCode())
+                .trsnId(responseApproveVo.getTid())
+                .vrValDt(responseApproveVo.getValidDate())
+                .vrValTt(responseApproveVo.getValidTime())
+                .vrAcct(responseApproveVo.getVacct())
+                .vrAcctNm(responseApproveVo.getVacctName())
+                .vrBnkCd(responseApproveVo.getVacctBankCode())
                 .build();
 
         paymentTrxMapper.insertOpPayInfo(opPayInfo);
