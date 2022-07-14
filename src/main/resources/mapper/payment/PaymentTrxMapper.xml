@@ -19,4 +19,16 @@
             #{vrBnkCd}, now(), 'admin', now(), 'admin'
             )
     </insert>
+    <update id="updateOpPayInfoComplete">
+        UPDATE op_pay_info
+           SET
+               pay_prgs_scd = '20',
+               rfnd_avl_amt = #{amt_input},
+               trsn_id = #{no_tid},
+               pay_cmt_dtime = now()
+         WHERE trsn_id = #{no_req_tid}
+    </update>
+
+
+
 </mapper>

@@ -3,6 +3,8 @@ package com.plateer.ec1.payment.vo.request;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.UnsupportedEncodingException;
+
 @Data
 @Builder
 public class RequestApproveCompleteVo {
@@ -13,7 +15,7 @@ public class RequestApproveCompleteVo {
     private String dt_trans;
     private String tm_trans;
     private String no_vacct;
-    private String amt_input;
+    private Long amt_input;
     private String flg_close;
     private String cl_close;
     private String type_msg;
@@ -28,4 +30,5 @@ public class RequestApproveCompleteVo {
     private String tm_cshr;
     private String no_cshr_appl;
     private String no_cshr_tid;
+    private String no_req_tid;
 }

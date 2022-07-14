@@ -12,7 +12,7 @@ public interface PayService {
 
     public List<PayApproveResponseVo> approve(RequestPaymentVo requestPaymentVo);
 
-    public String approveComplete(RequestApproveCompleteVo requestApproveCompleteVo);
+    public void approveComplete(RequestApproveCompleteVo requestApproveCompleteVo);
 
     public void cancel(RequestCancelVo requestCancelVo);
 

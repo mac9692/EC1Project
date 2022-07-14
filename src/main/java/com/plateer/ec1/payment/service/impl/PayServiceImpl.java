@@ -1,6 +1,7 @@
 package com.plateer.ec1.payment.service.impl;
 
 import com.plateer.ec1.payment.factory.PaymentServiceFactory;
+import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
 import com.plateer.ec1.payment.service.PayService;
 import com.plateer.ec1.payment.service.PaymentService;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
@@ -12,7 +13,9 @@ import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -21,6 +24,7 @@ import java.util.List;
 public class PayServiceImpl implements PayService {
 
     private final PaymentServiceFactory paymentServiceFactory;
+    private final PaymentTrxMapper paymentTrxMapper;
 
     @Override
     public List<PayApproveResponseVo> approve(RequestPaymentVo requestPaymentVo) {
@@ -33,8 +37,9 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public String approveComplete(RequestApproveCompleteVo requestApproveCompleteVo) {
-        return null;
+    @Transactional
+    public void approveComplete(RequestApproveCompleteVo requestApproveCompleteVo) {
+        paymentTrxMapper.updateOpPayInfoComplete(requestApproveCompleteVo);
     }
 
     @Override

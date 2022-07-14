@@ -65,7 +65,31 @@ public class PaymentTest {
     @Test
     @DisplayName("2. 입금 완료 테스트")
     void approveCompleteTest() {
-
+        RequestApproveCompleteVo requestApproveCompleteVo = RequestApproveCompleteVo.builder()
+                .no_tid("ININPGVBNKINIpayTest20220714130936873141")
+                .no_oid("192938127892-2328382")
+                .cd_bank("00000011")
+                .cd_deal("00000011")
+                .dt_trans("20220714")
+                .tm_trans("130936")
+                .no_vacct("79015900529638")
+                .amt_input(1L)
+                .flg_close("0")
+                .cl_close("0")
+                .type_msg("0200")
+                .nm_inputbank("__�\u05FD�Ʈ__")
+                .nm_input("ȫ�浿")
+                .dt_inputstd("20220714")
+                .dt_calculstd("20220714")
+                .dt_transbase("20220714")
+                .cl_trans("1100")
+                .cl_kor("2")
+                .dt_cshr(null)
+                .tm_cshr(null)
+                .no_cshr_appl(null)
+                .no_cshr_tid(null)
+                .build();
+        paymentController.approveComplete(requestApproveCompleteVo);
     }
 
 //    @Test

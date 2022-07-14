@@ -29,7 +29,7 @@ public class PaymentController {
 
     @PostMapping(path = "approveComplete")
     public String approveComplete(RequestApproveCompleteVo requestApproveCompleteVo) {
-        log.info(String.valueOf(requestApproveCompleteVo));
+        payService.approveComplete(requestApproveCompleteVo);
         return "OK";
     }
 
