@@ -18,8 +18,12 @@ import com.plateer.ec1.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -48,8 +52,7 @@ public class Inicis implements PaymentService {
     @Transactional
     public List<PayApproveResponseVo> approvePay(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         if (validatePGAuth(payInfoVo)) {
-            RequestApproveVo requestApproveVo = new RequestApproveVo();
-            ResponseApproveVo responseApproveVo = requestApproveVo.createContext(orderInfoVo, payInfoVo);
+            ResponseApproveVo responseApproveVo = doRestRequest(orderInfoVo, payInfoVo);
             boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseApproveVo.getResultCode());
             if (value) {
                 insertOpPayInfo(responseApproveVo, orderInfoVo, payInfoVo);
@@ -87,6 +90,15 @@ public class Inicis implements PaymentService {
         log.info("승인 취소 IF");
         log.info("승인 취소 요청 결과 이력(망취소) 업데이트");
         log.info("결제사 : 이니시스 망취소 서비스 종료");
+    }
+
+    public ResponseApproveVo doRestRequest(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+        RequestApproveVo requestApproveVo = new RequestApproveVo();
+        HttpEntity<MultiValueMap<String, String>> context = requestApproveVo.createContext(orderInfoVo, payInfoVo);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<ResponseApproveVo> responseEntity = restTemplate.postForEntity(Constants.APPROVE_URL_POST, context, ResponseApproveVo.class);
+
+        return responseEntity.getBody();
     }
 
     @Transactional

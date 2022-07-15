@@ -7,10 +7,9 @@ import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.response.ResponseApproveVo;
 import com.plateer.ec1.utils.Constants;
 import lombok.Data;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.apache.coyote.Response;
+import org.apache.tomcat.util.bcel.Const;
+import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 @Data
 public class RequestApproveVo {
@@ -31,9 +31,9 @@ public class RequestApproveVo {
     private String tmInput = now.plusHours(24).format(DateTimeFormatter.ofPattern("hhmm"));
     private String clientIp = getIpAddress();
 
-    public ResponseApproveVo createContext(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    public HttpEntity<MultiValueMap<String, String>>  createContext(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+        HttpHeaders headers = getHttpHeaders();
+
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         map.add("type", Constants.TYPE);
         map.add("paymethod", Constants.PAY_METHOD);
@@ -52,19 +52,16 @@ public class RequestApproveVo {
         map.add("nmInput", payInfoVo.getDepositorName());
         map.add("hashData", convertSHA512(Constants.INI_API_KEY + Constants.TYPE + Constants.PAY_METHOD + timestamp + clientIp + Constants.MID + orderInfoVo.getMoid() + String.valueOf(payInfoVo.getPayAmount())));
 
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        HttpEntity<MultiValueMap<String, String>> context = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity(Constants.APPROVE_URL_POST, request, String.class);
-        ObjectMapper objectMapper = new ObjectMapper();
-        ResponseApproveVo responseApproveVo = new ResponseApproveVo();
-        try {
-            responseApproveVo = objectMapper.readValue(response.getBody(), ResponseApproveVo.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        return context;
+    }
 
-        return responseApproveVo;
+    public HttpHeaders getHttpHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        headers.setAccept(Arrays.asList(MediaType.ALL));
+        return headers;
     }
 
     public String getIpAddress() {
