@@ -1,16 +1,15 @@
 package com.plateer.ec1.payment.mapper;
 
+import com.plateer.ec1.common.model.order.OpOrdBase;
 import com.plateer.ec1.common.model.order.OpPayInfo;
 import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface PaymentTrxMapper {
+public interface PaymentMapper {
 
-    public void insertOpPayInfo(OpPayInfo opPayInfo);
+    public OpPayInfo getOpPayInfo(RequestCancelVo requestCancelVo);
 
-    public void updateOpPayInfoComplete(RequestApproveCompleteVo requestApproveCompleteVo);
-
-    public void insertOpPayInfoCancelBefore(RequestCancelVo requestCancelVo);
+    public OpOrdBase getOpOrdBase(RequestCancelVo requestCancelVo);
 }

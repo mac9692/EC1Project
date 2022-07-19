@@ -6,11 +6,14 @@ public class Constants {
     public static final String N = "N";
 
     //결제 정적 변수
-    public static final String TYPE = "Pay";
+    public static final String PAYMENT_APPROVE_TYPE = "Pay";
+    public static final String PAYMENT_FULL_REFUND_TYPE = "Refund";
+    public static final String PAYMENT_PARTIAL_REFUND_TYPE = "PartialRefund";
     public static final String PAY_METHOD = "Vacct";
     public static final String MID = "INIpayTest";
     public static final String INI_API_KEY = "ItEQKi3rY7uvDS8l";
     public static final String APPROVE_URL_POST = "https://iniapi.inicis.com/api/v1/formpay";
+    public static final String REFUND_URL_POST = "https://iniapi.inicis.com/api/v1/refund";
     public static final String INICIS_SUCCESS_RESULT_CODE = "00";
     public static final String PAY_NO_S = "S";
 }

@@ -6,6 +6,7 @@ import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
+import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +32,7 @@ public class PaymentTest {
     void approveTest() {
         RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        orderInfoVo.setOrdNo("1");
+        orderInfoVo.setOrdNo("4");
         orderInfoVo.setBuyerName("박진성");
         orderInfoVo.setBuyerEmail("박진성 이메일");
         orderInfoVo.setGoodName("새우깡");
@@ -45,19 +46,17 @@ public class PaymentTest {
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
 
-        PayInfoVo payInfoVo2 = new PayInfoVo();
-        payInfoVo2.setPaymentType(PaymentType.INICIS);
-        payInfoVo2.setPayAmount(1L);
-        payInfoVo2.setBankCode(OPT0013.NH.getType());
-        payInfoVo2.setDepositorName("박진성");
+//        PayInfoVo payInfoVo2 = new PayInfoVo();
+//        payInfoVo2.setPaymentType(PaymentType.INICIS);
+//        payInfoVo2.setPayAmount(1L);
+//        payInfoVo2.setBankCode(OPT0013.NH.getType());
+//        payInfoVo2.setDepositorName("박진성");
 
         payInfoVoList.add(payInfoVo1);
-        payInfoVoList.add(payInfoVo2);
+//        payInfoVoList.add(payInfoVo2);
 
         requestPaymentVo.setOrderInfoVo(orderInfoVo);
         requestPaymentVo.setPayInfoVoList(payInfoVoList);
-
-        System.out.println(requestPaymentVo);
 
         paymentController.approve(requestPaymentVo);
     }
@@ -90,6 +89,18 @@ public class PaymentTest {
                 .no_cshr_tid(null)
                 .build();
         paymentController.approveComplete(requestApproveCompleteVo);
+    }
+
+    @Test
+    @DisplayName("3. 이니시스 취소 테스트")
+    void cancelTest() {
+        RequestCancelVo requestCancelVo = new RequestCancelVo();
+        requestCancelVo.setPaymentType(PaymentType.INICIS);
+        requestCancelVo.setOrdNo("3");
+        requestCancelVo.setClmNo(1L);
+        requestCancelVo.setCnclAmt(1L);
+
+        paymentController.cancel(requestCancelVo);
     }
 
 //    @Test
