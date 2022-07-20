@@ -4,22 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.payment.mapper.PaymentMapper">
 
-   <select id="getOpPayInfo" resultType="com.plateer.ec1.common.model.order.OpPayInfo">
-      SELECT
-          pay_no, ord_no, pay_mn_cd, pay_ccd,
-          pay_prgs_scd, pay_amt, cncl_amt, rfnd_avl_amt,
-          trsn_id, vr_val_dt , vr_acct, vr_acct_nm,
-          vr_bnk_cd, SYS_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
-        FROM op_pay_info
-       WHERE ord_no = #{ordNo};
-   </select>
-
-   <select id="getOpOrdBase" resultType="com.plateer.ec1.common.model.order.OpOrdBase">
-      SELECT ord_no,
-             rfnd_bnk_ck,
-             rfnd_acct_no,
-             rfnd_acct_own_nm
-        FROM op_pay_info
-       WHERE ord_no = #{ordNo};
+   <select id="getOpPayInfo" resultType="com.plateer.ec1.payment.vo.OrderBaseVo">
+       SELECT opi.pay_no, opi.ord_no, opi.clm_no, opi.pay_mn_cd, opi.pay_ccd,
+              opi.pay_prgs_scd, opi.pay_amt, opi.cncl_amt, opi.rfnd_avl_amt, opi.trsn_id,
+              opi.org_pay_no, opi.vr_acct, opi.vr_acct_nm, opi.vr_bnk_cd, oob.rfnd_bnk_ck,
+              oob.rfnd_acct_no, oob.rfnd_acct_own_nm
+         FROM op_pay_info opi , op_ord_base oob
+        WHERE opi.ord_no = oob.ord_no
+          AND opi.ord_no = #{ordNo}
+          AND opi.pay_prgs_scd IN ('10', '20');
    </select>
 </mapper>

@@ -9,6 +9,7 @@ import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.mapper.PaymentMapper;
 import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
 import com.plateer.ec1.payment.service.PaymentService;
+import com.plateer.ec1.payment.vo.OrderBaseVo;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
@@ -75,41 +76,20 @@ public class Inicis implements PaymentService {
 
     @Override
     public void cancelPay(RequestCancelVo requestCancelVo) {
-        log.info("원 주문결제 데이터 조회 -> 취소 할 완료된 주문 데이터");
-        log.info("취소 요청 금액 및 환불 가능 금액 검증");
-        log.info("검증 성공 시 : 환불 가능 금액 업데이트");
-        OpPayInfo opPayInfo = paymentMapper.getOpPayInfo(requestCancelVo);
-        OpOrdBase opOrdBase = paymentMapper.getOpOrdBase(requestCancelVo);
-
-        if (OPT0011.PAYMENT_REQUEST.getType().equals(opPayInfo.getPayPrgsScd())) {
-            if (requestCancelVo.getCnclAmt().equals(opPayInfo.getRfndAvlAmt())) {
-
-            } else if (requestCancelVo.getCnclAmt() < opPayInfo.getRfndAvlAmt()) {
-
-            } else {
-                log.info("Error");
+        OrderBaseVo orderBaseVo = paymentMapper.getOpPayInfo(requestCancelVo);
+        if (OPT0011.PAYMENT_REQUEST.getType().equals(orderBaseVo.getPayPrgsScd())) {
+            paymentTrxMapper.updateOpPayInfoCancel(orderBaseVo);
+            paymentTrxMapper.insertOpPayInfoCancel(orderBaseVo);
+            if (requestCancelVo.getCnclAmt() < orderBaseVo.getPayAmt()) {
+                paymentTrxMapper.insertOpPayInfoCancelBefore(orderBaseVo, requestCancelVo);
             }
-        } else if (OPT0011.PAYMENT_COMPLETE.getType().equals(opPayInfo.getPayPrgsScd())) {
-            if (requestCancelVo.getCnclAmt().equals(opPayInfo.getRfndAvlAmt())) {
-                ResponseFullRefundVo responseFullRefundVo = fullRefundRequest(opPayInfo, opOrdBase);
-                boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseFullRefundVo.getResultCode());
-                if (value) {
-                    log.info("승인 요청 결과 성공 이력 업데이트");
-                } else {
-                    log.info("승인 요청 결과 실패 이력 업데이트");
-                }
-            } else if (requestCancelVo.getCnclAmt() < opPayInfo.getRfndAvlAmt()) {
-                ResponsePartialRefundVo responsePartialRefundVo = partialRefundRequest(opPayInfo, opOrdBase, requestCancelVo);
-                boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responsePartialRefundVo.getResultCode());
-                if (value) {
-                    log.info("승인 요청 결과 성공 이력 업데이트");
-                } else {
-                    log.info("승인 요청 결과 실패 이력 업데이트");
-                }
+        } else if (OPT0011.PAYMENT_COMPLETE.getType().equals(orderBaseVo.getPayPrgsScd())) {
+            if (requestCancelVo.getCnclAmt().equals(orderBaseVo.getRfndAvlAmt())) {
+                ResponseFullRefundVo responseFullRefundVo = fullRefundRequest(orderBaseVo);
+            } else if (requestCancelVo.getCnclAmt() > orderBaseVo.getRfndAvlAmt()) {
+                ResponsePartialRefundVo responsePartialRefundVo = partialRefundRequest(orderBaseVo, requestCancelVo);
             }
-
         }
-
     }
 
     @Override
@@ -131,31 +111,28 @@ public class Inicis implements PaymentService {
         return responseEntity.getBody();
     }
 
-    public ResponseFullRefundVo fullRefundRequest(OpPayInfo opPayInfo, OpOrdBase opOrdBase ) {
+    public ResponseFullRefundVo fullRefundRequest(OrderBaseVo orderBaseVo) {
         FullRefundContextVo fullRefundContextVo = new FullRefundContextVo();
-        HttpEntity<MultiValueMap<String, String>> context = fullRefundContextVo.createContext(opPayInfo, opOrdBase);
+        HttpEntity<MultiValueMap<String, String>> context = fullRefundContextVo.createContext(orderBaseVo);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ResponseFullRefundVo> responseEntity = restTemplate.postForEntity(Constants.REFUND_URL_POST, context, ResponseFullRefundVo.class);
 
         return responseEntity.getBody();
     }
 
-    public ResponsePartialRefundVo partialRefundRequest(OpPayInfo opPayInfo, OpOrdBase opOrdBase, RequestCancelVo requestCancelVo ) {
+    public ResponsePartialRefundVo partialRefundRequest(OrderBaseVo orderBaseVo, RequestCancelVo requestCancelVo) {
         PartialRefundContextVo partialRefundContextVo = new PartialRefundContextVo();
-        HttpEntity<MultiValueMap<String, String>> context = partialRefundContextVo.createContext(opPayInfo, opOrdBase, requestCancelVo);
+        HttpEntity<MultiValueMap<String, String>> context = partialRefundContextVo.createContext(orderBaseVo, requestCancelVo);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<ResponsePartialRefundVo> responseEntity = restTemplate.postForEntity(Constants.REFUND_URL_POST, context, ResponsePartialRefundVo.class);
 
         return responseEntity.getBody();
     }
 
-
-
-
     @Transactional
     public void insertOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         OpPayInfo opPayInfo = OpPayInfo.builder()
-                .payNo(Constants.PAY_NO_S + responseApproveVo.getValidDate() + (int)(Math.random()*100))
+                .payNo(Constants.PAY_NO_S + responseApproveVo.getValidDate() + (int) (Math.random() * 100))
                 .ordNo(orderInfoVo.getOrdNo())
                 .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
                 .payCcd(OPT0010.PAYMENT.getType())

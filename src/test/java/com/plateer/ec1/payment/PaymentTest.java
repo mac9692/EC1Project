@@ -32,7 +32,7 @@ public class PaymentTest {
     void approveTest() {
         RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
         OrderInfoVo orderInfoVo = new OrderInfoVo();
-        orderInfoVo.setOrdNo("4");
+        orderInfoVo.setOrdNo("5");
         orderInfoVo.setBuyerName("박진성");
         orderInfoVo.setBuyerEmail("박진성 이메일");
         orderInfoVo.setGoodName("새우깡");
@@ -42,7 +42,7 @@ public class PaymentTest {
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();
         payInfoVo1.setPaymentType(PaymentType.INICIS);
-        payInfoVo1.setPayAmount(1L);
+        payInfoVo1.setPayAmount(20000L);
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
 
@@ -96,7 +96,7 @@ public class PaymentTest {
     void cancelTest() {
         RequestCancelVo requestCancelVo = new RequestCancelVo();
         requestCancelVo.setPaymentType(PaymentType.INICIS);
-        requestCancelVo.setOrdNo("3");
+        requestCancelVo.setOrdNo("5");
         requestCancelVo.setClmNo(1L);
         requestCancelVo.setCnclAmt(1L);
 

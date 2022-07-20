@@ -44,7 +44,6 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public void cancel(RequestCancelVo requestCancelVo) {
-        log.info("결제 취소 서비스 호출");
         PaymentService paymentService = paymentServiceFactory.getPaymentService(requestCancelVo.getPaymentType());
         paymentService.cancelPay(requestCancelVo);
     }

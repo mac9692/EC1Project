@@ -2,6 +2,7 @@ package com.plateer.ec1.payment.vo.context;
 
 import com.plateer.ec1.common.model.order.OpOrdBase;
 import com.plateer.ec1.common.model.order.OpPayInfo;
+import com.plateer.ec1.payment.vo.OrderBaseVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.utils.Constants;
 import com.plateer.ec1.utils.Utils;
@@ -22,7 +23,7 @@ public class PartialRefundContextVo {
     private String timestamp = now.format(DateTimeFormatter.ofPattern("yyyyMMddhhmmss"));
     private String clientIp = getIpAddress();
 
-    public HttpEntity<MultiValueMap<String, String>> createContext(OpPayInfo opPayInfo, OpOrdBase opOrdBase, RequestCancelVo requestCancelVo) {
+    public HttpEntity<MultiValueMap<String, String>> createContext(OrderBaseVo orderBaseVo, RequestCancelVo requestCancelVo) {
         HttpHeaders headers = getHttpHeaders();
 
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -32,14 +33,14 @@ public class PartialRefundContextVo {
         map.add("clientIp", clientIp);
         map.add("mid", Constants.MID);
         map.add("msg", null);
-        map.add("tid", opPayInfo.getTrsnId());
+        map.add("tid", orderBaseVo.getTrsnId());
         map.add("price", String.valueOf(requestCancelVo.getCnclAmt()));
-        map.add("confirmPrice", String.valueOf(opPayInfo.getRfndAvlAmt()-requestCancelVo.getCnclAmt()));
-        map.add("refundAcctNum", Utils.convertSHA512(opOrdBase.getRfndAcctNo()));
-        map.add("refundBankCode", opOrdBase.getRfndBnkCk());
-        map.add("refundAcctName", opOrdBase.getRfndAcctOwnNm());
+        map.add("confirmPrice", String.valueOf(orderBaseVo.getRfndAvlAmt()-requestCancelVo.getCnclAmt()));
+        map.add("refundAcctNum", Utils.convertSHA512(orderBaseVo.getRfndAcctNo()));
+        map.add("refundBankCode", orderBaseVo.getRfndBnkCk());
+        map.add("refundAcctName", orderBaseVo.getRfndAcctOwnNm());
 
-        map.add("hashData", Utils.convertSHA512(Constants.INI_API_KEY + Constants.PAYMENT_PARTIAL_REFUND_TYPE + Constants.PAY_METHOD + timestamp + clientIp + Constants.MID + opPayInfo.getTrsnId() + opOrdBase.getRfndAcctNo()));
+        map.add("hashData", Utils.convertSHA512(Constants.INI_API_KEY + Constants.PAYMENT_PARTIAL_REFUND_TYPE + Constants.PAY_METHOD + timestamp + clientIp + Constants.MID + orderBaseVo.getTrsnId() + orderBaseVo.getRfndAcctNo()));
 
         return new HttpEntity<MultiValueMap<String, String>>(map, headers);
     }
