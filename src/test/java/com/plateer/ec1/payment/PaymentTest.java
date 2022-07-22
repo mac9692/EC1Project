@@ -46,14 +46,7 @@ public class PaymentTest {
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
 
-//        PayInfoVo payInfoVo2 = new PayInfoVo();
-//        payInfoVo2.setPaymentType(PaymentType.INICIS);
-//        payInfoVo2.setPayAmount(1L);
-//        payInfoVo2.setBankCode(OPT0013.NH.getType());
-//        payInfoVo2.setDepositorName("박진성");
-
         payInfoVoList.add(payInfoVo1);
-//        payInfoVoList.add(payInfoVo2);
 
         requestPaymentVo.setOrderInfoVo(orderInfoVo);
         requestPaymentVo.setPayInfoVoList(payInfoVoList);
@@ -97,6 +90,45 @@ public class PaymentTest {
         RequestCancelVo requestCancelVo = new RequestCancelVo();
         requestCancelVo.setPaymentType(PaymentType.INICIS);
         requestCancelVo.setOrdNo("5");
+        requestCancelVo.setClmNo(1L);
+        requestCancelVo.setCnclAmt(1L);
+
+        paymentController.cancel(requestCancelVo);
+    }
+
+    @Test
+    @DisplayName("4. 포인트 - 결제 승인 테스트")
+    void approvePointTest() {
+        RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        orderInfoVo.setOrdNo("7");
+        orderInfoVo.setBuyerName("박진성");
+        orderInfoVo.setBuyerEmail("박진성 이메일");
+        orderInfoVo.setGoodName("새우깡");
+        orderInfoVo.setMoid("192938127892-2328382");
+        orderInfoVo.setStoreUrl("https://abc.com");
+
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        PayInfoVo payInfoVo1 = new PayInfoVo();
+        payInfoVo1.setPaymentType(PaymentType.POINT);
+        payInfoVo1.setPayAmount(20000L);
+        payInfoVo1.setBankCode(OPT0013.NH.getType());
+        payInfoVo1.setDepositorName("박진성");
+
+        payInfoVoList.add(payInfoVo1);
+
+        requestPaymentVo.setOrderInfoVo(orderInfoVo);
+        requestPaymentVo.setPayInfoVoList(payInfoVoList);
+
+        paymentController.approve(requestPaymentVo);
+    }
+
+    @Test
+    @DisplayName("5. 포인트 취소 테스트")
+    void cancelPointTest() {
+        RequestCancelVo requestCancelVo = new RequestCancelVo();
+        requestCancelVo.setPaymentType(PaymentType.POINT);
+        requestCancelVo.setOrdNo("7");
         requestCancelVo.setClmNo(1L);
         requestCancelVo.setCnclAmt(1L);
 

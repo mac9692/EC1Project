@@ -6,17 +6,17 @@
     <insert id="insertOpPayInfo">
         INSERT INTO op_pay_info
             (
-            pay_no, ord_no, pay_mn_cd, pay_ccd,
-            pay_prgs_scd, pay_amt, cncl_amt, rfnd_avl_amt,
-            trsn_id, vr_val_dt , vr_acct, vr_acct_nm,
-            vr_bnk_cd, SYS_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
+                pay_no, ord_no, pay_mn_cd, pay_ccd,
+                pay_prgs_scd, pay_amt, cncl_amt, rfnd_avl_amt,
+                trsn_id, vr_val_dt , vr_acct, vr_acct_nm,
+                vr_bnk_cd, SYS_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
             )
         VALUES
             (
-            #{payNo}, #{ordNo}, #{payMnCd}, #{payCcd},
-            #{payPrgsScd}, #{payAmt}, #{cnclAmt}, #{rfndAvlAmt},
-            #{trsnId}, #{vrValDt}, #{vrAcct}, #{vrAcctNm},
-            #{vrBnkCd}, now(), 'admin', now(), 'admin'
+                concat('S', nextval('nextval_pay_no')), #{ordNo}, #{payMnCd}, #{payCcd},
+                #{payPrgsScd}, #{payAmt}, #{cnclAmt}, #{rfndAvlAmt},
+                #{trsnId}, #{vrValDt}, #{vrAcct}, #{vrAcctNm},
+                #{vrBnkCd}, now(), 'admin', now(), 'admin'
             )
     </insert>
     <update id="updateOpPayInfoComplete">
@@ -32,12 +32,25 @@
     <update id="updateOpPayInfoCancel">
         UPDATE op_pay_info
            SET
-               cncl_amt = #{payAmt}
-         WHERE ordNo = #{ordNo}
+               cncl_amt = #{cnclAmt}
+         WHERE ord_no = #{ordNo}
     </update>
 
     <insert id="insertOpPayInfoCancel">
-
+        INSERT INTO op_pay_info
+        (
+            pay_no, ord_no, clm_no, pay_mn_cd, pay_ccd,
+            pay_prgs_scd, pay_amt, cncl_amt, rfnd_avl_amt, org_pay_no,
+            trsn_id, vr_val_dt , vr_acct, vr_acct_nm,
+            vr_bnk_cd, SYS_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
+        )
+        VALUES
+            (
+                concat('S', nextval('nextval_pay_no')), #{ordNo}, 'C1', #{payMnCd}, '20',
+                '30', #{payAmt}, 0, 0, #{payNo},
+                #{trsnId}, #{vrValDt}, #{vrAcct}, #{vrAcctNm},
+                #{vrBnkCd}, now(), 'admin', now(), 'admin'
+            )
     </insert>
 
     <insert id="insertOpPayInfoCancelBefore">
@@ -50,12 +63,33 @@
         )
         VALUES
             (
-                #{payNo}, #{ordNo}, #{payMnCd}, #{payCcd},
-                #{payPrgsScd}, #{payAmt}, 0, 0,
+                concat('S', nextval('nextval_pay_no')), #{ordNo}, 'C1', #{payMnCd}, '10',
+                '10', #{payAmt}, 0, 0,
                 #{trsnId}, #{vrValDt}, #{vrAcct}, #{vrAcctNm},
                 #{vrBnkCd}, now(), 'admin', now(), 'admin'
             )
     </insert>
 
+    <insert id="insertOpPayInfoPointApprove">
+        INSERT INTO op_pay_info
+            (
+                pay_no, ord_no, pay_mn_cd, pay_ccd,
+                pay_prgs_scd, pay_amt, cncl_amt, rfnd_avl_amt,
+                trsn_id, SYS_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id, pay_cmt_dtime
+            )
+        VALUES
+            (
+                concat('S', nextval('nextval_pay_no')), #{ordNo}, #{payMnCd}, #{payCcd},
+                #{payPrgsScd}, #{payAmt}, #{cnclAmt}, #{rfndAvlAmt},
+                nextval('cc_mbr_pnt_pnt_hst_seq_seq'), now(), 'admin', now(), 'admin', now()
+            )
+    </insert>
 
+    <update id="updateOpPayInfoPointCancel">
+        UPDATE op_pay_info
+        SET
+            cncl_amt = #{cnclAmt},
+            rfnd_avl_amt = pay_amt-#{cnclAmt}
+        WHERE ord_no = #{ordNo}
+    </update>
 </mapper>

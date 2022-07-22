@@ -2,6 +2,8 @@ package com.plateer.ec1.payment.vo;
 
 import lombok.Data;
 
+import java.sql.Timestamp;
+
 @Data
 public class OrderBaseVo {
 
@@ -15,10 +17,13 @@ public class OrderBaseVo {
     private Long cnclAmt;
     private Long rfndAvlAmt;
     private String trsnId;
+    private Timestamp payCmtDtime;
     private String orgPayNo;
     private String vrAcct;
     private String vrAcctNm;
     private String vrBnkCd;
+    private String vrValDt;
+    private String vrValTt;
 
     private String rfndBnkCk;
     private String rfndAcctNo;

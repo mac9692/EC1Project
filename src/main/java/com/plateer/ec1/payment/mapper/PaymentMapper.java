@@ -11,4 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface PaymentMapper {
 
     public OrderBaseVo getOpPayInfo(RequestCancelVo requestCancelVo);
+    public OrderBaseVo getOpPayPointInfo(RequestCancelVo requestCancelVo);
 }

@@ -18,4 +18,8 @@ public interface PaymentTrxMapper {
     public void insertOpPayInfoCancel(OrderBaseVo orderBaseVo);
 
     public void insertOpPayInfoCancelBefore(OrderBaseVo orderBaseVo, RequestCancelVo requestCancelVo);
+
+    public void insertOpPayInfoPointApprove(OpPayInfo opPayInfo);
+
+    public void updateOpPayInfoPointCancel(RequestCancelVo requestCancelVo);
 }

@@ -63,7 +63,7 @@ public class Inicis implements PaymentService {
             ResponseApproveVo responseApproveVo = approveRequest(orderInfoVo, payInfoVo);
             boolean value = Constants.INICIS_SUCCESS_RESULT_CODE.equals(responseApproveVo.getResultCode());
             if (value) {
-                insertOpPayInfo(responseApproveVo, orderInfoVo, payInfoVo);
+                insertApproveDataOpPayInfo(responseApproveVo, orderInfoVo, payInfoVo);
                 log.info("승인 요청 결과 성공 이력 업데이트");
             } else {
                 log.info("승인 요청 결과 실패 이력 업데이트");
@@ -74,6 +74,7 @@ public class Inicis implements PaymentService {
         return null;
     }
 
+    @Transactional
     @Override
     public void cancelPay(RequestCancelVo requestCancelVo) {
         OrderBaseVo orderBaseVo = paymentMapper.getOpPayInfo(requestCancelVo);
@@ -130,9 +131,8 @@ public class Inicis implements PaymentService {
     }
 
     @Transactional
-    public void insertOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
+    public void insertApproveDataOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
         OpPayInfo opPayInfo = OpPayInfo.builder()
-                .payNo(Constants.PAY_NO_S + responseApproveVo.getValidDate() + (int) (Math.random() * 100))
                 .ordNo(orderInfoVo.getOrdNo())
                 .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
                 .payCcd(OPT0010.PAYMENT.getType())

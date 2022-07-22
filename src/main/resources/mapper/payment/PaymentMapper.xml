@@ -7,11 +7,22 @@
    <select id="getOpPayInfo" resultType="com.plateer.ec1.payment.vo.OrderBaseVo">
        SELECT opi.pay_no, opi.ord_no, opi.clm_no, opi.pay_mn_cd, opi.pay_ccd,
               opi.pay_prgs_scd, opi.pay_amt, opi.cncl_amt, opi.rfnd_avl_amt, opi.trsn_id,
-              opi.org_pay_no, opi.vr_acct, opi.vr_acct_nm, opi.vr_bnk_cd, oob.rfnd_bnk_ck,
-              oob.rfnd_acct_no, oob.rfnd_acct_own_nm
+              opi.pay_cmt_dtime, opi.org_pay_no,
+              opi.vr_acct, opi.vr_acct_nm, opi.vr_bnk_cd, opi.vr_val_dt, opi.vr_val_tt,
+              oob.rfnd_bnk_ck, oob.rfnd_acct_no, oob.rfnd_acct_own_nm
          FROM op_pay_info opi , op_ord_base oob
         WHERE opi.ord_no = oob.ord_no
           AND opi.ord_no = #{ordNo}
           AND opi.pay_prgs_scd IN ('10', '20');
    </select>
+
+    <select id="getOpPayPointInfo" resultType="com.plateer.ec1.payment.vo.OrderBaseVo">
+        SELECT opi.pay_no, opi.ord_no, opi.clm_no, opi.pay_mn_cd, opi.pay_ccd,
+               opi.pay_prgs_scd, opi.pay_amt, opi.cncl_amt, opi.rfnd_avl_amt, opi.trsn_id,
+               opi.pay_cmt_dtime, opi.org_pay_no,
+               opi.vr_acct, opi.vr_acct_nm, opi.vr_bnk_cd, opi.vr_val_dt, opi.vr_val_tt
+        FROM op_pay_info opi
+        WHERE opi.ord_no = #{ordNo}
+          AND opi.pay_prgs_scd = '20';
+    </select>
 </mapper>
