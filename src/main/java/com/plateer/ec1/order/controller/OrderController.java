@@ -2,7 +2,7 @@ package com.plateer.ec1.order.controller;
 
 
 import com.plateer.ec1.order.service.OrderService;
-import com.plateer.ec1.order.vo.OrderRequest;
+import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @RequestMapping(path = "order")
-    public void order(OrderRequest orderRequest) {
-        log.info("주문하기 시작");
-        orderService.order(orderRequest);
+    public void order(RequestOrderVo requestOrderVo) {
+        orderService.order(requestOrderVo);
     }
 }

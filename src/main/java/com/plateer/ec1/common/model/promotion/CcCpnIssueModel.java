@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class CcCpnIssue {
+public class CcCpnIssueModel {
 
     private Long cpnIssNo;
     private String mbrNo;

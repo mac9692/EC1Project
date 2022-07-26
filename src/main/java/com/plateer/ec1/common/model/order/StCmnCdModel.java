@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class StCmnCd {
+public class StCmnCdModel {
 
     private String cmnGrpCd;
     private String cmnCd;

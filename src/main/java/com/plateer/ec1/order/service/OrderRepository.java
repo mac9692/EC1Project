@@ -1,13 +1,13 @@
 package com.plateer.ec1.order.service;
 
-import com.plateer.ec1.order.vo.Order;
+import com.plateer.ec1.order.vo.OrderVo;
 
 public interface OrderRepository {
 
-    void insertOrderBase(Order order);
+    void insertOrderBase(OrderVo orderVo);
 
-    void insertOrderProduct(Order order);
+    void insertOrderProduct(OrderVo orderVo);
 
-    void insertOrderClaim(Order order);
+    void insertOrderClaim(OrderVo orderVo);
 
 }

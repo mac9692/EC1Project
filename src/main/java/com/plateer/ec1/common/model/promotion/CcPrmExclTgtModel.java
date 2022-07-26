@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class CcPrmExclTgt {
+public class CcPrmExclTgtModel {
 
     private Long exclTgtSeq;
     private String exclTgtCcd;

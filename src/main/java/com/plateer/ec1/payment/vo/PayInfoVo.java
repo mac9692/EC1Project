@@ -1,11 +1,13 @@
 package com.plateer.ec1.payment.vo;
 
 import com.plateer.ec1.payment.enums.PaymentType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Setter
+@Getter
 public class PayInfoVo {
 
     @NotNull

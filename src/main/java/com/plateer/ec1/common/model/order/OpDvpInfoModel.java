@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class OpDvpAreaInfo {
+public class OpDvpInfoModel {
 
     private String ordNo;
     private Integer dvpSeq;

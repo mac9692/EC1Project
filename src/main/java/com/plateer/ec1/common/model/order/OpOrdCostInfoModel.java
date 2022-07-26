@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class OpOrdCostInfo {
+public class OpOrdCostInfoModel {
 
     private String ordCstNo;
     private Integer dvGrpNo;

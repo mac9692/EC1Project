@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class CcPrmAplyTgt {
+public class CcPrmAplyTgtModel {
 
     private Long aplyTgtSeq;
     private String aplyTgtCcd;

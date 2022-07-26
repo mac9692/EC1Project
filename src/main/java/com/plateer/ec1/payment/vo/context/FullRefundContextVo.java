@@ -1,7 +1,5 @@
 package com.plateer.ec1.payment.vo.context;
 
-import com.plateer.ec1.common.model.order.OpOrdBase;
-import com.plateer.ec1.common.model.order.OpPayInfo;
 import com.plateer.ec1.payment.vo.OrderBaseVo;
 import com.plateer.ec1.utils.Constants;
 import com.plateer.ec1.utils.Utils;

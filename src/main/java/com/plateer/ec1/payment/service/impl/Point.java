@@ -3,7 +3,7 @@ package com.plateer.ec1.payment.service.impl;
 import com.plateer.ec1.common.code.order.OPT0009;
 import com.plateer.ec1.common.code.order.OPT0010;
 import com.plateer.ec1.common.code.order.OPT0011;
-import com.plateer.ec1.common.model.order.OpPayInfo;
+import com.plateer.ec1.common.model.order.OpPayInfoModel;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.mapper.PaymentMapper;
 import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
@@ -14,7 +14,6 @@ import com.plateer.ec1.payment.vo.PayApproveResponseVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
-import com.plateer.ec1.payment.vo.response.ResponseApproveVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,6 +50,7 @@ public class Point implements PaymentService {
         return null;
     }
 
+
     @Transactional
     @Override
     public void cancelPay(RequestCancelVo requestCancelVo) {
@@ -71,7 +71,7 @@ public class Point implements PaymentService {
 
     @Transactional
     public void insertApproveDataOpPayInfo(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        OpPayInfo opPayInfo = OpPayInfo.builder()
+        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
                 .ordNo(orderInfoVo.getOrdNo())
                 .payMnCd(OPT0009.POINT.getType())
                 .payCcd(OPT0010.PAYMENT.getType())
@@ -81,12 +81,12 @@ public class Point implements PaymentService {
                 .rfndAvlAmt(payInfoVo.getPayAmount())
                 .build();
 
-        paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfo);
+        paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfoModel);
     }
 
     @Transactional
     public void insertCancelDataOpPayInfo(RequestCancelVo requestCancelVo) {
-        OpPayInfo opPayInfo = OpPayInfo.builder()
+        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
                 .ordNo(requestCancelVo.getOrdNo())
                 .payMnCd(OPT0009.POINT.getType())
                 .payCcd(OPT0010.CANCEL.getType())
@@ -96,6 +96,6 @@ public class Point implements PaymentService {
                 .rfndAvlAmt(0L)
                 .build();
 
-        paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfo);
+        paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfoModel);
     }
 }

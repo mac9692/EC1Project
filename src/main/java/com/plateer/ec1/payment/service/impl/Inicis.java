@@ -3,8 +3,7 @@ package com.plateer.ec1.payment.service.impl;
 import com.plateer.ec1.common.code.order.OPT0009;
 import com.plateer.ec1.common.code.order.OPT0010;
 import com.plateer.ec1.common.code.order.OPT0011;
-import com.plateer.ec1.common.model.order.OpOrdBase;
-import com.plateer.ec1.common.model.order.OpPayInfo;
+import com.plateer.ec1.common.model.order.OpPayInfoModel;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.mapper.PaymentMapper;
 import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
@@ -132,7 +131,7 @@ public class Inicis implements PaymentService {
 
     @Transactional
     public void insertApproveDataOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        OpPayInfo opPayInfo = OpPayInfo.builder()
+        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
                 .ordNo(orderInfoVo.getOrdNo())
                 .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
                 .payCcd(OPT0010.PAYMENT.getType())
@@ -148,6 +147,6 @@ public class Inicis implements PaymentService {
                 .vrBnkCd(responseApproveVo.getVacctBankCode())
                 .build();
 
-        paymentTrxMapper.insertOpPayInfo(opPayInfo);
+        paymentTrxMapper.insertOpPayInfo(opPayInfoModel);
     }
 }

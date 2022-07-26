@@ -5,14 +5,15 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class OpDvpInfo {
+public class OpOrdBnfRelInfoModel {
 
     private String ordNo;
-    private Integer dvpSeq;
-    private String rmtiNm;
-    private String rmtiHpNo;
-    private String rmtiAddr;
-    private String rmtiAddrDtl;
+    private Integer ordSeq;
+    private Integer procSeq;
+    private String ordBnfNo;
+    private String aplyCnclCcd;
+    private Long aplyAmt;
+    private String clmNo;
     private Timestamp sysRegDtime;
     private String sysRegrId;
     private Timestamp sysModDtime;

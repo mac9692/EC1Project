@@ -6,7 +6,7 @@ import com.plateer.ec1.order.service.OrderContext;
 import com.plateer.ec1.order.service.OrderService;
 import com.plateer.ec1.order.strategy.AfterStrategy;
 import com.plateer.ec1.order.strategy.DataStrategy;
-import com.plateer.ec1.order.vo.OrderRequest;
+import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,20 +23,19 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void order(OrderRequest orderRequest) {
-        log.info("주문하기 서비스 실행");
-        orderContext.execute(getDataStrategy(orderRequest), getAfterStrategy(orderRequest), orderRequest);
+    public void order(RequestOrderVo requestOrderVo) {
+        orderContext.execute(getDataStrategy(requestOrderVo), getAfterStrategy(requestOrderVo), requestOrderVo);
     }
 
     @Override
-    public DataStrategy getDataStrategy(OrderRequest orderRequest) {
+    public DataStrategy getDataStrategy(RequestOrderVo requestOrderVo) {
         log.info("주문 전략 호출 시작");
-        return dataStrategyFactory.getDataStrategy(orderRequest.getOrderType());
+        return dataStrategyFactory.getDataStrategy(requestOrderVo.getOrderType());
     }
 
     @Override
-    public AfterStrategy getAfterStrategy(OrderRequest orderRequest) {
+    public AfterStrategy getAfterStrategy(RequestOrderVo requestOrderVo) {
         log.info("후처리 전략 호출 시작");
-        return afterStrategyFactory.getAfterStrategy(orderRequest.getSystemType());
+        return afterStrategyFactory.getAfterStrategy(requestOrderVo.getSystemType());
     }
 }

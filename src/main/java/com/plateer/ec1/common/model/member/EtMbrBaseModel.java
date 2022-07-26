@@ -1,15 +1,14 @@
-package com.plateer.ec1.common.model.product;
+package com.plateer.ec1.common.model.member;
 
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
-public class PrItemInfo {
-
-    private String goodsNo;
-    private String itemNo;
-    private String itemNm;
+public class EtMbrBaseModel {
+    private String mbrNo;
+    private String mbrId;
+    private String mbrNm;
     private Timestamp sysRegDtime;
     private Timestamp sysModDtime;
     private String sysRegrId;

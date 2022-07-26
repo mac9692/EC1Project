@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class CcMbrPnt {
+public class CcMbrPntModel {
 
     private Long pntHstSeq;
     private String mbrNo;

@@ -5,14 +5,10 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class OpOrdClmMntLog {
-
+public class OpOrdClmMntLogModel {
     private Integer logSeq;
     private String ordNo;
     private String clmNo;
-
-
-
     private Timestamp sysRegDtime;
     private String sysRegrId;
     private Timestamp sysModDtime;

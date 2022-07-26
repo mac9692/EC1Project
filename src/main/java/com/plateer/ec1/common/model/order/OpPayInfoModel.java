@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Data
 @Builder
-public class OpPayInfo {
+public class OpPayInfoModel {
 
     private String payNo;
     private String ordNo;

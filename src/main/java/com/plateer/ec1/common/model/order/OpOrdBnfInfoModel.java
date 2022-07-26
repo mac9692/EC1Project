@@ -5,7 +5,7 @@ import lombok.Data;
 import java.sql.Timestamp;
 
 @Data
-public class OpOrdBnfInfo {
+public class OpOrdBnfInfoModel {
 
     private String ordBnfNo;
     private Integer ordBnfAmt;
