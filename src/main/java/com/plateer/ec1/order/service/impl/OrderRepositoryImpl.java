@@ -1,7 +1,7 @@
 package com.plateer.ec1.order.service.impl;
 
 import com.plateer.ec1.order.service.OrderRepository;
-import com.plateer.ec1.order.vo.OrderVo;
+import com.plateer.ec1.order.vo.OrderDataVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
@@ -9,16 +9,38 @@ import org.springframework.stereotype.Repository;
 @Slf4j
 public class OrderRepositoryImpl implements OrderRepository {
 
-
-    public void insertOrderBase(OrderVo orderVo) {
+    @Override
+    public void insertOrderBase(OrderDataVo orderDataVo) {
         log.info("주문 베이스 데이터 삽입");
     }
 
-    public void insertOrderProduct(OrderVo orderVo) {
+    @Override
+    public void insertOrderProduct(OrderDataVo orderDataVo) {
         log.info("주문상품 베이스 데이터 삽입");
     }
 
-    public void insertOrderClaim(OrderVo orderVo) {
+    @Override
+    public void insertOrderClaim(OrderDataVo orderDataVo) {
         log.info("주문 클레임 데이터 삽입");
+    }
+
+    @Override
+    public void insertOrderDelivery(OrderDataVo orderDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderCost(OrderDataVo orderDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderBenefit(OrderDataVo orderDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderBenefitRelation(OrderDataVo orderDataVo) {
+
     }
 }

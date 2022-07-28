@@ -17,4 +17,14 @@
                 now(), 'admin', now(), 'admin'
             )
     </insert>
+
+    <update id="updateOrderHistory" parameterType="com.plateer.ec1.order.vo.OrderDataVo">
+        UPDATE op_ord_clm_mnt_log
+        SET
+            ins_data = (#{json})::json,
+            proc_ccd = #{procCcd},
+            sys_mod_dtime = now(),
+            sys_modr_id = 'admin'
+        WHERE log_seq = #{historyNo}
+    </update>
 </mapper>
