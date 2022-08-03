@@ -135,7 +135,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("1. OrderRequestVo 주문번호 Null")
-    void OrderRequestOrdNoNullTest() throws Exception {
+    void orderRequestOrdNoNullTest() throws Exception {
         requestOrderVo.setOrderNo(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -147,7 +147,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("2. OrderRequestVo 주문기본 Null")
-    void OrderRequestOrderVoNullTest() throws Exception {
+    void orderRequestOrderVoNullTest() throws Exception {
         requestOrderVo.setOrderVo(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -159,7 +159,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("3. OrderRequestVo 주문상품 Null")
-    void OrderRequestOrderGoodsVoListNullTest() throws Exception {
+    void orderRequestOrderGoodsVoListNullTest() throws Exception {
         requestOrderVo.setOrderGoodsVoList(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -171,7 +171,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("4. OrderRequestVo 주문혜택 Null")
-    void OrderRequestOrderBenefitVoListNullTest() throws Exception {
+    void orderRequestOrderBenefitVoListNullTest() throws Exception {
         requestOrderVo.setOrderBenefitVoList(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -183,7 +183,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("5. OrderRequestVo 배송지정보 Null")
-    void OrderRequestDeliveryAddressVoListNullTest() throws Exception {
+    void orderRequestDeliveryAddressVoListNullTest() throws Exception {
         requestOrderVo.setDeliveryAddressVoList(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -195,7 +195,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("6. OrderRequestVo 결제정보 Null")
-    void OrderRequestPayInfoVoListNullTest() throws Exception {
+    void orderRequestPayInfoVoListNullTest() throws Exception {
         requestOrderVo.setPayInfoVo(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -207,7 +207,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("7. OrderRequestVo OrderType Null")
-    void OrderRequestOrderTypeListNullTest() throws Exception {
+    void orderRequestOrderTypeListNullTest() throws Exception {
         requestOrderVo.setOrderType(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
@@ -219,7 +219,7 @@ public class OrderValidateTest {
 
     @Test
     @DisplayName("8. OrderRequestVo SystemType Null")
-    void OrderRequestSystemTypeNullTest() throws Exception {
+    void orderRequestSystemTypeNullTest() throws Exception {
         requestOrderVo.setSystemType(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
