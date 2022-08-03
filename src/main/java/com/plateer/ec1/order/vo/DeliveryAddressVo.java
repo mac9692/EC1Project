@@ -1,14 +1,14 @@
 package com.plateer.ec1.order.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Builder
 @ToString
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class DeliveryAddressVo {
     private Integer dvpSeq;
     private String rmtiNm;

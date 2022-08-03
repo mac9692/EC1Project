@@ -1,14 +1,12 @@
 package com.plateer.ec1.order.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Builder
 @Setter
 @Getter
-@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderVo {
     private String ordNo;
     private String mbrNo;

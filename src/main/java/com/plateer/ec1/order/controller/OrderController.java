@@ -5,8 +5,12 @@ import com.plateer.ec1.order.service.OrderService;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,8 +20,8 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @RequestMapping(path = "order")
-    public void order(RequestOrderVo requestOrderVo) {
+    @PostMapping
+    public void order(@Valid @RequestBody RequestOrderVo requestOrderVo) {
         orderService.order(requestOrderVo);
     }
 }

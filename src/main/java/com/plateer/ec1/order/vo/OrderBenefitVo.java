@@ -1,14 +1,14 @@
 package com.plateer.ec1.order.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @Builder
 @Getter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderBenefitVo {
     private Long prmNo;
     private String cpnKndCd;
