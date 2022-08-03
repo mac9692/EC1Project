@@ -9,7 +9,7 @@ public enum OPT0012 {
     VALIDATION_CHECK("FV"),
     PAYMENT("FP");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

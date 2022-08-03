@@ -8,7 +8,7 @@ public enum OPT0007 {
     PRODUCT_DAMAGE("20"),
     ETC("99");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

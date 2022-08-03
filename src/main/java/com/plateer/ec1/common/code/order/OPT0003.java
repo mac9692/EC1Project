@@ -10,7 +10,7 @@ public enum OPT0003 {
     RETURN_CANCEL("RC"),
     EXCHANGE("X");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

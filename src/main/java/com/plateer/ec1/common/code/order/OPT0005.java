@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 public enum OPT0005 {
     APPLY("APLY"),
     CANCEL("CNCL");
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

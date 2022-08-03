@@ -7,7 +7,7 @@ public enum OPT0010 {
     PAYMENT("10"),
     CANCEL("20");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

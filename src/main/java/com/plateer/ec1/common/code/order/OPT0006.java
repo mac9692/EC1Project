@@ -8,7 +8,7 @@ public enum OPT0006 {
     RETURN_CHARGE("20"),
     CHANGE_DELIVERY_CHARGE("30"),
     MOUNTAIN_COUNTRY("40");
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

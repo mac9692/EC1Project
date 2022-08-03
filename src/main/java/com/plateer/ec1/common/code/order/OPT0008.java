@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 public enum OPT0008 {
     CUSTOMER("10"),
     COMPANY("20");
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

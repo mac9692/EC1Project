@@ -7,7 +7,7 @@ public enum OPT0001 {
     GENERAL("10"),
     MOBILE_COUPON("20");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

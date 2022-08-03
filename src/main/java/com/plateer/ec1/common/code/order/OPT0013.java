@@ -8,7 +8,7 @@ public enum OPT0013 {
     KB("04"),
     NH("11");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

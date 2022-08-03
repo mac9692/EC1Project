@@ -12,7 +12,7 @@ public enum OPT0004 {
     ORDER_WAIT("60"),
     EXCHANGE_REQUEST("70"),
     RETURN_WITHDRAWAL_COMPLETE("80");
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;

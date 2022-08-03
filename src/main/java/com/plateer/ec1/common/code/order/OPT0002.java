@@ -7,7 +7,7 @@ public enum OPT0002 {
     FO("10"),
     BO("20");
 
-    private String type;
+    private final String type;
 
     public String getType() {
         return type;
