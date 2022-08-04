@@ -46,6 +46,7 @@ public class OrderTest {
                 .prmNo(1L)
                 .cpnKndCd(PRM0004.PRODUCT_COUPON.getType())
                 .cpnIssNo(1L)
+                .dcVal(1000L)
                 .degrCcd(1)
                 .build();
 
@@ -128,6 +129,5 @@ public class OrderTest {
 
     @Test
     void generalOrderOrderTest() {
-        orderController.order(requestOrderVo);
     }
 }

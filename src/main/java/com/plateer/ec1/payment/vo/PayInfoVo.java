@@ -1,10 +1,7 @@
 package com.plateer.ec1.payment.vo;
 
 import com.plateer.ec1.payment.enums.PaymentType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PayInfoVo {
 
     @NotNull
@@ -25,4 +23,13 @@ public class PayInfoVo {
 
     @NotNull
     private String depositorName;
+
+    @NotNull
+    private String rfndBnkCk;
+
+    @NotNull
+    private String rfndAcctNo;
+
+    @NotNull
+    private String rfndAcctOwnNm;
 }

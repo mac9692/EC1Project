@@ -12,5 +12,6 @@ public class ProductBenefitVo {
     private Long prmNo;
     private String cpnKndCd;
     private Long cpnIssNo;
+    private Long dcVal;
     private Integer degrCcd;
 }

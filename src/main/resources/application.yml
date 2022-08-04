@@ -5,6 +5,9 @@ spring:
     username: postgres
     password: 1111
 
+  messages:
+    basename: errors
+
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml
   configuration:

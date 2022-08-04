@@ -2,6 +2,7 @@ package com.plateer.ec1.order.vo;
 
 import lombok.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Setter
@@ -11,5 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CombinedDeliveryVo {
     private Long CombinedDeliveryNo;
+
+    @Valid
     private List<ProductInfoVo> productInfoVoList;
 }

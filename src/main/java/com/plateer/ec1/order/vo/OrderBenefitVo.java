@@ -2,6 +2,7 @@ package com.plateer.ec1.order.vo;
 
 import lombok.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Builder
@@ -14,5 +15,7 @@ public class OrderBenefitVo {
     private String cpnKndCd;
     private Long cpnIssNo;
     private Integer degrCcd;
+
+    @Valid
     private List<OrderBenefitProductVo> orderBenefitProductVoList;
 }

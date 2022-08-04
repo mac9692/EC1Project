@@ -1,4 +1,4 @@
-package com.plateer.ec1.order;
+package com.plateer.ec1.order.validate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plateer.ec1.common.code.order.OPT0001;
@@ -8,32 +8,34 @@ import com.plateer.ec1.order.enums.AfterStrategyType;
 import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
+import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import java.util.Set;
 
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
-@AutoConfigureMockMvc
 @SpringBootTest
-public class OrderValidateTest {
+public class OrderPayInfoValidateTest {
 
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
+    static ValidatorFactory validatorFactory;
+    static Validator validator;
     RequestOrderVo requestOrderVo;
+
+    @BeforeAll
+    static void setUp() {
+        validatorFactory = Validation.buildDefaultValidatorFactory();
+        validator = validatorFactory.getValidator();
+    }
 
     @BeforeEach
     void init() {
@@ -53,6 +55,7 @@ public class OrderValidateTest {
                 .prmNo(1L)
                 .cpnKndCd(PRM0004.PRODUCT_COUPON.getType())
                 .cpnIssNo(1L)
+                .dcVal(1000L)
                 .degrCcd(1)
                 .build();
 
@@ -117,7 +120,16 @@ public class OrderValidateTest {
         List<DeliveryAddressVo> deliveryAddressVoList = new ArrayList<>();
         deliveryAddressVoList.add(deliveryAddressVo);
 
-        PayInfoVo payInfoVo = new PayInfoVo();
+        PayInfoVo payInfoVo = PayInfoVo
+                .builder()
+                .payAmount(19000L)
+                .bankCode("04")
+                .paymentType(PaymentType.INICIS)
+                .depositorName("박진성")
+                .rfndBnkCk("04")
+                .rfndAcctNo("700102-01-111")
+                .rfndAcctOwnNm("박진성")
+                .build();
 
         requestOrderVo = RequestOrderVo
                 .builder()
@@ -130,102 +142,29 @@ public class OrderValidateTest {
                 .orderType(DataStrategyType.GENERAL)
                 .systemType(AfterStrategyType.FO)
                 .build();
-
     }
 
     @Test
-    @DisplayName("1. OrderRequestVo 주문번호 Null")
-    void orderRequestOrdNoNullTest() throws Exception {
-        requestOrderVo.setOrderNo(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
+    @DisplayName("1-1. OrderRequestVo.PayInfoVo 환불계좌은행코드 Null 테스트")
+    void orderRequestPayInfoVoRfndBnkCkTest() {
+        requestOrderVo.getPayInfoVo().setRfndBnkCk(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
     }
 
     @Test
-    @DisplayName("2. OrderRequestVo 주문기본 Null")
-    void orderRequestOrderVoNullTest() throws Exception {
-        requestOrderVo.setOrderVo(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
+    @DisplayName("1-2. OrderRequestVo.PayInfoVo 환불계좌번호 Null 테스트")
+    void orderRequestPayInfoVoRfndAcctNoTest() {
+        requestOrderVo.getPayInfoVo().setRfndAcctNo(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
     }
 
     @Test
-    @DisplayName("3. OrderRequestVo 주문상품 Null")
-    void orderRequestOrderGoodsVoListNullTest() throws Exception {
-        requestOrderVo.setOrderGoodsVoList(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("4. OrderRequestVo 주문혜택 Null")
-    void orderRequestOrderBenefitVoListNullTest() throws Exception {
-        requestOrderVo.setOrderBenefitVoList(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("5. OrderRequestVo 배송지정보 Null")
-    void orderRequestDeliveryAddressVoListNullTest() throws Exception {
-        requestOrderVo.setDeliveryAddressVoList(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("6. OrderRequestVo 결제정보 Null")
-    void orderRequestPayInfoVoListNullTest() throws Exception {
-        requestOrderVo.setPayInfoVo(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("7. OrderRequestVo OrderType Null")
-    void orderRequestOrderTypeListNullTest() throws Exception {
-        requestOrderVo.setOrderType(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
-    @DisplayName("8. OrderRequestVo SystemType Null")
-    void orderRequestSystemTypeNullTest() throws Exception {
-        requestOrderVo.setSystemType(null);
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)))
-                .andExpect(status().isBadRequest());
+    @DisplayName("1-3. OrderRequestVo.PayInfoVo 환불계좌예금주명 Null 테스트")
+    void orderRequestPayInfoVoRfndAcctOwnNmTest() {
+        requestOrderVo.getPayInfoVo().setRfndAcctOwnNm(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
     }
 }

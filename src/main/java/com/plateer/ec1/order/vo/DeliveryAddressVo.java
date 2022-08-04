@@ -2,6 +2,7 @@ package com.plateer.ec1.order.vo;
 
 import lombok.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Builder
@@ -15,5 +16,7 @@ public class DeliveryAddressVo {
     private String rmtiHpNo;
     private String rmtiAddr;
     private String rmtiAddrDtl;
+
+    @Valid
     private List<CombinedDeliveryVo> combinedDeliveryVoList;
 }

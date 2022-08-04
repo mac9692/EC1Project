@@ -9,16 +9,16 @@ import com.plateer.ec1.order.vo.OrderVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import lombok.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Builder
-@Setter
 @Getter
-@ToString
-@NoArgsConstructor
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 public class RequestOrderVo {
 
     private Long logSeq;
@@ -26,20 +26,23 @@ public class RequestOrderVo {
     @NotBlank(message = "orderNo 는 Null, \"\", \" \" 입력이 불가능합니다.")
     private String orderNo;
 
+    @Valid
     @NotNull(message = "orderVo 는 Null 입력이 불가능합니다.")
     private OrderVo orderVo;
 
+    @Valid
     @NotNull(message = "orderGoodsVoList 는 Null 입력이 불가능합니다.")
     private List<OrderGoodsVo> orderGoodsVoList;
 
+    @Valid
     @NotNull(message = "orderBenefitVoList 는 Null 입력이 불가능합니다.")
     private List<OrderBenefitVo> orderBenefitVoList;
 
+    @Valid
     @NotNull(message = "deliveryAddressVoList 는 Null 입력이 불가능합니다.")
     private List<DeliveryAddressVo> deliveryAddressVoList;
 
-    private String json;
-
+    @Valid
     @NotNull(message = "payInfoVo 는 Null 입력이 불가능합니다.")
     private PayInfoVo payInfoVo;
 
@@ -49,4 +52,5 @@ public class RequestOrderVo {
     @NotNull(message = "systemType 는 Null 입력이 불가능합니다.")
     private AfterStrategyType systemType;
 
+    private String json;
 }
