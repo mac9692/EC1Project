@@ -1,46 +1,38 @@
-package com.plateer.ec1.order;
+package com.plateer.ec1.order.validate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.order.controller.OrderController;
 import com.plateer.ec1.order.enums.AfterStrategyType;
 import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@SpringBootTest
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
-@AutoConfigureMockMvc
-public class OrderTest {
+@SpringBootTest
+public class OrderProductValidateTest {
+    static ValidatorFactory validatorFactory;
+    static Validator validator;
+    RequestOrderVo requestOrderVo;
 
-    @Autowired
-    OrderController orderController;
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
-    static RequestOrderVo requestOrderVo;
+    @BeforeAll
+    static void setUp() {
+        validatorFactory = Validation.buildDefaultValidatorFactory();
+        validator = validatorFactory.getValidator();
+    }
 
     @BeforeEach
     void init() {
@@ -150,12 +142,10 @@ public class OrderTest {
     }
 
     @Test
-    @DisplayName("주문하기 전체 로직 TEST")
-    void generalOrderOrderTest() throws Exception {
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)));
+    @DisplayName("1-1. 상품정보-상품(단품) 존재 여부")
+    void orderRequestPayInfoVoRfndBnkCkTest() {
+        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
     }
 }

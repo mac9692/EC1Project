@@ -8,5 +8,5 @@ import com.plateer.ec1.order.vo.request.RequestOrderVo;
 public interface DataStrategy {
 
     DataStrategyType getType();
-    public OrderDataVo create(RequestOrderVo requestOrderVo, OrderProductView orderProductView);
+    public OrderDataVo create(RequestOrderVo requestOrderVo);
 }

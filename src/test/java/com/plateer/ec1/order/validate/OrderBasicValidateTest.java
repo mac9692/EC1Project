@@ -239,9 +239,17 @@ public class OrderBasicValidateTest {
     }
 
     @Test
-    @DisplayName("2-4. OrderRequestVo.OrderVo 주문수량 0개 이하 테스트")
+    @DisplayName("2-4. 주문기본정보-주문수량 0개 이하 여부")
     void orderRequestOrderCountMinTest() {
         requestOrderVo.getOrderGoodsVoList().get(0).setOrderCount(0L);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("2-5. 주문기본정보-주문 상품유무")
+    void orderRequestPayInfoVoRfndBnkCkTest() {
+        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

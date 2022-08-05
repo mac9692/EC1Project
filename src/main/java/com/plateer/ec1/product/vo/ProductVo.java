@@ -1,8 +1,6 @@
 package com.plateer.ec1.product.vo;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -10,6 +8,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductVo {
     @NotNull(message = "상품번호는 필수값입니다.")
     private String goodsNo;

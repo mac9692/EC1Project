@@ -30,7 +30,7 @@ public class OrderContextImpl implements OrderContext {
         Long historyNo = requestOrderVo.getLogSeq();
 
         //주문 데이터 생성
-        OrderDataVo orderDataVo = dataStrategy.create(requestOrderVo, new OrderProductView());
+        OrderDataVo orderDataVo = dataStrategy.create(requestOrderVo);
 
         //결제
 //        payService.approve(orderRequest.getPayInfo());

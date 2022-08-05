@@ -16,6 +16,9 @@ public class OrderGoodsVo {
     private String ordGoodsNo;
     private String ordItemNo;
     private String goodsSellTpCd;
+    private String goodsDlvTpCd;
+    private Long sellAmt;
+    private Long sellDcAmt;
 
     @Min(value = 1, message = "주문 수량 개수는 0개 이상으로 입력하세요.")
     private Long orderCount;

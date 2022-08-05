@@ -1,46 +1,38 @@
-package com.plateer.ec1.order;
+package com.plateer.ec1.order.validate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.order.controller.OrderController;
 import com.plateer.ec1.order.enums.AfterStrategyType;
 import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@SpringBootTest
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
-@AutoConfigureMockMvc
-public class OrderTest {
+@SpringBootTest
+public class OrderTypeValidateTest {
+    static ValidatorFactory validatorFactory;
+    static Validator validator;
+    RequestOrderVo requestOrderVo;
 
-    @Autowired
-    OrderController orderController;
-
-    @Autowired
-    MockMvc mockMvc;
-
-    @Autowired
-    ObjectMapper objectMapper;
-
-    static RequestOrderVo requestOrderVo;
+    @BeforeAll
+    static void setUp() {
+        validatorFactory = Validation.buildDefaultValidatorFactory();
+        validator = validatorFactory.getValidator();
+    }
 
     @BeforeEach
     void init() {
@@ -150,12 +142,58 @@ public class OrderTest {
     }
 
     @Test
-    @DisplayName("주문하기 전체 로직 TEST")
-    void generalOrderOrderTest() throws Exception {
-        String jsonData = objectMapper.writeValueAsString(requestOrderVo);
-
-        mockMvc.perform(post("/order")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(String.valueOf(jsonData)));
+    @DisplayName("1-1. 일반주문-상품확인")
+    void generalGoodsTypeTest() {
+        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
     }
+
+    @Test
+    @DisplayName("1-2. 일반주문-배송지 유무(수취인 주소)")
+    void generalGoodsRmtiAddrNullTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiAddr(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("1-3. 일반주문-배송지 유무(수취인 상세 주소)")
+    void generalGoodsRmtiAddrDtlNullTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiAddrDtl(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
+    }
+    @Test
+    @DisplayName("1-4. 일반주문-배송지 유무(휴대전화번호)")
+    void generalGoodsRmtiHpNoNullTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiHpNo(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("1-5. 일반주문-배송지 유무(수취인명)")
+    void generalGoodsRmtiNmNullTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiNm(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isNotEmpty();
+    }
+
+    @Test
+    @DisplayName("2-1. ECoupon주문-상품타입확인)")
+    void isECouponTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiNm(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isEmpty();
+    }
+
+    @Test
+    @DisplayName("2-2. ECoupon주문-배송지 수가 1개거나 상품 주문 수량이 같은지)")
+    void isECouponDeliveryTest() {
+        requestOrderVo.getDeliveryAddressVoList().get(0).setRmtiNm(null);
+        Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
+        Assertions.assertThat(violations).isEmpty();
+    }
+
 }

@@ -1,8 +1,16 @@
 package com.plateer.ec1.order.enums;
 
 
-public enum DataStrategyType {
-    GENERAL,
-    ECOUPON;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
+public enum DataStrategyType {
+    GENERAL("10"),
+    ECOUPON("20");
+
+    private final String type;
+
+    public String getType() {
+        return type;
+    }
 }

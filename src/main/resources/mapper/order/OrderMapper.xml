@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plateer.ec1.order.mapper.OrderMapper">
+
+   <select id="getGoodsForValidate" parameterType="com.plateer.ec1.order.vo.OrderGoodsVo" resultType="com.plateer.ec1.product.vo.ProductVo">
+       SELECT prgs_stat_cd, goods_tp_cd, goods_dlv_tp_cd
+         FROM pr_goods_base pgb ,pr_item_info pii
+        WHERE pgb.goods_no = pii.goods_no
+          AND pgb.goods_no = #{ordGoodsNo}
+          AND pii.item_no = #{ordItemNo};
+   </select>
+</mapper>

@@ -7,20 +7,22 @@ import com.plateer.ec1.order.vo.OrderDataVo;
 import com.plateer.ec1.order.vo.OrderProductView;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class GeneralDataStrategy implements DataStrategy {
+public class ECouponDataStrategy implements DataStrategy {
 
     private final OrderModelCreator orderModelCreator;
+
     @Override
     public DataStrategyType getType() {
-        return DataStrategyType.GENERAL;
+        return DataStrategyType.ECOUPON;
     }
 
     @Override
+    @Transactional
     public OrderDataVo create(RequestOrderVo requestOrderVo) {
         OrderDataVo orderDataVo = OrderDataVo
                 .builder()
