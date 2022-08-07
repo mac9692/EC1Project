@@ -26,7 +26,7 @@ public class OpGoodsInfoModel {
     private String sysModrId;
 
     public OpGoodsInfoModel generalOrder(OrderGoodsVo orderGoodsVo) {
-        builder()
+        return OpGoodsInfoModel.builder()
                 .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
                 .ordItemNo(orderGoodsVo.getOrdItemNo())
                 .goodsSellTpCd(orderGoodsVo.getGoodsSellTpCd())
@@ -34,12 +34,10 @@ public class OpGoodsInfoModel {
                 .sellAmt(orderGoodsVo.getSellAmt())
                 .sellDcAmt(orderGoodsVo.getSellDcAmt())
                 .build();
-
-        return this;
     }
 
-    public OpGoodsInfoModel eCouponOrder(OrderGoodsVo orderGoodsVo) {
-        builder()
+    public OpGoodsInfoModel mobileCouponOrder(OrderGoodsVo orderGoodsVo) {
+        return OpGoodsInfoModel.builder()
                 .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
                 .ordItemNo(orderGoodsVo.getOrdItemNo())
                 .goodsSellTpCd(orderGoodsVo.getGoodsSellTpCd())
@@ -47,7 +45,5 @@ public class OpGoodsInfoModel {
                 .sellAmt(orderGoodsVo.getSellAmt())
                 .sellDcAmt(orderGoodsVo.getSellDcAmt())
                 .build();
-
-        return this;
     }
 }

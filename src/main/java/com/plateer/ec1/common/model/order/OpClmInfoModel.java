@@ -1,10 +1,12 @@
 package com.plateer.ec1.common.model.order;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
+@Builder
 public class OpClmInfoModel {
 
     private String ordNo;
@@ -31,4 +33,60 @@ public class OpClmInfoModel {
     private String sysModrId;
     private String clmNo;
     private Integer orgProcSeq;
+
+    public OpClmInfoModel generalVirtualAccountUnPay() {
+        return OpClmInfoModel
+                .builder()
+                .ordGoodsNo()
+                .ordItemNo()
+                .ordClmTpCd()
+                .dvRvtCcd()
+                .ordCnt()
+                .ordAmt()
+                .cnclCnt()
+                .rtgsCnt()
+                .dvGrpNo()
+                .ordPrgsScd()
+                .ordClmReqDtime()
+                .ordClmAcptDtime()
+                .build();
+    }
+
+    public OpClmInfoModel generalVirtualAccountPayComplete() {
+        return OpClmInfoModel
+                .builder()
+                .ordGoodsNo()
+                .ordItemNo()
+                .ordClmTpCd()
+                .dvRvtCcd()
+                .ordCnt()
+                .ordAmt()
+                .cnclCnt()
+                .rtgsCnt()
+                .dvGrpNo()
+                .ordPrgsScd()
+                .ordClmReqDtime()
+                .ordClmAcptDtime()
+                .ordClmCmtDtime()
+                .build();
+    }
+
+    public OpClmInfoModel mobileCouponOrder() {
+        return OpClmInfoModel
+                .builder()
+                .ordGoodsNo()
+                .ordItemNo()
+                .ordClmTpCd()
+                .dvRvtCcd()
+                .ordCnt()
+                .ordAmt()
+                .cnclCnt()
+                .rtgsCnt()
+                .dvGrpNo()
+                .ordPrgsScd()
+                .ordClmReqDtime()
+                .ordClmAcptDtime()
+                .ordClmCmtDtime()
+                .build();
+    }
 }

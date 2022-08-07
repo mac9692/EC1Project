@@ -17,4 +17,20 @@ public class OpDvpAreaInfoModel {
     private String sysRegrId;
     private Timestamp sysModDtime;
     private String sysModrId;
+
+    public OpDvpAreaInfoModel generalOrder() {
+        setDvpSeq();
+        setRmtiNm();
+        setRmtiHpNo();
+        setRmtiAddr();
+        setRmtiAddrDtl();
+        return this;
+    }
+
+    public OpDvpAreaInfoModel mobileCouponOrder() {
+        setDvpSeq();
+        setRmtiNm();
+        setRmtiHpNo();
+        return this;
+    }
 }

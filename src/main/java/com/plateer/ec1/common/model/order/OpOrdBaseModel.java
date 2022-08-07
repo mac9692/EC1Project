@@ -42,7 +42,13 @@ public class OpOrdBaseModel {
     }
 
     public OpOrdBaseModel generalVirtualAccountPayComplete(RequestOrderVo requestOrderVo) {
+        setOrdTpCd(requestOrderVo.getOrderType().getType());
+        setOrdSysCcd(requestOrderVo.getSystemType().getType());
+        setOrdReqDtime(simpleDateFormat);
         setOrdCmtDtime(simpleDateFormat);
+        setRfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk());
+        setRfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo());
+        setRfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm());
         return this;
     }
     public OpOrdBaseModel eCouponPointPay(RequestOrderVo requestOrderVo) {

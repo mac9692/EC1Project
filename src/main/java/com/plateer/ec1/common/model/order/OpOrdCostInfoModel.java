@@ -1,10 +1,12 @@
 package com.plateer.ec1.common.model.order;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
 
 @Data
+@Builder
 public class OpOrdCostInfoModel {
 
     private String ordCstNo;
@@ -24,4 +26,32 @@ public class OpOrdCostInfoModel {
     private String sysModrId;
     private String dvPlcTpCd;
     private Long cnclDvAmt;
+
+    public OpOrdCostInfoModel generalOrder() {
+        return OpOrdCostInfoModel
+                .builder()
+                .ordCstNo()
+                .dvGrpNo()
+                .aplyCcd()
+                .dvAmtTpCd()
+                .orgDvAmt()
+                .aplyDvAmt()
+                .dvBnfAmt()
+                .dvPlcTpCd()
+                .build();
+    }
+
+    public OpOrdCostInfoModel mobileCouponOrder() {
+        return OpOrdCostInfoModel
+                .builder()
+                .ordCstNo()
+                .dvGrpNo()
+                .aplyCcd()
+                .dvAmtTpCd()
+                .orgDvAmt()
+                .aplyDvAmt()
+                .dvBnfAmt()
+                .dvPlcTpCd()
+                .build();
+    }
 }

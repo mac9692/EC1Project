@@ -1,5 +1,6 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.common.code.product.DVP0001;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -7,14 +8,22 @@ import java.sql.Timestamp;
 @Data
 public class OpDvpInfoModel {
 
+    private int dvGrpNo;
     private String ordNo;
-    private Integer dvpSeq;
-    private String rmtiNm;
-    private String rmtiHpNo;
-    private String rmtiAddr;
-    private String rmtiAddrDtl;
-    private Timestamp sysRegDtime;
-    private String sysRegrId;
-    private Timestamp sysModDtime;
-    private String sysModrId;
+    private int dvpSeq;
+    private String dvMthdCd;
+
+    public OpDvpInfoModel generalOrder() {
+        setDvGrpNo();
+        setDvpSeq();
+        setDvMthdCd(DVP0001.DELIVERY.getType());
+        return this;
+    }
+
+    public OpDvpInfoModel mobileCouponOrder() {
+        setDvGrpNo();
+        setDvpSeq();
+        setDvMthdCd(DVP0001.NON_DELIVERY.getType());
+        return this;
+    }
 }

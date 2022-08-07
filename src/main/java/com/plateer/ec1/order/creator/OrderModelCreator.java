@@ -26,6 +26,10 @@ public class OrderModelCreator {
         return new OpDvpAreaInfoModel();
     }
 
+    public OpDvpInfoModel commonOrderDeliveryInfo(RequestOrderVo requestOrderVo) {
+        return new OpDvpInfoModel();
+    }
+
     public OpOrdCostInfoModel commonOrderCost(RequestOrderVo requestOrderVo) {
         return new OpOrdCostInfoModel();
     }
