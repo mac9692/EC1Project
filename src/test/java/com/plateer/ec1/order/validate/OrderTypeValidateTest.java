@@ -64,7 +64,7 @@ public class OrderTypeValidateTest {
                 .ordGoodsNo("P001")
                 .ordItemNo("1")
                 .goodsSellTpCd("10")
-                .orderCount(1L)
+                .orderCount(1)
                 .productBenefitVoList(productBenefitVoList)
                 .build();
 
@@ -98,7 +98,7 @@ public class OrderTypeValidateTest {
         productInfoVoList.add(productInfoVo);
 
         CombinedDeliveryVo combinedDeliveryVo = new CombinedDeliveryVo();
-        combinedDeliveryVo.setCombinedDeliveryNo(1L);
+        combinedDeliveryVo.setCombinedDeliveryNo(1);
         combinedDeliveryVo.setProductInfoVoList(productInfoVoList);
 
         List<CombinedDeliveryVo> combinedDeliveryVoList = new ArrayList<>();

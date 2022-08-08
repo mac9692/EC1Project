@@ -65,7 +65,7 @@ public class OrderBasicValidateTest {
                 .ordGoodsNo("P111")
                 .ordItemNo("I111")
                 .goodsSellTpCd("10")
-                .orderCount(1L)
+                .orderCount(1)
                 .productBenefitVoList(productBenefitVoList)
                 .build();
 
@@ -99,7 +99,7 @@ public class OrderBasicValidateTest {
         productInfoVoList.add(productInfoVo);
 
         CombinedDeliveryVo combinedDeliveryVo = new CombinedDeliveryVo();
-        combinedDeliveryVo.setCombinedDeliveryNo(1L);
+        combinedDeliveryVo.setCombinedDeliveryNo(1);
         combinedDeliveryVo.setProductInfoVoList(productInfoVoList);
 
         List<CombinedDeliveryVo> combinedDeliveryVoList = new ArrayList<>();
@@ -241,7 +241,7 @@ public class OrderBasicValidateTest {
     @Test
     @DisplayName("2-4. 주문기본정보-주문수량 0개 이하 여부")
     void orderRequestOrderCountMinTest() {
-        requestOrderVo.getOrderGoodsVoList().get(0).setOrderCount(0L);
+        requestOrderVo.getOrderGoodsVoList().get(0).setOrderCount(0);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

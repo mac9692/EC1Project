@@ -3,8 +3,6 @@ package com.plateer.ec1.order.validate;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.order.enums.AfterStrategyType;
-import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import com.plateer.ec1.payment.enums.PaymentType;
@@ -64,7 +62,7 @@ public class OrderProductValidateTest {
                 .ordGoodsNo("P001")
                 .ordItemNo("1")
                 .goodsSellTpCd("10")
-                .orderCount(1L)
+                .orderCount(1)
                 .productBenefitVoList(productBenefitVoList)
                 .build();
 
@@ -98,7 +96,7 @@ public class OrderProductValidateTest {
         productInfoVoList.add(productInfoVo);
 
         CombinedDeliveryVo combinedDeliveryVo = new CombinedDeliveryVo();
-        combinedDeliveryVo.setCombinedDeliveryNo(1L);
+        combinedDeliveryVo.setCombinedDeliveryNo(1);
         combinedDeliveryVo.setProductInfoVoList(productInfoVoList);
 
         List<CombinedDeliveryVo> combinedDeliveryVoList = new ArrayList<>();
