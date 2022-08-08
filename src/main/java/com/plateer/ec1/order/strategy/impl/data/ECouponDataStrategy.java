@@ -15,8 +15,8 @@ public class ECouponDataStrategy implements DataStrategy {
     private final OrderModelCreator orderModelCreator;
 
     @Override
-    public DataStrategyType getType() {
-        return DataStrategyType.ECOUPON;
+    public String getType() {
+        return DataStrategyType.ECOUPON.getType();
     }
 
     @Override

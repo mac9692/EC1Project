@@ -1,5 +1,6 @@
 package com.plateer.ec1.order.service.impl;
 
+import com.plateer.ec1.order.creator.OrderModelCreator;
 import com.plateer.ec1.order.mapper.OrderTrxMapper;
 import com.plateer.ec1.order.service.OrderContext;
 import com.plateer.ec1.order.service.OrderHistoryService;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderContextImpl implements OrderContext {
 
     private final OrderHistoryService orderHistoryService;
+    private final OrderModelCreator orderModelCreator;
     private final PayService payService;
     private final OrderDataInsertProcessor orderDataInsertProcessor;
 
@@ -29,7 +31,7 @@ public class OrderContextImpl implements OrderContext {
         Long historyNo = requestOrderVo.getLogSeq();
 
         //주문 데이터 생성
-        OrderDataVo orderDataVo = dataStrategy.create(requestOrderVo);
+        OrderDataVo orderDataVo = orderModelCreator.create(requestOrderVo);
 
         //결제
 //        payService.approve(orderRequest.getPayInfo());

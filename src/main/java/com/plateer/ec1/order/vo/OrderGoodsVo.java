@@ -21,7 +21,7 @@ public class OrderGoodsVo {
     private Long sellDcAmt;
 
     @Min(value = 1, message = "주문 수량 개수는 0개 이상으로 입력하세요.")
-    private Long orderCount;
+    private Integer orderCount;
 
     @Valid
     private List<ProductBenefitVo> productBenefitVoList;

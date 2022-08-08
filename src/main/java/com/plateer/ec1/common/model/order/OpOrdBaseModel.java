@@ -34,30 +34,36 @@ public class OpOrdBaseModel {
     private Timestamp now = new Timestamp(System.currentTimeMillis());
     private Timestamp simpleDateFormat = Timestamp.valueOf(new SimpleDateFormat("yyyy.MM.dd hh:mm").format(now));
     public OpOrdBaseModel generalVirtualAccountUnPay(RequestOrderVo requestOrderVo) {
-        setOrdTpCd(requestOrderVo.getOrderType().getType());
-        setOrdSysCcd(requestOrderVo.getSystemType().getType());
-        setOrdReqDtime(simpleDateFormat);
-        setRfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk());
-        setRfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo());
-        setRfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm());
-        return this;
+        return OpOrdBaseModel
+                .builder()
+                .ordTpCd(requestOrderVo.getOrderType())
+                .ordSysCcd(requestOrderVo.getSystemType())
+                .ordReqDtime(simpleDateFormat)
+                .rfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk())
+                .rfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo())
+                .rfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm())
+                .build();
     }
 
     public OpOrdBaseModel generalVirtualAccountPayComplete(RequestOrderVo requestOrderVo) {
-        setOrdTpCd(requestOrderVo.getOrderType().getType());
-        setOrdSysCcd(requestOrderVo.getSystemType().getType());
-        setOrdReqDtime(simpleDateFormat);
-        setOrdCmtDtime(simpleDateFormat);
-        setRfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk());
-        setRfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo());
-        setRfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm());
-        return this;
+        return OpOrdBaseModel
+                .builder()
+                .ordTpCd(requestOrderVo.getOrderType())
+                .ordSysCcd(requestOrderVo.getSystemType())
+                .ordReqDtime(simpleDateFormat)
+                .ordCmtDtime(simpleDateFormat)
+                .rfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk())
+                .rfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo())
+                .rfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm())
+                .build();
     }
     public OpOrdBaseModel eCouponPointPay(RequestOrderVo requestOrderVo) {
-        setOrdTpCd(requestOrderVo.getOrderType().getType());
-        setOrdSysCcd(requestOrderVo.getSystemType().getType());
-        setOrdReqDtime(simpleDateFormat);
-        setOrdCmtDtime(simpleDateFormat);
-        return this;
+        return OpOrdBaseModel
+                .builder()
+                .ordTpCd(requestOrderVo.getOrderType())
+                .ordSysCcd(requestOrderVo.getSystemType())
+                .ordReqDtime(simpleDateFormat)
+                .ordCmtDtime(simpleDateFormat)
+                .build();
     }
 }

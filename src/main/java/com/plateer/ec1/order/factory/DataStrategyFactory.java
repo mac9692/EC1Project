@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 public class DataStrategyFactory {
 
-    private Map<DataStrategyType, DataStrategy> dataStrategyTypeMap = new LinkedHashMap<>();
+    private Map<String, DataStrategy> dataStrategyTypeMap = new LinkedHashMap<>();
     private final List<DataStrategy> dataStrategyList;
 
     public DataStrategyFactory(List<DataStrategy> dataStrategyList) {
@@ -26,7 +26,7 @@ public class DataStrategyFactory {
         dataStrategyList.forEach(c -> dataStrategyTypeMap.put(c.getType(),c));
     }
 
-    public DataStrategy getDataStrategy(DataStrategyType dataStrategyType) {
+    public DataStrategy getDataStrategy(String dataStrategyType) {
         log.info("주문 서비스에 맞는 전략 호출");
         return dataStrategyTypeMap.get(dataStrategyType);
     }

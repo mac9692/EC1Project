@@ -1,5 +1,9 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.common.code.order.OPT0005;
+import com.plateer.ec1.common.code.order.OPT0006;
+import com.plateer.ec1.common.code.product.DVP0002;
+import com.plateer.ec1.order.vo.CombinedDeliveryVo;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -29,31 +33,29 @@ public class OpOrdCostInfoModel {
     private String dvPlcTpCd;
     private Long cnclDvAmt;
 
-    public OpOrdCostInfoModel generalOrder() {
+    public OpOrdCostInfoModel generalOrder(CombinedDeliveryVo combinedDeliveryVo) {
         return OpOrdCostInfoModel
                 .builder()
-                .ordCstNo()
-                .dvGrpNo()
-                .aplyCcd()
-                .dvAmtTpCd()
-                .orgDvAmt()
-                .aplyDvAmt()
-                .dvBnfAmt()
-                .dvPlcTpCd()
+                .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
+                .aplyCcd(OPT0005.APPLY.getType())
+                .dvAmtTpCd(OPT0006.DELIVERY_CHARGE.getType())
+                .orgDvAmt(0L)
+                .aplyDvAmt(0L)
+                .dvBnfAmt(0L)
+                .dvPlcTpCd(DVP0002.FREE.getType())
                 .build();
     }
 
-    public OpOrdCostInfoModel mobileCouponOrder() {
+    public OpOrdCostInfoModel mobileCouponOrder(CombinedDeliveryVo combinedDeliveryVo) {
         return OpOrdCostInfoModel
                 .builder()
-                .ordCstNo()
-                .dvGrpNo()
-                .aplyCcd()
-                .dvAmtTpCd()
-                .orgDvAmt()
-                .aplyDvAmt()
-                .dvBnfAmt()
-                .dvPlcTpCd()
+                .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
+                .aplyCcd(OPT0005.APPLY.getType())
+                .dvAmtTpCd(OPT0006.DELIVERY_CHARGE.getType())
+                .orgDvAmt(0L)
+                .aplyDvAmt(0L)
+                .dvBnfAmt(0L)
+                .dvPlcTpCd(DVP0002.FREE.getType())
                 .build();
     }
 }

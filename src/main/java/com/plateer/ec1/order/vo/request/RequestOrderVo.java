@@ -47,10 +47,10 @@ public class RequestOrderVo {
     private PayInfoVo payInfoVo;
 
     @NotNull(message = "orderType 는 Null 입력이 불가능합니다.")
-    private DataStrategyType orderType;
+    private String orderType;
 
     @NotNull(message = "systemType 는 Null 입력이 불가능합니다.")
-    private AfterStrategyType systemType;
+    private String systemType;
 
     private String json;
 }

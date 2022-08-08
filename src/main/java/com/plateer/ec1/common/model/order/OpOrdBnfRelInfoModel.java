@@ -1,5 +1,8 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.common.code.order.OPT0005;
+import com.plateer.ec1.order.vo.OrderBenefitProductVo;
+import com.plateer.ec1.order.vo.OrderBenefitVo;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -23,25 +26,25 @@ public class OpOrdBnfRelInfoModel {
     private Timestamp sysModDtime;
     private String sysModrId;
 
-    public OpOrdBnfRelInfoModel generalOrder() {
+    public OpOrdBnfRelInfoModel generalOrder(OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
         return OpOrdBnfRelInfoModel
                 .builder()
-                .ordBnfNo()
-                .ordSeq()
-                .procSeq()
-                .aplyCnclCcd()
-                .aplyAmt()
+                .ordBnfNo(orderBenefitVo.getOrdBnfNo())
+                .ordSeq(orderBenefitProductVo.getOrdSeq())
+                .procSeq(orderBenefitProductVo.getProcSeq())
+                .aplyCnclCcd(OPT0005.APPLY.getType())
+                .aplyAmt(orderBenefitProductVo.getAplyAmt())
                 .build();
     }
 
-    public OpOrdBnfRelInfoModel mobileCouponOrder() {
+    public OpOrdBnfRelInfoModel mobileCouponOrder(OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
         return OpOrdBnfRelInfoModel
                 .builder()
-                .ordBnfNo()
-                .ordSeq()
-                .procSeq()
-                .aplyCnclCcd()
-                .aplyAmt()
+                .ordBnfNo(orderBenefitVo.getOrdBnfNo())
+                .ordSeq(orderBenefitProductVo.getOrdSeq())
+                .procSeq(orderBenefitProductVo.getProcSeq())
+                .aplyCnclCcd(OPT0005.APPLY.getType())
+                .aplyAmt(orderBenefitProductVo.getAplyAmt())
                 .build();
     }
 }

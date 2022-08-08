@@ -8,6 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderBenefitProductVo {
+    private Integer ordSeq;
+    private Integer procSeq;
     private String ordGoodsNo;
     private String ordItemNo;
+    private Long aplyAmt;
 }

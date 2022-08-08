@@ -14,7 +14,7 @@ import java.util.Map;
 @Component
 public class AfterStrategyFactory {
 
-    private Map<AfterStrategyType, AfterStrategy> afterStrategyTypeMap = new LinkedHashMap<>();
+    private Map<String, AfterStrategy> afterStrategyTypeMap = new LinkedHashMap<>();
     private final List<AfterStrategy> afterStrategyList;
 
     public AfterStrategyFactory(List<AfterStrategy> afterStrategyList) {
@@ -26,7 +26,7 @@ public class AfterStrategyFactory {
         afterStrategyList.forEach(c -> afterStrategyTypeMap.put(c.getType(),c));
     }
 
-    public AfterStrategy getAfterStrategy(AfterStrategyType afterStrategyType) {
+    public AfterStrategy getAfterStrategy(String afterStrategyType) {
         log.info("후처리 서비스에 맞는 전략 호출");
         return afterStrategyTypeMap.get(afterStrategyType);
     }

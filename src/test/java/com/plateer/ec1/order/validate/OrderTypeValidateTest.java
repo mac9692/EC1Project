@@ -136,8 +136,8 @@ public class OrderTypeValidateTest {
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
                 .payInfoVo(payInfoVo)
-                .orderType(DataStrategyType.GENERAL)
-                .systemType(AfterStrategyType.FO)
+                .orderType("10")
+                .systemType("10")
                 .build();
     }
 

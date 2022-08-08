@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class BoAfterStrategy implements AfterStrategy {
     @Override
-    public AfterStrategyType getType() {
-        return AfterStrategyType.BO;
+    public String getType() {
+        return AfterStrategyType.BO.getType();
     }
 
     @Override

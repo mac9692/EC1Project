@@ -6,6 +6,6 @@ import com.plateer.ec1.order.vo.request.RequestOrderVo;
 
 public interface AfterStrategy {
 
-    AfterStrategyType getType();
+    String getType();
     void call(RequestOrderVo requestOrderVo, OrderDataVo orderDataVo);
 }

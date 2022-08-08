@@ -1,8 +1,15 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.common.code.order.OPT0003;
+import com.plateer.ec1.common.code.order.OPT0004;
+import com.plateer.ec1.common.code.product.DVP0001;
+import com.plateer.ec1.order.vo.CombinedDeliveryVo;
+import com.plateer.ec1.order.vo.DeliveryAddressVo;
+import com.plateer.ec1.order.vo.OrderGoodsVo;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Builder
 @Setter
@@ -36,59 +43,63 @@ public class OpClmInfoModel {
     private String clmNo;
     private Integer orgProcSeq;
 
-    public OpClmInfoModel generalVirtualAccountUnPay() {
+    private Timestamp now = new Timestamp(System.currentTimeMillis());
+    private Timestamp simpleDateFormat = Timestamp.valueOf(new SimpleDateFormat("yyyy.MM.dd hh:mm").format(now));
+
+    public OpClmInfoModel generalVirtualAccountUnPay(OrderGoodsVo orderGoodsVo, CombinedDeliveryVo combinedDeliveryVo) {
+
         return OpClmInfoModel
                 .builder()
-                .ordGoodsNo()
-                .ordItemNo()
-                .ordClmTpCd()
-                .dvRvtCcd()
-                .ordCnt()
-                .ordAmt()
-                .cnclCnt()
-                .rtgsCnt()
-                .dvGrpNo()
-                .ordPrgsScd()
-                .ordClmReqDtime()
-                .ordClmAcptDtime()
+                .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
+                .ordItemNo(orderGoodsVo.getOrdItemNo())
+                .ordClmTpCd(OPT0003.ORDER.getType())
+                .dvRvtCcd(DVP0001.DELIVERY.getType())
+                .ordCnt(orderGoodsVo.getOrderCount())
+                .ordAmt(orderGoodsVo.getSellDcAmt())
+                .cnclCnt(0)
+                .rtgsCnt(0)
+                .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
+                .ordPrgsScd(OPT0004.ORDER_WAIT.getType())
+                .ordClmReqDtime(simpleDateFormat)
+                .ordClmAcptDtime(simpleDateFormat)
                 .build();
     }
 
-    public OpClmInfoModel generalVirtualAccountPayComplete() {
+    public OpClmInfoModel generalVirtualAccountPayComplete(OrderGoodsVo orderGoodsVo, CombinedDeliveryVo combinedDeliveryVo) {
         return OpClmInfoModel
                 .builder()
-                .ordGoodsNo()
-                .ordItemNo()
-                .ordClmTpCd()
-                .dvRvtCcd()
-                .ordCnt()
-                .ordAmt()
-                .cnclCnt()
-                .rtgsCnt()
-                .dvGrpNo()
-                .ordPrgsScd()
-                .ordClmReqDtime()
-                .ordClmAcptDtime()
-                .ordClmCmtDtime()
+                .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
+                .ordItemNo(orderGoodsVo.getOrdItemNo())
+                .ordClmTpCd(OPT0003.ORDER.getType())
+                .dvRvtCcd(DVP0001.DELIVERY.getType())
+                .ordCnt(orderGoodsVo.getOrderCount())
+                .ordAmt(orderGoodsVo.getSellDcAmt())
+                .cnclCnt(0)
+                .rtgsCnt(0)
+                .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
+                .ordPrgsScd(OPT0004.ORDER_COMPLETE.getType())
+                .ordClmReqDtime(simpleDateFormat)
+                .ordClmAcptDtime(simpleDateFormat)
+                .ordClmCmtDtime(simpleDateFormat)
                 .build();
     }
 
-    public OpClmInfoModel mobileCouponOrder() {
+    public OpClmInfoModel mobileCouponOrder(OrderGoodsVo orderGoodsVo, CombinedDeliveryVo combinedDeliveryVo) {
         return OpClmInfoModel
                 .builder()
-                .ordGoodsNo()
-                .ordItemNo()
-                .ordClmTpCd()
-                .dvRvtCcd()
-                .ordCnt()
-                .ordAmt()
-                .cnclCnt()
-                .rtgsCnt()
-                .dvGrpNo()
-                .ordPrgsScd()
-                .ordClmReqDtime()
-                .ordClmAcptDtime()
-                .ordClmCmtDtime()
+                .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
+                .ordItemNo(orderGoodsVo.getOrdItemNo())
+                .ordClmTpCd(OPT0003.ORDER.getType())
+                .dvRvtCcd(DVP0001.DELIVERY.getType())
+                .ordCnt(orderGoodsVo.getOrderCount())
+                .ordAmt(orderGoodsVo.getSellDcAmt())
+                .cnclCnt(0)
+                .rtgsCnt(0)
+                .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
+                .ordPrgsScd(OPT0004.ORDER_COMPLETE.getType())
+                .ordClmReqDtime(simpleDateFormat)
+                .ordClmAcptDtime(simpleDateFormat)
+                .ordClmCmtDtime(simpleDateFormat)
                 .build();
     }
 }

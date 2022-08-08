@@ -4,10 +4,8 @@ import com.plateer.ec1.order.creator.OrderModelCreator;
 import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.strategy.DataStrategy;
 import com.plateer.ec1.order.vo.OrderDataVo;
-import com.plateer.ec1.order.vo.OrderProductView;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,8 +14,8 @@ public class GeneralDataStrategy implements DataStrategy {
 
     private final OrderModelCreator orderModelCreator;
     @Override
-    public DataStrategyType getType() {
-        return DataStrategyType.GENERAL;
+    public String getType() {
+        return DataStrategyType.GENERAL.getType();
     }
 
     @Override

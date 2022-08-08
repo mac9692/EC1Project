@@ -1,5 +1,7 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.common.code.promotion.PRM0012;
+import com.plateer.ec1.order.vo.OrderBenefitVo;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -23,27 +25,27 @@ public class OpOrdBnfInfoModel {
     private String sysModrId;
     private String cpnKndCd;
 
-    public OpOrdBnfInfoModel generalOrder() {
+    public OpOrdBnfInfoModel generalOrder(OrderBenefitVo orderBenefitVo) {
         return OpOrdBnfInfoModel
                 .builder()
-                .ordBnfNo()
-                .prmNo()
-                .cpnKndCd()
-                .degrCcd()
-                .ordBnfAmt()
-                .ordCnclBnfAmt()
+                .ordBnfNo(orderBenefitVo.getOrdBnfNo())
+                .prmNo(orderBenefitVo.getPrmNo())
+                .cpnKndCd(orderBenefitVo.getCpnKndCd())
+                .degrCcd(orderBenefitVo.getDegrCcd())
+                .ordBnfAmt(orderBenefitVo.getOrdCnclBnfAmt())
+                .ordCnclBnfAmt(0)
                 .build();
     }
 
-    public OpOrdBnfInfoModel mobileCouponOrder() {
+    public OpOrdBnfInfoModel mobileCouponOrder(OrderBenefitVo orderBenefitVo) {
         return OpOrdBnfInfoModel
                 .builder()
-                .ordBnfNo()
-                .prmNo()
-                .cpnKndCd()
-                .degrCcd()
-                .ordBnfAmt()
-                .ordCnclBnfAmt()
+                .ordBnfNo(orderBenefitVo.getOrdBnfNo())
+                .prmNo(orderBenefitVo.getPrmNo())
+                .cpnKndCd(orderBenefitVo.getCpnKndCd())
+                .degrCcd(orderBenefitVo.getDegrCcd())
+                .ordBnfAmt(orderBenefitVo.getOrdCnclBnfAmt())
+                .ordCnclBnfAmt(0)
                 .build();
     }
 }
