@@ -1,12 +1,14 @@
 package com.plateer.ec1.common.model.order;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
-@Data
 @Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OpOrdBnfRelInfoModel {
 
     private String ordNo;

@@ -1,10 +1,14 @@
 package com.plateer.ec1.common.model.order;
 
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
-@Data
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OpDvpAreaInfoModel {
 
     private String ordNo;

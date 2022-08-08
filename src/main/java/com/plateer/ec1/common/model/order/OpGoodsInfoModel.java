@@ -2,14 +2,15 @@ package com.plateer.ec1.common.model.order;
 
 import com.plateer.ec1.order.vo.OrderGoodsVo;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OpGoodsInfoModel {
     private String ordNo;
     private String ordGoodsNo;

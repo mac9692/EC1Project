@@ -1,11 +1,15 @@
 package com.plateer.ec1.common.model.order;
 
 import com.plateer.ec1.common.code.product.DVP0001;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
 
-@Data
+@Builder
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OpDvpInfoModel {
 
     private int dvGrpNo;

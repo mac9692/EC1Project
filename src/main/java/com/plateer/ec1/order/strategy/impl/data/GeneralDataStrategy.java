@@ -22,16 +22,16 @@ public class GeneralDataStrategy implements DataStrategy {
 
     @Override
     public OrderDataVo create(RequestOrderVo requestOrderVo) {
-        OrderDataVo orderDataVo = OrderDataVo
+        return OrderDataVo
                 .builder()
                 .opOrdBaseModel(orderModelCreator.commonOrderBase(requestOrderVo))
-                .opGoodsInfoModel(orderModelCreator.commonOrderProduct(requestOrderVo))
-                .clmInfoModel(orderModelCreator.commonOrderClaim(requestOrderVo))
-                .opDvpAreaInfoModel(orderModelCreator.commonOrderDelivery(requestOrderVo))
-                .opOrdCostInfoModel(orderModelCreator.commonOrderCost(requestOrderVo))
-                .opOrdBnfInfoModel(orderModelCreator.commonOrderBenefit(requestOrderVo))
-                .opOrdBnfRelInfoModel(orderModelCreator.commonOrderBenefitRelation(requestOrderVo))
+                .opGoodsInfoModelList(orderModelCreator.commonOrderProduct(requestOrderVo))
+                .clmInfoModelList(orderModelCreator.commonOrderClaim(requestOrderVo))
+                .opDvpAreaInfoModelList(orderModelCreator.commonOrderDelivery(requestOrderVo))
+                .opDvpInfoModelList(orderModelCreator.commonOrderDeliveryInfo(requestOrderVo))
+                .opOrdCostInfoModelList(orderModelCreator.commonOrderCost(requestOrderVo))
+                .opOrdBnfInfoModelList(orderModelCreator.commonOrderBenefit(requestOrderVo))
+                .opOrdBnfRelInfoModelList(orderModelCreator.commonOrderBenefitRelation(requestOrderVo))
                 .build();
-        return orderDataVo;
     }
 }

@@ -1,14 +1,16 @@
 package com.plateer.ec1.common.model.order;
 
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+@Builder
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class OpOrdBaseModel {
 
     private String ordNo;
