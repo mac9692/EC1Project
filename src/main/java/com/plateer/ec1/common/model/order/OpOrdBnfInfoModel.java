@@ -30,6 +30,7 @@ public class OpOrdBnfInfoModel {
                 .builder()
                 .ordBnfNo(orderBenefitVo.getOrdBnfNo())
                 .prmNo(orderBenefitVo.getPrmNo())
+                .cpnIssNo(orderBenefitVo.getCpnIssNo())
                 .cpnKndCd(orderBenefitVo.getCpnKndCd())
                 .degrCcd(orderBenefitVo.getDegrCcd())
                 .ordBnfAmt(orderBenefitVo.getOrdCnclBnfAmt())

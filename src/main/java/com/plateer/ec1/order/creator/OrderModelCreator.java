@@ -131,11 +131,11 @@ public class OrderModelCreator {
         OpOrdCostInfoModel opOrdCostInfoModel = new OpOrdCostInfoModel();
 
         if (DataStrategyType.GENERAL.getType().equals(requestOrderVo.getOrderType())) {
-            combinedDeliveryVoList.forEach(combinedDeliveryVo -> opOrdCostInfoModelList.add(opOrdCostInfoModel.generalOrder(combinedDeliveryVo)));
+            combinedDeliveryVoList.forEach(combinedDeliveryVo -> opOrdCostInfoModelList.add(opOrdCostInfoModel.generalOrder(requestOrderVo, combinedDeliveryVo)));
             return opOrdCostInfoModelList;
         }
         if (DataStrategyType.ECOUPON.getType().equals(requestOrderVo.getOrderType())) {
-            combinedDeliveryVoList.forEach(combinedDeliveryVo -> opOrdCostInfoModelList.add(opOrdCostInfoModel.mobileCouponOrder(combinedDeliveryVo)));
+            combinedDeliveryVoList.forEach(combinedDeliveryVo -> opOrdCostInfoModelList.add(opOrdCostInfoModel.mobileCouponOrder(requestOrderVo, combinedDeliveryVo)));
             return opOrdCostInfoModelList;
         }
         return null;
@@ -168,13 +168,13 @@ public class OrderModelCreator {
 
         if (DataStrategyType.GENERAL.getType().equals(requestOrderVo.getOrderType())) {
             for (OrderBenefitVo orderBenefitVo : orderBenefitVoList) {
-                orderBenefitProductVoList.forEach(orderBenefitProductVo -> opOrdBnfInfoModelList.add(opOrdBnfRelInfoModel.generalOrder(orderBenefitVo, orderBenefitProductVo)));
+                orderBenefitProductVoList.stream().forEach(orderBenefitProductVo -> opOrdBnfInfoModelList.add(opOrdBnfRelInfoModel.generalOrder(requestOrderVo, orderBenefitVo, orderBenefitProductVo)));
                 return opOrdBnfInfoModelList;
             }
         }
         if (DataStrategyType.ECOUPON.getType().equals(requestOrderVo.getOrderType())) {
             for (OrderBenefitVo orderBenefitVo : orderBenefitVoList) {
-                orderBenefitProductVoList.forEach(orderBenefitProductVo -> opOrdBnfInfoModelList.add(opOrdBnfRelInfoModel.mobileCouponOrder(orderBenefitVo, orderBenefitProductVo)));
+                orderBenefitProductVoList.forEach(orderBenefitProductVo -> opOrdBnfInfoModelList.add(opOrdBnfRelInfoModel.mobileCouponOrder(requestOrderVo, orderBenefitVo, orderBenefitProductVo)));
                 return opOrdBnfInfoModelList;
             }
         }

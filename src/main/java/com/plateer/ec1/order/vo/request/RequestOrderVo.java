@@ -6,7 +6,9 @@ import com.plateer.ec1.order.vo.DeliveryAddressVo;
 import com.plateer.ec1.order.vo.OrderBenefitVo;
 import com.plateer.ec1.order.vo.OrderGoodsVo;
 import com.plateer.ec1.order.vo.OrderVo;
+import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
+import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
 import lombok.*;
 
 import javax.validation.Valid;
@@ -44,7 +46,7 @@ public class RequestOrderVo {
 
     @Valid
     @NotNull(message = "payInfoVo 는 Null 입력이 불가능합니다.")
-    private PayInfoVo payInfoVo;
+    private List<PayInfoVo> payInfoVoList;
 
     @NotNull(message = "orderType 는 Null 입력이 불가능합니다.")
     private String orderType;
@@ -53,4 +55,17 @@ public class RequestOrderVo {
     private String systemType;
 
     private String json;
+
+    public RequestPaymentVo convertToRequestPaymentVo() {
+        OrderInfoVo orderInfoVo = OrderInfoVo
+                .builder()
+                .ordNo(this.orderNo)
+                .goodName(getOrderGoodsVoList().get(0).getOrdGoodsNo())
+                .buyerName(getOrderVo().getOrdNm())
+                .build();
+        RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
+        requestPaymentVo.setOrderInfoVo(orderInfoVo);
+        requestPaymentVo.setPayInfoVoList(payInfoVoList);
+        return requestPaymentVo;
+    }
 }

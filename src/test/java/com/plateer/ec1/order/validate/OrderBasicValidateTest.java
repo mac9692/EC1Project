@@ -3,8 +3,6 @@ package com.plateer.ec1.order.validate;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.order.enums.AfterStrategyType;
-import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import com.plateer.ec1.payment.enums.PaymentType;
@@ -129,6 +127,9 @@ public class OrderBasicValidateTest {
                 .rfndAcctOwnNm("박진성")
                 .build();
 
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        payInfoVoList.add(payInfoVo);
+
         requestOrderVo = RequestOrderVo
                 .builder()
                 .orderNo("0202")
@@ -136,7 +137,7 @@ public class OrderBasicValidateTest {
                 .orderGoodsVoList(orderGoodsVoList)
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
-                .payInfoVo(payInfoVo)
+                .payInfoVoList(payInfoVoList)
                 .orderType("10")
                 .systemType("10")
                 .build();
@@ -163,7 +164,7 @@ public class OrderBasicValidateTest {
     void orderRequestOrderGoodsVoListNullTest() {
         requestOrderVo.setOrderGoodsVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        Assertions.assertThat(violations).isEmpty();
     }
 
     @Test
@@ -185,7 +186,7 @@ public class OrderBasicValidateTest {
     @Test
     @DisplayName("1-6. OrderRequestVo 결제정보 Null")
     void orderRequestPayInfoVoListNullTest() {
-        requestOrderVo.setPayInfoVo(null);
+        requestOrderVo.setPayInfoVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }
@@ -249,7 +250,7 @@ public class OrderBasicValidateTest {
     @Test
     @DisplayName("2-5. 주문기본정보-주문 상품유무")
     void orderRequestPayInfoVoRfndBnkCkTest() {
-        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
+        requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk("05");
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

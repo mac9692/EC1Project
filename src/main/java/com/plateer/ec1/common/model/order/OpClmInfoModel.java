@@ -42,9 +42,7 @@ public class OpClmInfoModel {
     private String sysModrId;
     private String clmNo;
     private Integer orgProcSeq;
-
     private Timestamp now = new Timestamp(System.currentTimeMillis());
-    private Timestamp simpleDateFormat = Timestamp.valueOf(new SimpleDateFormat("yyyy.MM.dd hh:mm").format(now));
 
     public OpClmInfoModel generalVirtualAccountUnPay(OrderGoodsVo orderGoodsVo, CombinedDeliveryVo combinedDeliveryVo) {
 
@@ -60,8 +58,8 @@ public class OpClmInfoModel {
                 .rtgsCnt(0)
                 .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
                 .ordPrgsScd(OPT0004.ORDER_WAIT.getType())
-                .ordClmReqDtime(simpleDateFormat)
-                .ordClmAcptDtime(simpleDateFormat)
+                .ordClmReqDtime(now)
+                .ordClmAcptDtime(now)
                 .build();
     }
 
@@ -78,9 +76,9 @@ public class OpClmInfoModel {
                 .rtgsCnt(0)
                 .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
                 .ordPrgsScd(OPT0004.ORDER_COMPLETE.getType())
-                .ordClmReqDtime(simpleDateFormat)
-                .ordClmAcptDtime(simpleDateFormat)
-                .ordClmCmtDtime(simpleDateFormat)
+                .ordClmReqDtime(now)
+                .ordClmAcptDtime(now)
+                .ordClmCmtDtime(now)
                 .build();
     }
 
@@ -97,9 +95,9 @@ public class OpClmInfoModel {
                 .rtgsCnt(0)
                 .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
                 .ordPrgsScd(OPT0004.ORDER_COMPLETE.getType())
-                .ordClmReqDtime(simpleDateFormat)
-                .ordClmAcptDtime(simpleDateFormat)
-                .ordClmCmtDtime(simpleDateFormat)
+                .ordClmReqDtime(now)
+                .ordClmAcptDtime(now)
+                .ordClmCmtDtime(now)
                 .build();
     }
 }

@@ -126,6 +126,9 @@ public class OrderProductValidateTest {
                 .rfndAcctOwnNm("박진성")
                 .build();
 
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        payInfoVoList.add(payInfoVo);
+
         requestOrderVo = RequestOrderVo
                 .builder()
                 .orderNo("0202")
@@ -133,7 +136,7 @@ public class OrderProductValidateTest {
                 .orderGoodsVoList(orderGoodsVoList)
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
-                .payInfoVo(payInfoVo)
+                .payInfoVoList(payInfoVoList)
                 .orderType("10")
                 .systemType("10")
                 .build();
@@ -142,7 +145,7 @@ public class OrderProductValidateTest {
     @Test
     @DisplayName("1-1. 상품정보-상품(단품) 존재 여부")
     void orderRequestPayInfoVoRfndBnkCkTest() {
-        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
+        requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk("05");
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

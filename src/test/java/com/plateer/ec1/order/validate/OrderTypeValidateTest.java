@@ -128,6 +128,9 @@ public class OrderTypeValidateTest {
                 .rfndAcctOwnNm("박진성")
                 .build();
 
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        payInfoVoList.add(payInfoVo);
+
         requestOrderVo = RequestOrderVo
                 .builder()
                 .orderNo("0202")
@@ -135,7 +138,7 @@ public class OrderTypeValidateTest {
                 .orderGoodsVoList(orderGoodsVoList)
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
-                .payInfoVo(payInfoVo)
+                .payInfoVoList(payInfoVoList)
                 .orderType("10")
                 .systemType("10")
                 .build();
@@ -144,7 +147,7 @@ public class OrderTypeValidateTest {
     @Test
     @DisplayName("1-1. 일반주문-상품확인")
     void generalGoodsTypeTest() {
-        requestOrderVo.getPayInfoVo().setRfndBnkCk("05");
+        requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk("05");
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

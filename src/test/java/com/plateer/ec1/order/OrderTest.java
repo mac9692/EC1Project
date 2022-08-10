@@ -80,7 +80,10 @@ public class OrderTest {
         orderGoodsVoList.add(orderGoodsVo);
 
         OrderBenefitProductVo orderBenefitProductVo = new OrderBenefitProductVo();
+        orderBenefitProductVo.setOrdSeq(1);
+        orderBenefitProductVo.setProcSeq(1);
         orderBenefitProductVo.setOrdGoodsNo("P111");
+        orderBenefitProductVo.setAplyAmt(1000L);
         orderBenefitProductVo.setOrdItemNo("I111");
 
         List<OrderBenefitProductVo> orderBenefitProductVoList = new ArrayList<>();
@@ -91,7 +94,9 @@ public class OrderTest {
                 .prmNo(2L)
                 .cpnKndCd(PRM0004.PRODUCT_COUPON.getType())
                 .cpnIssNo(2L)
+                .ordBnfNo("099")
                 .degrCcd(3)
+                .ordCnclBnfAmt(1000)
                 .orderBenefitProductVoList(orderBenefitProductVoList)
                 .build();
 
@@ -106,6 +111,7 @@ public class OrderTest {
         productInfoVoList.add(productInfoVo);
 
         CombinedDeliveryVo combinedDeliveryVo = new CombinedDeliveryVo();
+        combinedDeliveryVo.setOrderCostNo("3");
         combinedDeliveryVo.setCombinedDeliveryNo(1);
         combinedDeliveryVo.setProductInfoVoList(productInfoVoList);
 
@@ -136,6 +142,9 @@ public class OrderTest {
                 .rfndAcctOwnNm("박진성")
                 .build();
 
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        payInfoVoList.add(payInfoVo);
+
         requestOrderVo = RequestOrderVo
                 .builder()
                 .orderNo("0202")
@@ -143,7 +152,7 @@ public class OrderTest {
                 .orderGoodsVoList(orderGoodsVoList)
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
-                .payInfoVo(payInfoVo)
+                .payInfoVoList(payInfoVoList)
                 .orderType("10")
                 .systemType("10")
                 .build();
@@ -152,6 +161,8 @@ public class OrderTest {
     @Test
     @DisplayName("주문하기 전체 로직 TEST")
     void generalOrderOrderTest() throws Exception {
+        requestOrderVo.setOrderNo("05");
+//        requestOrderVo.setOrderNo(null);
         String jsonData = objectMapper.writeValueAsString(requestOrderVo);
 
         mockMvc.perform(post("/order")

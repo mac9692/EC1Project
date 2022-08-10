@@ -11,7 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CombinedDeliveryVo {
-    private Integer CombinedDeliveryNo;
+    private String orderCostNo;
+    private Integer combinedDeliveryNo;
 
     @Valid
     private List<ProductInfoVo> productInfoVoList;

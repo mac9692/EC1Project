@@ -34,7 +34,7 @@ public class OrderContextImpl implements OrderContext {
         OrderDataVo orderDataVo = orderModelCreator.create(requestOrderVo);
 
         //결제
-//        payService.approve(orderRequest.getPayInfo());
+        payService.approve(requestOrderVo.convertToRequestPaymentVo());
 
         //주문 데이터 등록
         orderDataInsertProcessor.insertOrderData(orderDataVo);

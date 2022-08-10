@@ -3,6 +3,7 @@ package com.plateer.ec1.common.model.order;
 import com.plateer.ec1.common.code.order.OPT0005;
 import com.plateer.ec1.order.vo.OrderBenefitProductVo;
 import com.plateer.ec1.order.vo.OrderBenefitVo;
+import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -26,9 +27,10 @@ public class OpOrdBnfRelInfoModel {
     private Timestamp sysModDtime;
     private String sysModrId;
 
-    public OpOrdBnfRelInfoModel generalOrder(OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
+    public OpOrdBnfRelInfoModel generalOrder(RequestOrderVo requestOrderVo, OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
         return OpOrdBnfRelInfoModel
                 .builder()
+                .ordNo(requestOrderVo.getOrderNo())
                 .ordBnfNo(orderBenefitVo.getOrdBnfNo())
                 .ordSeq(orderBenefitProductVo.getOrdSeq())
                 .procSeq(orderBenefitProductVo.getProcSeq())
@@ -37,9 +39,10 @@ public class OpOrdBnfRelInfoModel {
                 .build();
     }
 
-    public OpOrdBnfRelInfoModel mobileCouponOrder(OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
+    public OpOrdBnfRelInfoModel mobileCouponOrder(RequestOrderVo requestOrderVo, OrderBenefitVo orderBenefitVo, OrderBenefitProductVo orderBenefitProductVo) {
         return OpOrdBnfRelInfoModel
                 .builder()
+                .ordNo(requestOrderVo.getOrderNo())
                 .ordBnfNo(orderBenefitVo.getOrdBnfNo())
                 .ordSeq(orderBenefitProductVo.getOrdSeq())
                 .procSeq(orderBenefitProductVo.getProcSeq())

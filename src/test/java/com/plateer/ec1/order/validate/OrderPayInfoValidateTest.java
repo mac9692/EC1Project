@@ -131,6 +131,9 @@ public class OrderPayInfoValidateTest {
                 .rfndAcctOwnNm("박진성")
                 .build();
 
+        List<PayInfoVo> payInfoVoList = new ArrayList<>();
+        payInfoVoList.add(payInfoVo);
+
         requestOrderVo = RequestOrderVo
                 .builder()
                 .orderNo("0202")
@@ -138,7 +141,7 @@ public class OrderPayInfoValidateTest {
                 .orderGoodsVoList(orderGoodsVoList)
                 .orderBenefitVoList(orderBenefitVoList)
                 .deliveryAddressVoList(deliveryAddressVoList)
-                .payInfoVo(payInfoVo)
+                .payInfoVoList(payInfoVoList)
                 .orderType("10")
                 .systemType("10")
                 .build();
@@ -147,7 +150,7 @@ public class OrderPayInfoValidateTest {
     @Test
     @DisplayName("1-1. OrderRequestVo.PayInfoVo 환불계좌은행코드 Null 테스트")
     void orderRequestPayInfoVoRfndBnkCkTest() {
-        requestOrderVo.getPayInfoVo().setRfndBnkCk(null);
+        requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }
@@ -155,7 +158,7 @@ public class OrderPayInfoValidateTest {
     @Test
     @DisplayName("1-2. OrderRequestVo.PayInfoVo 환불계좌번호 Null 테스트")
     void orderRequestPayInfoVoRfndAcctNoTest() {
-        requestOrderVo.getPayInfoVo().setRfndAcctNo(null);
+        requestOrderVo.getPayInfoVoList().get(0).setRfndAcctNo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }
@@ -163,7 +166,7 @@ public class OrderPayInfoValidateTest {
     @Test
     @DisplayName("1-3. OrderRequestVo.PayInfoVo 환불계좌예금주명 Null 테스트")
     void orderRequestPayInfoVoRfndAcctOwnNmTest() {
-        requestOrderVo.getPayInfoVo().setRfndAcctOwnNm(null);
+        requestOrderVo.getPayInfoVoList().get(0).setRfndAcctOwnNm(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
         Assertions.assertThat(violations).isNotEmpty();
     }

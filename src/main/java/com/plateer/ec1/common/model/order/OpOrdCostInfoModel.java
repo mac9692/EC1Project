@@ -2,8 +2,10 @@ package com.plateer.ec1.common.model.order;
 
 import com.plateer.ec1.common.code.order.OPT0005;
 import com.plateer.ec1.common.code.order.OPT0006;
+import com.plateer.ec1.common.code.order.OPT0008;
 import com.plateer.ec1.common.code.product.DVP0002;
 import com.plateer.ec1.order.vo.CombinedDeliveryVo;
+import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -33,28 +35,34 @@ public class OpOrdCostInfoModel {
     private String dvPlcTpCd;
     private Long cnclDvAmt;
 
-    public OpOrdCostInfoModel generalOrder(CombinedDeliveryVo combinedDeliveryVo) {
+    public OpOrdCostInfoModel generalOrder(RequestOrderVo requestOrderVo, CombinedDeliveryVo combinedDeliveryVo) {
         return OpOrdCostInfoModel
                 .builder()
+                .ordCstNo(combinedDeliveryVo.getOrderCostNo())
                 .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
                 .aplyCcd(OPT0005.APPLY.getType())
                 .dvAmtTpCd(OPT0006.DELIVERY_CHARGE.getType())
                 .orgDvAmt(0L)
                 .aplyDvAmt(0L)
                 .dvBnfAmt(0L)
+                .ordNo(requestOrderVo.getOrderNo())
+                .imtnRsnCcd(OPT0008.COMPANY.getType())
                 .dvPlcTpCd(DVP0002.FREE.getType())
                 .build();
     }
 
-    public OpOrdCostInfoModel mobileCouponOrder(CombinedDeliveryVo combinedDeliveryVo) {
+    public OpOrdCostInfoModel mobileCouponOrder(RequestOrderVo requestOrderVo, CombinedDeliveryVo combinedDeliveryVo) {
         return OpOrdCostInfoModel
                 .builder()
+                .ordCstNo(combinedDeliveryVo.getOrderCostNo())
                 .dvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo())
                 .aplyCcd(OPT0005.APPLY.getType())
                 .dvAmtTpCd(OPT0006.DELIVERY_CHARGE.getType())
                 .orgDvAmt(0L)
                 .aplyDvAmt(0L)
                 .dvBnfAmt(0L)
+                .ordNo(requestOrderVo.getOrderNo())
+                .imtnRsnCcd(OPT0008.COMPANY.getType())
                 .dvPlcTpCd(DVP0002.FREE.getType())
                 .build();
     }

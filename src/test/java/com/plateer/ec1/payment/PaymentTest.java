@@ -31,13 +31,15 @@ public class PaymentTest {
     @DisplayName("1. 이니시스 - 결제 승인 테스트")
     void approveTest() {
         RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
-        OrderInfoVo orderInfoVo = new OrderInfoVo();
-        orderInfoVo.setOrdNo("5");
-        orderInfoVo.setBuyerName("박진성");
-        orderInfoVo.setBuyerEmail("박진성 이메일");
-        orderInfoVo.setGoodName("새우깡");
-        orderInfoVo.setMoid("192938127892-2328382");
-        orderInfoVo.setStoreUrl("https://abc.com");
+        OrderInfoVo orderInfoVo = OrderInfoVo
+                .builder()
+                .ordNo("5")
+                .buyerName("박진성")
+                .buyerEmail("박진성 이메일")
+                .goodName("새우깡")
+                .moid("192938127892-2328382")
+                .storeUrl("https://abc.com")
+                .build();
 
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();
@@ -100,13 +102,15 @@ public class PaymentTest {
     @DisplayName("4. 포인트 - 결제 승인 테스트")
     void approvePointTest() {
         RequestPaymentVo requestPaymentVo = new RequestPaymentVo();
-        OrderInfoVo orderInfoVo = new OrderInfoVo();
-        orderInfoVo.setOrdNo("7");
-        orderInfoVo.setBuyerName("박진성");
-        orderInfoVo.setBuyerEmail("박진성 이메일");
-        orderInfoVo.setGoodName("새우깡");
-        orderInfoVo.setMoid("192938127892-2328382");
-        orderInfoVo.setStoreUrl("https://abc.com");
+        OrderInfoVo orderInfoVo = OrderInfoVo
+                .builder()
+                .ordNo("7")
+                .buyerName("박진성")
+                .buyerEmail("박진성 이메일")
+                .goodName("새우깡")
+                .moid("192938127892-2328382")
+                .storeUrl("https://abc.com")
+                .build();
 
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();

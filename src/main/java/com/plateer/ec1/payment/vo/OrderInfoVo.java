@@ -1,15 +1,15 @@
 package com.plateer.ec1.payment.vo;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
 @Data
+@Builder
 public class OrderInfoVo {
-    @NotNull
     private String moid;
 
-    @NotNull
     private String storeUrl;
 
     @NotNull
@@ -21,6 +21,5 @@ public class OrderInfoVo {
     @NotNull
     private String buyerName;
 
-    @NotNull
     private String buyerEmail;
 }

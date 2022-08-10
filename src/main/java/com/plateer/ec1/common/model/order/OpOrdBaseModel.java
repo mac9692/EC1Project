@@ -30,40 +30,57 @@ public class OpOrdBaseModel {
     private String sysRegrId;
     private Timestamp sysModrId;
     private String sysModDtim;
-
     private Timestamp now = new Timestamp(System.currentTimeMillis());
-    private Timestamp simpleDateFormat = Timestamp.valueOf(new SimpleDateFormat("yyyy.MM.dd hh:mm").format(now));
+
     public OpOrdBaseModel generalVirtualAccountUnPay(RequestOrderVo requestOrderVo) {
         return OpOrdBaseModel
                 .builder()
+                .ordNo(requestOrderVo.getOrderNo())
+                .mbrNo(requestOrderVo.getOrderVo().getMbrNo())
+                .ordNm(requestOrderVo.getOrderVo().getOrdNm())
+                .ordSellNo(requestOrderVo.getOrderVo().getOrdSellNo())
+                .ordAddr(requestOrderVo.getOrderVo().getOrdAddr())
+                .ordAddrDtl(requestOrderVo.getOrderVo().getOrdAddrDtl())
                 .ordTpCd(requestOrderVo.getOrderType())
                 .ordSysCcd(requestOrderVo.getSystemType())
-                .ordReqDtime(simpleDateFormat)
-                .rfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk())
-                .rfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo())
-                .rfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm())
+                .ordReqDtime(now)
+                .rfndBnkCk(requestOrderVo.getPayInfoVoList().get(0).getRfndBnkCk())
+                .rfndAcctNo(requestOrderVo.getPayInfoVoList().get(0).getRfndAcctNo())
+                .rfndAcctOwnNm(requestOrderVo.getPayInfoVoList().get(0).getRfndAcctOwnNm())
                 .build();
     }
 
     public OpOrdBaseModel generalVirtualAccountPayComplete(RequestOrderVo requestOrderVo) {
         return OpOrdBaseModel
                 .builder()
+                .ordNo(requestOrderVo.getOrderNo())
+                .mbrNo(requestOrderVo.getOrderVo().getMbrNo())
+                .ordNm(requestOrderVo.getOrderVo().getOrdNm())
+                .ordSellNo(requestOrderVo.getOrderVo().getOrdSellNo())
+                .ordAddr(requestOrderVo.getOrderVo().getOrdAddr())
+                .ordAddrDtl(requestOrderVo.getOrderVo().getOrdAddrDtl())
                 .ordTpCd(requestOrderVo.getOrderType())
                 .ordSysCcd(requestOrderVo.getSystemType())
-                .ordReqDtime(simpleDateFormat)
-                .ordCmtDtime(simpleDateFormat)
-                .rfndBnkCk(requestOrderVo.getPayInfoVo().getRfndBnkCk())
-                .rfndAcctNo(requestOrderVo.getPayInfoVo().getRfndAcctNo())
-                .rfndAcctOwnNm(requestOrderVo.getPayInfoVo().getRfndAcctOwnNm())
+                .ordReqDtime(now)
+                .ordCmtDtime(now)
+                .rfndBnkCk(requestOrderVo.getPayInfoVoList().get(0).getRfndBnkCk())
+                .rfndAcctNo(requestOrderVo.getPayInfoVoList().get(0).getRfndAcctNo())
+                .rfndAcctOwnNm(requestOrderVo.getPayInfoVoList().get(0).getRfndAcctOwnNm())
                 .build();
     }
     public OpOrdBaseModel eCouponPointPay(RequestOrderVo requestOrderVo) {
         return OpOrdBaseModel
                 .builder()
+                .ordNo(requestOrderVo.getOrderNo())
+                .mbrNo(requestOrderVo.getOrderVo().getMbrNo())
+                .ordNm(requestOrderVo.getOrderVo().getOrdNm())
+                .ordSellNo(requestOrderVo.getOrderVo().getOrdSellNo())
+                .ordAddr(requestOrderVo.getOrderVo().getOrdAddr())
+                .ordAddrDtl(requestOrderVo.getOrderVo().getOrdAddrDtl())
                 .ordTpCd(requestOrderVo.getOrderType())
                 .ordSysCcd(requestOrderVo.getSystemType())
-                .ordReqDtime(simpleDateFormat)
-                .ordCmtDtime(simpleDateFormat)
+                .ordReqDtime(now)
+                .ordCmtDtime(now)
                 .build();
     }
 }
