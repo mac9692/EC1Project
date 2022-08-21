@@ -2,51 +2,52 @@ package com.plateer.ec1.claim.creator.impl;
 
 import com.plateer.ec1.claim.creator.ClaimDataCreator;
 import com.plateer.ec1.claim.enums.CreatorType;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 
 public class GeneralOrderCancelDataCreator implements ClaimDataCreator {
     @Override
-    public CreatorType getType() {
-        return CreatorType.GENERALORDERCANCEL;
+    public String getType() {
+        return CreatorType.GENERALORDERCANCEL.getType();
     }
-//
-//    @Override
-//    public ClaimModel getInsertClaimData(Claim claim) {
-//        return null;
-//    }
-//
-//    @Override
-//    public ClaimModel getUpdateClaimData(Claim claim) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderBenefitData(Claim claim) {
-//
-//    }
-//
-//    @Override
-//    public ClaimModel insertOrderBenefitRelation(ClaimModel claimModel) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderCost(ClaimModel claimModel) {
-//
-//    }
-//
-//    @Override
-//    public ClaimModel insertOrderCost(ClaimModel claimModel) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderClaim(ClaimModel claimModel) {
-//
-//    }
-//
-//    @Override
-//    public ClaimModel insertOrderClaim(ClaimModel claimModel) {
-//        return null;
-//    }
+
+    @Override
+    public void getInsertClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void getUpdateClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderBenefitData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderBenefitRelation(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderCost(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderCost(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
 }

@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 public class ClaimDataCreatorFactory {
 
-    private Map<CreatorType, ClaimDataCreator> claimDataCreatorTypeMap = new LinkedHashMap<>();
+    private Map<String, ClaimDataCreator> claimDataCreatorTypeMap = new LinkedHashMap<>();
     private final List<ClaimDataCreator> claimDataCreatorList;
 
     public ClaimDataCreatorFactory(List<ClaimDataCreator> claimDataCreatorList) {
@@ -26,7 +26,7 @@ public class ClaimDataCreatorFactory {
         claimDataCreatorList.forEach(c -> claimDataCreatorTypeMap.put(c.getType(), c));
     }
 
-    public ClaimDataCreator getClaimDataCreator(CreatorType creatorType) {
+    public ClaimDataCreator getClaimDataCreator(String creatorType) {
         log.info("클레임 종류에 맞는 데이터생성기 호출");
         return claimDataCreatorTypeMap.get(creatorType);
     }

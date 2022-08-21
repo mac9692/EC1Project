@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface OrderMapper {
-
+    public String getOrderNo();
     public ProductVo getGoodsForValidate(OrderGoodsVo orderGoodsVo);
 }

@@ -7,10 +7,12 @@ import com.plateer.ec1.claim.helper.IFCallHelper;
 import com.plateer.ec1.claim.helper.MonitoringLogHelper;
 import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.ClaimDataVo;
+import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Slf4j
@@ -23,21 +25,23 @@ public class CompleteProcessor implements ClaimProcessor {
     private final IFCallHelper ifCallHelper;
 
     @Override
-    public ProcessorType getType() {
-        return ProcessorType.COMPLETE;
+    public String getType() {
+        return ProcessorType.COMPLETE.getType();
     }
 
+    @Transactional
     @Override
-    public void doProcess(Claim claim) {
-        log.info("취소 완료 프로세스 시작");
-        monitoringLogHelper.insertMonitoringLog(claim);
-        claimValidator.isValidStatus(claim);
-        ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(claim.getCreatorType());
-//        claimDataCreator.updateOrderClaim(new ClaimModel());
-//        claimDataCreator.getInsertClaimData(claim);
-        claimValidator.isValidAmount(claim);
-        ifCallHelper.callRestoreCoupon(claim);
-        ifCallHelper.callPaymentIF(claim);
-        monitoringLogHelper.updateMonitoringLog(1L, "abc");
+    public void doProcess(RequestClaimVo requestClaimVo) {
+        Long logSeq = monitoringLogHelper.insertMonitoringLog(requestClaimVo);
+        log.info(String.valueOf(logSeq));
+        claimValidator.isValidStatus(requestClaimVo);
+        ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
+        ClaimDataVo claimDataVo = new ClaimDataVo();
+        claimDataCreator.updateOrderClaimData(claimDataVo);
+        claimDataCreator.getInsertClaimData(claimDataVo);
+        claimValidator.isValidAmount(requestClaimVo);
+        ifCallHelper.callRestoreCoupon(requestClaimVo);
+        ifCallHelper.callPaymentIF(requestClaimVo);
+        monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
     }
 }

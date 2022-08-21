@@ -1,25 +1,24 @@
 package com.plateer.ec1.claim.creator;
 
-import com.plateer.ec1.claim.enums.CreatorType;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 
 public interface ClaimDataCreator {
 
-    CreatorType getType();
+    String getType();
 //
-//    void getInsertClaimData(Claim claim);
-//
-//    void getUpdateClaimData(Claim claim);
-//
-//    void updateOrderBenefitData(Claim claim);
-//
-//    void insertOrderBenefitRelation(Claim claim);
-//
-//    void updateOrderCost(Claim claim);
-//
-//    void insertOrderCost(Claim claim);
-//
-//    void updateOrderClaim(Claim claim);
-//
-//    void insertOrderClaim(Claim claim);
+    void getInsertClaimData(ClaimDataVo claimDataVo);
+
+    void getUpdateClaimData(ClaimDataVo claimDataVo);
+
+    void updateOrderBenefitData(ClaimDataVo claimDataVo);
+
+    void insertOrderBenefitRelation(ClaimDataVo claimDataVo);
+
+    void updateOrderCost(ClaimDataVo claimDataVo);
+
+    void insertOrderCost(ClaimDataVo claimDataVo);
+
+    void updateOrderClaimData(ClaimDataVo claimDataVo);
+
+    void insertOrderClaimData(ClaimDataVo claimDataVo);
 }

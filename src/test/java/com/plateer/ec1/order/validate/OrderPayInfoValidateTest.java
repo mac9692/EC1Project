@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
 @SpringBootTest
 public class OrderPayInfoValidateTest {
@@ -152,7 +154,8 @@ public class OrderPayInfoValidateTest {
     void orderRequestPayInfoVoRfndBnkCkTest() {
         requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("환불은행코드는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -160,7 +163,8 @@ public class OrderPayInfoValidateTest {
     void orderRequestPayInfoVoRfndAcctNoTest() {
         requestOrderVo.getPayInfoVoList().get(0).setRfndAcctNo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("환불은행계좌번호는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -168,6 +172,7 @@ public class OrderPayInfoValidateTest {
     void orderRequestPayInfoVoRfndAcctOwnNmTest() {
         requestOrderVo.getPayInfoVoList().get(0).setRfndAcctOwnNm(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("환불은행예금주는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 }

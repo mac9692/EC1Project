@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
 @SpringBootTest
 public class OrderBasicValidateTest {
@@ -148,7 +150,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrdNoNullTest() {
         requestOrderVo.setOrderNo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderNo 는 Null, \"\", \" \" 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -156,7 +159,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrderVoNullTest() {
         requestOrderVo.setOrderVo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderVo 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -164,7 +168,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrderGoodsVoListNullTest() {
         requestOrderVo.setOrderGoodsVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderGoodsVoList 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -172,7 +177,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrderBenefitVoListNullTest() {
         requestOrderVo.setOrderBenefitVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderBenefitVoList 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -180,7 +186,8 @@ public class OrderBasicValidateTest {
     void orderRequestDeliveryAddressVoListNullTest() {
         requestOrderVo.setDeliveryAddressVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("deliveryAddressVoList 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -188,7 +195,8 @@ public class OrderBasicValidateTest {
     void orderRequestPayInfoVoListNullTest() {
         requestOrderVo.setPayInfoVoList(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("payInfoVo 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -196,7 +204,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrderTypeListNullTest() {
         requestOrderVo.setOrderType(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderType 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -204,7 +213,8 @@ public class OrderBasicValidateTest {
     void orderRequestSystemTypeNullTest() {
         requestOrderVo.setSystemType(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("systemType 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -212,7 +222,8 @@ public class OrderBasicValidateTest {
     void orderRequestMbrNoNullTest() {
         requestOrderVo.getOrderVo().setMbrNo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("mbrNo 는 Null, \"\", \" \" 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -220,7 +231,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrdSellNoNullTest() {
         requestOrderVo.getOrderVo().setOrdSellNo(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("ordSellNo 는 Null, \"\", \" \" 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -228,7 +240,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrdAddrNullTest() {
         requestOrderVo.getOrderVo().setOrdAddr(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("ordAddr 는 Null, \"\", \" \" 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -236,7 +249,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrdAddrDtlNullTest() {
         requestOrderVo.getOrderVo().setOrdAddrDtl(null);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("ordAddrDtl 는 Null, \"\", \" \" 입력이 불가능합니다.", violations.iterator().next().getMessage());;
     }
 
     @Test
@@ -244,7 +258,8 @@ public class OrderBasicValidateTest {
     void orderRequestOrderCountMinTest() {
         requestOrderVo.getOrderGoodsVoList().get(0).setOrderCount(0);
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("주문 수량 개수는 0개 이상으로 입력하세요.", violations.iterator().next().getMessage());
     }
 
     @Test
@@ -252,6 +267,7 @@ public class OrderBasicValidateTest {
     void orderRequestPayInfoVoRfndBnkCkTest() {
         requestOrderVo.getPayInfoVoList().get(0).setRfndBnkCk("05");
         Set<ConstraintViolation<RequestOrderVo>> violations = validator.validate(requestOrderVo);
-        Assertions.assertThat(violations).isNotEmpty();
+        assertEquals(1, violations.size());
+        assertEquals("orderBenefitVoList 는 Null 입력이 불가능합니다.", violations.iterator().next().getMessage());
     }
 }

@@ -1,7 +1,5 @@
 package com.plateer.ec1.order.vo.request;
 
-import com.plateer.ec1.order.enums.AfterStrategyType;
-import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.DeliveryAddressVo;
 import com.plateer.ec1.order.vo.OrderBenefitVo;
 import com.plateer.ec1.order.vo.OrderGoodsVo;

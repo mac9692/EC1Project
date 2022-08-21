@@ -1,22 +1,17 @@
 package com.plateer.ec1.springtest;
 
 import com.plateer.ec1.claim.creator.ClaimDataCreator;
-import com.plateer.ec1.claim.enums.CreatorType;
-import com.plateer.ec1.claim.enums.ProcessorType;
 import com.plateer.ec1.claim.factory.ClaimDataCreatorFactory;
 import com.plateer.ec1.claim.factory.ClaimProcessorFactory;
 import com.plateer.ec1.claim.processor.ClaimProcessor;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.factory.PaymentServiceFactory;
 import com.plateer.ec1.payment.service.PaymentService;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -34,6 +29,17 @@ public class SpringTest {
 
     @Autowired
     ClaimProcessorFactory claimProcessorFactory;
+
+    RequestClaimVo requestClaimVo;
+
+    @BeforeEach
+    void init() {
+        requestClaimVo = RequestClaimVo
+                .builder()
+                .creatorType("10")
+                .processorType("20")
+                .build();
+    }
 
     @Test
     @DisplayName("1. 빈 싱글톤 확인 테스트")
@@ -54,13 +60,10 @@ public class SpringTest {
         log.info("결제 팩토리 테스트 종료");
 
         log.info("클레임 팩토리 테스트 시작");
-        Claim claim = new Claim();
-        claim.setProcessorType(ProcessorType.ACCEPT_WITHDRAWAL);
-        claim.setCreatorType(CreatorType.ECOUPONCANCELACCEPT);
-        ClaimProcessor claimProcessor1 = claimProcessorFactory.getClaimProcessor(claim.getProcessorType());
-        ClaimProcessor claimProcessor2 = claimProcessorFactory.getClaimProcessor(claim.getProcessorType());
-        ClaimDataCreator claimDataCreator1 = claimDataCreatorFactory.getClaimDataCreator(claim.getCreatorType());
-        ClaimDataCreator claimDataCreator2 = claimDataCreatorFactory.getClaimDataCreator(claim.getCreatorType());
+        ClaimProcessor claimProcessor1 = claimProcessorFactory.getClaimProcessor(requestClaimVo.getProcessorType());
+        ClaimProcessor claimProcessor2 = claimProcessorFactory.getClaimProcessor(requestClaimVo.getProcessorType());
+        ClaimDataCreator claimDataCreator1 = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
+        ClaimDataCreator claimDataCreator2 = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
         log.info(String.valueOf(claimProcessor1));
         log.info(String.valueOf(claimProcessor2));
         log.info(String.valueOf(claimDataCreator1));

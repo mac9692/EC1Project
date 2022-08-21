@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.plateer.ec1.claim.mapper.ClaimMapper">
+    <select id="getOrderNo" resultType="string">
+        SELECT CONCAT('O', TO_CHAR(NOW(), 'YYMMDDHH24'), NEXTVAL('nextval_ord_no'))
+    </select>
+
+    <select id="getGoodsForValidate" parameterType="com.plateer.ec1.claim.vo.OrderClaimInfoVo" resultType="com.plateer.ec1.product.vo.ProductVo">
+        SELECT goods_tp_cd,
+               prgs_stat_cd
+          FROM pr_goods_base
+         WHERE goods_no = #{goodsNo}
+    </select>
+</mapper>

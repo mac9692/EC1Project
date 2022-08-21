@@ -1,6 +1,7 @@
 package com.plateer.ec1.order.service.impl;
 
 import com.plateer.ec1.order.creator.OrderModelCreator;
+import com.plateer.ec1.order.mapper.OrderMapper;
 import com.plateer.ec1.order.mapper.OrderTrxMapper;
 import com.plateer.ec1.order.service.OrderContext;
 import com.plateer.ec1.order.service.OrderHistoryService;
@@ -23,9 +24,11 @@ public class OrderContextImpl implements OrderContext {
     private final OrderModelCreator orderModelCreator;
     private final PayService payService;
     private final OrderDataInsertProcessor orderDataInsertProcessor;
+    private final OrderMapper orderMapper;
 
     @Transactional
     public void execute(DataStrategy dataStrategy, AfterStrategy afterStrategy, RequestOrderVo requestOrderVo) {
+        setOrderNo(requestOrderVo);
         //주문 모니터링 로그 생성
         orderHistoryService.insertOrderHistory(requestOrderVo);
         Long historyNo = requestOrderVo.getLogSeq();
@@ -49,6 +52,9 @@ public class OrderContextImpl implements OrderContext {
         orderHistoryService.updateOrderHistory(historyNo, orderDataVo);
     }
 
+    private void setOrderNo(RequestOrderVo requestOrderVo) {
+        requestOrderVo.setOrderNo(orderMapper.getOrderNo());
+    }
 
 
     private void amountValidation(String orderNo) {

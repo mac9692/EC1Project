@@ -2,6 +2,16 @@ package com.plateer.ec1.common.code.order;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * 주문진행상태코드
+ * 주문완료
+ * 취소요청
+ * 취소완료
+ * 배송완료
+ * 반품접수
+ * 주문대기
+ * 반품철회완
+ */
 @AllArgsConstructor
 public enum OPT0004 {
     ORDER_COMPLETE("10"),

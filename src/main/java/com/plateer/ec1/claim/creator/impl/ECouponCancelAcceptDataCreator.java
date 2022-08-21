@@ -2,7 +2,7 @@ package com.plateer.ec1.claim.creator.impl;
 
 import com.plateer.ec1.claim.creator.ClaimDataCreator;
 import com.plateer.ec1.claim.enums.CreatorType;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,48 +10,49 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ECouponCancelAcceptDataCreator implements ClaimDataCreator {
     @Override
-    public CreatorType getType() {
-        return CreatorType.ECOUPONCANCELACCEPT;
+    public String getType() {
+        return CreatorType.ECOUPONCANCELACCEPT.getType();
     }
-//
-//    @Override
-//    public void getInsertClaimData(Claim claim) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void getUpdateClaimData(Claim claim) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderBenefitData(Claim claim) {
-//
-//    }
-//
-//    @Override
-//    public void insertOrderBenefitRelation(ClaimModel claimModel) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderCost(ClaimModel claimModel) {
-//
-//    }
-//
-//    @Override
-//    public void insertOrderCost(ClaimModel claimModel) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void updateOrderClaim(ClaimModel claimModel) {
-//
-//    }
-//
-//    @Override
-//    public void insertOrderClaim(ClaimModel claimModel) {
-//        return null;
-//    }
+
+    @Override
+    public void getInsertClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void getUpdateClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderBenefitData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderBenefitRelation(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderCost(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderCost(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void updateOrderClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
+    @Override
+    public void insertOrderClaimData(ClaimDataVo claimDataVo) {
+
+    }
+
 
 }

@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.order.mapper.OrderTrxMapper">
     <insert id="insertOrderHistory" parameterType="com.plateer.ec1.order.vo.request.RequestOrderVo">
-        <selectKey keyProperty="logSeq" resultType="long" order="AFTER">
-            select currval('op_ord_clm_mnt_log_log_seq_seq')
+        <selectKey keyProperty="logSeq" resultType="long" order="BEFORE">
+            SELECT NEXTVAL('op_ord_clm_mnt_log_log_seq_seq')
         </selectKey>
         INSERT INTO op_ord_clm_mnt_log
         (
@@ -13,7 +13,7 @@
         )
         VALUES
         (
-        nextval('op_ord_clm_mnt_log_log_seq_seq'), #{orderNo}, (#{json})::json,
+        #{logSeq}, #{orderNo}, (#{json})::json,
         now(), 'admin', now(), 'admin'
         )
     </insert>

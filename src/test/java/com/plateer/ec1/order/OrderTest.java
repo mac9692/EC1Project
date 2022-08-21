@@ -1,13 +1,10 @@
 package com.plateer.ec1.order;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
 import com.plateer.ec1.order.controller.OrderController;
-import com.plateer.ec1.order.enums.AfterStrategyType;
-import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
 import com.plateer.ec1.payment.enums.PaymentType;
@@ -18,13 +15,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.validation.BindingResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
@@ -40,7 +35,7 @@ public class OrderTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    static RequestOrderVo requestOrderVo;
+    RequestOrderVo requestOrderVo;
 
     @BeforeEach
     void init() {

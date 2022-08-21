@@ -24,12 +24,12 @@ public class PayInfoVo {
     @NotNull
     private String depositorName;
 
-    @NotNull
+    @NotNull(message = "환불은행코드는 Null 입력이 불가능합니다.")
     private String rfndBnkCk;
 
-    @NotNull
+    @NotNull(message = "환불은행계좌번호는 Null 입력이 불가능합니다.")
     private String rfndAcctNo;
 
-    @NotNull
+    @NotNull(message = "환불은행예금주는 Null 입력이 불가능합니다.")
     private String rfndAcctOwnNm;
 }

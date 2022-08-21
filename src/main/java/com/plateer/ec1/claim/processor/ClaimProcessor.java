@@ -1,11 +1,10 @@
 package com.plateer.ec1.claim.processor;
 
-import com.plateer.ec1.claim.enums.ProcessorType;
-import com.plateer.ec1.claim.vo.Claim;
+import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 
 public interface ClaimProcessor {
 
-    ProcessorType getType();
+    String getType();
 
-    void doProcess(Claim claim);
+    void doProcess(RequestClaimVo requestClaimVo);
 }
