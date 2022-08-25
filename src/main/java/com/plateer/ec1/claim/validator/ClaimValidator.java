@@ -8,14 +8,11 @@ import com.plateer.ec1.product.vo.ProductVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 클레임 진행 시 validation을 합니다.(상품 유형, 주문진행상태)
@@ -35,10 +32,10 @@ public class ClaimValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         RequestClaimVo requestClaimVo = (RequestClaimVo) target;
-        doProductValidate(errors, requestClaimVo);
+        isValidProduct(errors, requestClaimVo);
     }
 
-    private void doProductValidate(Errors errors, RequestClaimVo requestClaimVo) {
+    private void isValidProduct(Errors errors, RequestClaimVo requestClaimVo) {
         List<OrderClaimInfoVo> orderClaimInfoVoList = requestClaimVo.getOrderClaimInfoVoList();
         List<ProductVo> productVoList = new ArrayList<>();
         orderClaimInfoVoList.forEach(orderClaimInfoVo -> productVoList.add(claimMapper.getGoodsForValidate(orderClaimInfoVo)));
@@ -53,17 +50,13 @@ public class ClaimValidator implements Validator {
         }
     }
 
-
     public void isValidStatus(RequestClaimVo requestClaimVo) {
-        log.info("검증 시작 : 상태 검증");
     }
 
     public void isValidAmount(RequestClaimVo requestClaimVo) {
-        log.info("검증 시작 : 금액 검증");
     }
 
-    public void verifyAmount(RequestClaimVo requestClaimVo) {
-        log.info("검증 시작 : 재고 검증");
+    public void isVerifyAmount(RequestClaimVo requestClaimVo) {
     }
 
 }

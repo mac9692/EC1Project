@@ -18,4 +18,7 @@ public class OrderClaimInfoVo {
 
     @NotBlank(message = "goodsNo 은 Null, \"\", \" \" 입력이 불가능합니다.")
     private String goodsNo;
+
+    @NotBlank(message = "itemNo 은 Null, \"\", \" \" 입력이 불가능합니다.")
+    private String itemNo;
 }

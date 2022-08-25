@@ -45,7 +45,6 @@ public class OpClmInfoModel {
     private Timestamp now = new Timestamp(System.currentTimeMillis());
 
     public OpClmInfoModel generalVirtualAccountUnPay(OrderGoodsVo orderGoodsVo, CombinedDeliveryVo combinedDeliveryVo) {
-
         return OpClmInfoModel
                 .builder()
                 .ordGoodsNo(orderGoodsVo.getOrdGoodsNo())
