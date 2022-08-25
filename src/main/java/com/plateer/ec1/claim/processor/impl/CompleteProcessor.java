@@ -36,10 +36,10 @@ public class CompleteProcessor implements ClaimProcessor {
         log.info(String.valueOf(logSeq));
         claimValidator.isValidStatus(requestClaimVo);
         ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
-        ClaimDataVo claimDataVo = claimDataCreator.doProcess(requestClaimVo);
+        String updateMonitoringData = claimDataCreator.doProcess(requestClaimVo);
         claimValidator.isValidAmount(requestClaimVo);
         ifCallHelper.callRestoreCoupon(requestClaimVo);
         ifCallHelper.callPaymentIF(requestClaimVo);
-        monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
+        monitoringLogHelper.updateMonitoringLog(logSeq, updateMonitoringData);
     }
 }

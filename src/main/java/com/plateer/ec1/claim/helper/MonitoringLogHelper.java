@@ -22,7 +22,7 @@ public class MonitoringLogHelper {
         return opOrdClmMntLogModel.getLogSeq();
     }
 
-    public void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
+    public void updateMonitoringLog(Long logSeq, String updateMonitoringData) {
         log.info("모니터링 로그 UPDATE");
     }
 }
