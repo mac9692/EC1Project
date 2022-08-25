@@ -1,24 +1,19 @@
 package com.plateer.ec1.claim.creator;
 
 import com.plateer.ec1.claim.vo.ClaimDataVo;
+import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 
 public interface ClaimDataCreator {
 
     String getType();
-//
-    void getInsertClaimData(ClaimDataVo claimDataVo);
 
-    void getUpdateClaimData(ClaimDataVo claimDataVo);
+    ClaimDataVo getInsertClaimData(RequestClaimVo requestClaimVo);
 
-    void updateOrderBenefitData(ClaimDataVo claimDataVo);
+    ClaimDataVo getUpdateClaimData(RequestClaimVo requestClaimVo);
 
-    void insertOrderBenefitRelation(ClaimDataVo claimDataVo);
+    void insertClaimData(ClaimDataVo claimDataVo);
 
-    void updateOrderCost(ClaimDataVo claimDataVo);
+    void updateClaimData(ClaimDataVo claimDataVo);
 
-    void insertOrderCost(ClaimDataVo claimDataVo);
-
-    void updateOrderClaimData(ClaimDataVo claimDataVo);
-
-    void insertOrderClaimData(ClaimDataVo claimDataVo);
+    ClaimDataVo doProcess(RequestClaimVo requestClaimVo);
 }

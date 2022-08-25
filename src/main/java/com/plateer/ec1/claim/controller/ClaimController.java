@@ -20,14 +20,13 @@ public class ClaimController {
     private final ClaimValidator claimValidator;
     private final ClaimService claimService;
 
-
     @InitBinder
     public void init(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(claimValidator);
     }
 
     @PostMapping(path = "claim")
-    public ResponseClaimVo claim(@Validated @RequestBody RequestClaimVo requestClaimVo, BindingResult bindingResult) {
+    public ResponseClaimVo claim(@RequestBody @Validated RequestClaimVo requestClaimVo, BindingResult bindingResult) {
         ResponseClaimVo responseClaimVo = new ResponseClaimVo();
         if (bindingResult.hasErrors()) {
             responseClaimVo.setObjectErrorList(bindingResult.getAllErrors());

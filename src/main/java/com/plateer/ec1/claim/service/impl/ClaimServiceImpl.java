@@ -17,7 +17,6 @@ public class ClaimServiceImpl implements ClaimService {
 
     @Override
     public void claim(RequestClaimVo requestClaimVo) {
-        log.info("클레임 서비스 호출");
         ClaimProcessor claimProcessor = claimFactory.getClaimProcessor(requestClaimVo.getProcessorType());
         claimProcessor.doProcess(requestClaimVo);
     }

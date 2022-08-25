@@ -27,7 +27,6 @@ public class ClaimDataCreatorFactory {
     }
 
     public ClaimDataCreator getClaimDataCreator(String creatorType) {
-        log.info("클레임 종류에 맞는 데이터생성기 호출");
         return claimDataCreatorTypeMap.get(creatorType);
     }
 }

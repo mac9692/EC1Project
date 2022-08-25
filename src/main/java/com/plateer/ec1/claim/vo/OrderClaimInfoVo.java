@@ -11,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 public class OrderClaimInfoVo {
     private String claimId;
     private String goodsName;
+    private String cmnCd;
     private Long originalPrice;
     private Long SalePrice;
     private Long count;

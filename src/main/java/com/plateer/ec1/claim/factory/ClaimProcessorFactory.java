@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 public class ClaimProcessorFactory {
 
-    private Map<String, ClaimProcessor> claimTypeMap = new LinkedHashMap<>();
+    private Map<String, ClaimProcessor> claimProcessorTypeMap = new LinkedHashMap<>();
     private final List<ClaimProcessor> claimProcessorList;
 
     public ClaimProcessorFactory(List<ClaimProcessor> claimProcessorList) {
@@ -23,11 +23,10 @@ public class ClaimProcessorFactory {
 
     @PostConstruct
     public void init() {
-        claimProcessorList.forEach(c -> claimTypeMap.put(c.getType(), c));
+        claimProcessorList.forEach(c -> claimProcessorTypeMap.put(c.getType(), c));
     }
 
     public ClaimProcessor getClaimProcessor(String processorType) {
-        log.info("클레임 종류에 맞는 프로세서 호출");
-        return claimTypeMap.get(processorType);
+        return claimProcessorTypeMap.get(processorType);
     }
 }
