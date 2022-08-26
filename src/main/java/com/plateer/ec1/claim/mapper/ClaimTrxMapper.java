@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ClaimTrxMapper {
-    public Long insertMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
+    Long insertMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
 
-    public Long updateMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
+    void updateMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
 }

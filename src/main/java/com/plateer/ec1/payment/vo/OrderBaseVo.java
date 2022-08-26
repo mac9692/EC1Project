@@ -24,7 +24,6 @@ public class OrderBaseVo {
     private String vrBnkCd;
     private String vrValDt;
     private String vrValTt;
-
     private String rfndBnkCk;
     private String rfndAcctNo;
     private String rfndAcctOwnNm;

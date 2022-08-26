@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class OpOrdBnfInfoModel {
 
     private String ordBnfNo;

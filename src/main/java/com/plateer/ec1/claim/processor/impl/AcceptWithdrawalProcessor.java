@@ -36,7 +36,7 @@ public class AcceptWithdrawalProcessor implements ClaimProcessor {
         log.info(String.valueOf(logSeq));
         claimValidator.isValidStatus(requestClaimVo);
         ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
-        ClaimDataVo claimDataVo = new ClaimDataVo();
+        ClaimDataVo claimDataVo = claimDataCreator.doProcess(requestClaimVo);
         monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
     }
 }

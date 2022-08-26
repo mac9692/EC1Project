@@ -23,7 +23,7 @@ public abstract class AbstractClaimDataCreator implements ClaimDataCreator {
                 .opOrdCostInfoModelList(claimMapper.getOpOrdCostInfoModelList(requestClaimVo))
                 .opOrdBnfRelInfoModelList(claimMapper.getOpOrdBnfRelInfoModelList(requestClaimVo))
                 .opOrdBnfInfoModelList(claimMapper.getOpOrdBnfInfoModelList(requestClaimVo))
-                .opPayInfoModelList(claimMapper.getOpPayInfoModelList(requestClaimVo))
+//                .opPayInfoModelList(claimMapper.getOpPayInfoModelList(requestClaimVo))
                 .build();
     }
 

@@ -33,13 +33,12 @@ public class CompleteProcessor implements ClaimProcessor {
     @Override
     public void doProcess(RequestClaimVo requestClaimVo) {
         Long logSeq = monitoringLogHelper.insertMonitoringLog(requestClaimVo);
-        log.info(String.valueOf(logSeq));
         claimValidator.isValidStatus(requestClaimVo);
         ClaimDataCreator claimDataCreator = claimDataCreatorFactory.getClaimDataCreator(requestClaimVo.getCreatorType());
-        String updateMonitoringData = claimDataCreator.doProcess(requestClaimVo);
+        ClaimDataVo claimDataVo = claimDataCreator.doProcess(requestClaimVo);
         claimValidator.isValidAmount(requestClaimVo);
         ifCallHelper.callRestoreCoupon(requestClaimVo);
         ifCallHelper.callPaymentIF(requestClaimVo);
-        monitoringLogHelper.updateMonitoringLog(logSeq, updateMonitoringData);
+        monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
     }
 }

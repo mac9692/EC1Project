@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class OpOrdCostInfoModel {
 
     private String ordCstNo;

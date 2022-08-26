@@ -1,5 +1,6 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import com.plateer.ec1.utils.Utils;
 import lombok.*;
@@ -29,6 +30,14 @@ public class OpOrdClmMntLogModel {
                 .builder()
                 .ordNo(requestClaimVo.getOrderNo())
                 .reqPram(Utils.convertObjectToJson(requestClaimVo))
+                .build();
+    }
+
+    public OpOrdClmMntLogModel updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
+        return OpOrdClmMntLogModel
+                .builder()
+                .logSeq(logSeq)
+                .insData(Utils.convertObjectToJson(claimDataVo))
                 .build();
     }
 }

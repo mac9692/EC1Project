@@ -40,6 +40,7 @@ public class ClaimTest {
     void init() {
         OrderClaimInfoVo orderClaimInfoVo = new OrderClaimInfoVo();
         orderClaimInfoVo.setGoodsNo("P001");
+        orderClaimInfoVo.setItemNo("1");
 
         List<OrderClaimInfoVo> orderClaimInfoVoList = new ArrayList<>();
         orderClaimInfoVoList.add(orderClaimInfoVo);
@@ -48,7 +49,7 @@ public class ClaimTest {
 
         requestClaimVo = RequestClaimVo
                 .builder()
-                .orderNo("O220812091000004")
+                .orderNo("O220826001000008")
                 .creatorType("10")
                 .processorType("20")
                 .orderClaimInfoVoList(orderClaimInfoVoList)
@@ -61,7 +62,7 @@ public class ClaimTest {
 
     @Test
     @DisplayName("1. 일반상품주문취소완료 테스트")
-    void gccTest2() throws Exception {
+    void gccTest1() throws Exception {
         String jsonData = objectMapper.writeValueAsString(requestClaimVo);
         mockMvc.perform(
                         post("/api/claim")
@@ -70,5 +71,4 @@ public class ClaimTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
 }

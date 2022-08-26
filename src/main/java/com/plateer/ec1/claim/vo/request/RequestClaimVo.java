@@ -29,4 +29,7 @@ public class RequestClaimVo {
     private Long prodAmt;
     private Long rfndAmt;
     private Long dlvAmt;
+
+    @NotNull(message = "isAllGrpChecked 는 Null 입력이 불가능합니다.")
+    private boolean isAllGrpChecked;
 }

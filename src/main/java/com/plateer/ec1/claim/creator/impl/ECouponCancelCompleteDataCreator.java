@@ -26,20 +26,21 @@ public class ECouponCancelCompleteDataCreator extends AbstractClaimDataCreator i
     }
 
     @Override
-    public String doProcess(RequestClaimVo requestClaimVo) {
+    public ClaimDataVo doProcess(RequestClaimVo requestClaimVo) {
+        ClaimDataVo insertClaimData = super.getInsertClaimData(requestClaimVo);
+        ClaimDataVo updateClaimData = super.getUpdateClaimData(requestClaimVo);
+        return insertClaimData;
+    }
+
+    @Override
+    public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         return null;
+
     }
 
     @Override
-    public ClaimDataVo insertClaimData(RequestClaimVo requestClaimVo) {
-        ClaimDataVo claimDataVo = super.getInsertClaimData(requestClaimVo);
-        return claimDataVo;
-    }
-
-    @Override
-    public ClaimDataVo updateClaimData(RequestClaimVo requestClaimVo) {
-        ClaimDataVo claimDataVo = super.getUpdateClaimData(requestClaimVo);
-        return claimDataVo;
+    public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
+        return null;
     }
 
 }

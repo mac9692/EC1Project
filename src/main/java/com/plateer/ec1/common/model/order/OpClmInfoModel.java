@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class OpClmInfoModel {
 
     private String ordNo;

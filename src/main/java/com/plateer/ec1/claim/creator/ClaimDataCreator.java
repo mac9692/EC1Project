@@ -7,13 +7,13 @@ public interface ClaimDataCreator {
 
     String getType();
 
-    String doProcess(RequestClaimVo requestClaimVo);
+    ClaimDataVo doProcess(RequestClaimVo requestClaimVo);
 
     ClaimDataVo getInsertClaimData(RequestClaimVo requestClaimVo);
 
     ClaimDataVo getUpdateClaimData(RequestClaimVo requestClaimVo);
 
-    ClaimDataVo insertClaimData(RequestClaimVo requestClaimVo);
+    ClaimDataVo insertClaimData(ClaimDataVo claimDataVo);
 
-    ClaimDataVo updateClaimData(RequestClaimVo requestClaimVo);
+    ClaimDataVo updateClaimData(ClaimDataVo claimDataVo);
 }
