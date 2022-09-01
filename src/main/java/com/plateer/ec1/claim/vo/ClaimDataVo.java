@@ -12,6 +12,8 @@ import java.util.List;
 @Getter
 @Setter
 public class ClaimDataVo {
+    private String orderNo;
+    private String claimNo;
     private List<OpClmInfoModel> opClmInfoModelList;
     private List<OpOrdCostInfoModel> opOrdCostInfoModelList;
     private List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList;

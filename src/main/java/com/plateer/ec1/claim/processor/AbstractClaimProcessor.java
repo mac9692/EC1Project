@@ -42,6 +42,7 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
     public ClaimDataVo getClaimData(RequestClaimVo requestClaimVo) {
         return ClaimDataVo
                 .builder()
+                .orderNo(requestClaimVo.getOrderNo())
                 .opClmInfoModelList(claimMapper.getOpClmInfoModelList(requestClaimVo))
                 .opOrdCostInfoModelList(claimMapper.getOpOrdCostInfoModelList(requestClaimVo))
                 .opOrdBnfRelInfoModelList(claimMapper.getOpOrdBnfRelInfoModelList(requestClaimVo))

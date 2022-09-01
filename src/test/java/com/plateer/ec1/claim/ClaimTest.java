@@ -50,7 +50,6 @@ public class ClaimTest {
         requestClaimVo = RequestClaimVo
                 .builder()
                 .orderNo("O220826001000008")
-                .creatorType("10")
                 .processorType("20")
                 .orderClaimInfoVoList(orderClaimInfoVoList)
                 .deliveryInfoVoList(deliveryInfoVoList)

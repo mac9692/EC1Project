@@ -12,4 +12,6 @@ public interface ClaimTrxMapper {
     Long insertMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
 
     void updateMonitoringLog(OpOrdClmMntLogModel opOrdClmMntLogModel);
+
+    void insertOpClmInfo(List<OpClmInfoModel> opClmInfoModelList);
 }

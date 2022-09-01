@@ -63,7 +63,6 @@ public class ClaimValidateTest {
         requestClaimVo = RequestClaimVo
                 .builder()
                 .orderNo("O220812091000004")
-                .creatorType("10")
                 .processorType("10")
                 .orderClaimInfoVoList(orderClaimInfoVoList)
                 .deliveryInfoVoList(deliveryInfoVoList)

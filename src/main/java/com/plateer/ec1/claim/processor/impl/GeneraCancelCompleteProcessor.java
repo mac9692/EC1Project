@@ -24,7 +24,6 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
 
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
-        System.out.println("제발성공");
         String claimNumber = getClaimNumber();
         long logSeq = insertMonitoringLog(requestClaimVo);
         if (isValidStatus(requestClaimVo)) {

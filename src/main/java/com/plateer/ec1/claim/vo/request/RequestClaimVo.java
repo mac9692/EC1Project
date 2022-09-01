@@ -19,7 +19,6 @@ public class RequestClaimVo {
     @NotBlank(message = "orderNo 는 Null, \"\", \" \" 입력이 불가능합니다.")
     private String orderNo;
     private String claimNo;
-    private String creatorType;
     private String processorType;
 
     @Valid
