@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class IFCallHelper {
 
+    public void callRestoreInventory(RequestClaimVo requestClaimVo) {
+        log.info("재고 복원 API 호출");
+    }
+
     public void callRestoreCoupon(RequestClaimVo requestClaimVo) {
         log.info("쿠폰 복원 API 호출");
     }

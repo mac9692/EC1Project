@@ -12,12 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class ClaimServiceImpl implements ClaimService {
-
-    private final ClaimProcessorFactory claimFactory;
+    private final ClaimProcessorFactory claimProcessorFactory;
 
     @Override
     public void claim(RequestClaimVo requestClaimVo) {
-        ClaimProcessor claimProcessor = claimFactory.getClaimProcessor(requestClaimVo.getProcessorType());
+        ClaimProcessor claimProcessor = claimProcessorFactory.getClaimProcessor(requestClaimVo.getCreatorType());
         claimProcessor.doProcess(requestClaimVo);
     }
 }

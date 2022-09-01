@@ -3,6 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.claim.mapper.ClaimMapper">
+    <select id="getClaimNo" resultType="string">
+        SELECT CONCAT('C', TO_CHAR(NOW(), 'YYMMDDHH24'), NEXTVAL('nextval_clm_no'))
+    </select>
+
     <select id="getGoodsForValidate" parameterType="com.plateer.ec1.claim.vo.OrderClaimInfoVo" resultType="com.plateer.ec1.product.vo.ProductVo">
         SELECT goods_tp_cd,
                prgs_stat_cd

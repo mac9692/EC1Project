@@ -16,5 +16,4 @@ public class ClaimDataVo {
     private List<OpOrdCostInfoModel> opOrdCostInfoModelList;
     private List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList;
     private List<OpOrdBnfInfoModel> opOrdBnfInfoModelList;
-    private List<OpPayInfoModel> opPayInfoModelList;
 }

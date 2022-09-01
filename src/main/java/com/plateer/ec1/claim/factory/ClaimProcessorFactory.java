@@ -1,8 +1,7 @@
 package com.plateer.ec1.claim.factory;
 
-import com.plateer.ec1.claim.enums.ProcessorType;
+
 import com.plateer.ec1.claim.processor.ClaimProcessor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -11,9 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@Slf4j
 public class ClaimProcessorFactory {
-
     private Map<String, ClaimProcessor> claimProcessorTypeMap = new LinkedHashMap<>();
     private final List<ClaimProcessor> claimProcessorList;
 

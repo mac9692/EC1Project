@@ -12,6 +12,8 @@ import java.util.List;
 @Mapper
 public interface ClaimMapper {
     public String getOrderNo();
+
+    public String getClaimNo();
     public ProductVo getGoodsForValidate(OrderClaimInfoVo orderClaimInfoVo);
     public List<OpClmInfoModel> getOpClmInfoModelList(RequestClaimVo requestClaimVo);
     public List<OpOrdCostInfoModel> getOpOrdCostInfoModelList(RequestClaimVo requestClaimVo);

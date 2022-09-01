@@ -50,13 +50,12 @@ public class ClaimValidator implements Validator {
         }
     }
 
-    public void isValidStatus(RequestClaimVo requestClaimVo) {
+    public boolean isValidStatus(RequestClaimVo requestClaimVo) {
+        return true;
     }
 
-    public void isValidAmount(RequestClaimVo requestClaimVo) {
-    }
-
-    public void isVerifyAmount(RequestClaimVo requestClaimVo) {
+    public boolean isValidAmount(RequestClaimVo requestClaimVo) {
+        return true;
     }
 
 }

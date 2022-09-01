@@ -22,8 +22,8 @@ public class MonitoringLogHelper {
         return opOrdClmMntLogModel.getLogSeq();
     }
 
-    public void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
-        OpOrdClmMntLogModel opOrdClmMntLogModel = new OpOrdClmMntLogModel().updateMonitoringLog(logSeq, claimDataVo);
+    public void updateMonitoringLog(Long logSeq, RequestClaimVo requestClaimVo) {
+        OpOrdClmMntLogModel opOrdClmMntLogModel = new OpOrdClmMntLogModel().updateMonitoringLog(logSeq, requestClaimVo);
         claimTrxMapper.updateMonitoringLog(opOrdClmMntLogModel);
     }
 }
