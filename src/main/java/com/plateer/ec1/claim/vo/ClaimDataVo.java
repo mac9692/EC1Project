@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ClaimDataVo {
+    private Long logSeq;
     private String orderNo;
     private String claimNo;
     private List<OpClmInfoModel> opClmInfoModelList;

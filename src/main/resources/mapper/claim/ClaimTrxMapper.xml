@@ -3,14 +3,17 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.plateer.ec1.claim.mapper.ClaimTrxMapper">
-    <insert id="insertMonitoringLog" parameterType="com.plateer.ec1.common.model.order.OpOrdClmMntLogModel" useGeneratedKeys="true" keyProperty="logSeq">
+    <insert id="insertMonitoringLog" parameterType="com.plateer.ec1.common.model.order.OpOrdClmMntLogModel">
+        <selectKey keyProperty="logSeq" resultType="long" order="BEFORE">
+            SELECT NEXTVAL('op_ord_clm_mnt_log_log_seq_seq')
+        </selectKey>
         INSERT INTO op_ord_clm_mnt_log
         (
-        ord_no, req_pram, sys_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
+        log_seq, ord_no, req_pram, sys_reg_dtime, sys_regr_id, sys_mod_dtime, sys_modr_id
         )
         VALUES
         (
-        #{ordNo}, (#{reqPram})::json,
+        #{logSeq}, #{ordNo}, (#{reqPram})::json,
         now(), 'admin', now(), 'admin'
         )
     </insert>
@@ -20,7 +23,10 @@
         SET ins_data = (#{insData})::json
           , sys_mod_dtime = now()
           , sys_modr_id = 'admin'
-        WHERE log_seq = #{logSeq}
+        WHERE
+            ord_no = #{ordNo}
+          AND
+            log_seq = #{logSeq}
     </update>
 
     <insert id="insertOpClmInfo" parameterType="java.util.List">
@@ -78,8 +84,17 @@
         </foreach>
     </insert>
 
-
-
-
-
+    <update id="updateOpClmInfo" parameterType="java.util.List">
+        UPDATE op_clm_info
+        SET
+        <foreach collection="list" item="item">
+            cncl_cnt = #{item.ordCnt}
+        WHERE
+            ord_no = #{item.ordNo}
+          AND
+            ord_seq = #{item.ordSeq}
+          AND
+            proc_seq = #{item.orgProcSeq}
+        </foreach>
+    </update>
 </mapper>

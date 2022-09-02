@@ -6,6 +6,7 @@ import com.plateer.ec1.claim.mapper.ClaimMapper;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
+import com.plateer.ec1.common.model.order.OpOrdClmMntLogModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -63,8 +64,8 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
     }
 
     @Override
-    public void updateMonitoringLog(Long logSeq, RequestClaimVo requestClaimVo) {
-        monitoringLogHelper.updateMonitoringLog(logSeq, requestClaimVo);
+    public void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
+        monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
     }
 
     @Override

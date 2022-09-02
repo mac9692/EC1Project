@@ -39,8 +39,9 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
         Long logSeq = insertMonitoringLog(requestClaimVo);
+        ClaimDataVo claimDataVo = new ClaimDataVo();
         if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
+            claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
             insertClaimData(claimDataVo);
             updateClaimData(claimDataVo);
             if (isValidAmount(requestClaimVo)) {
@@ -49,7 +50,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
                 log.info("E쿠폰 주문취소 접수 실패");
             }
         }
-        updateMonitoringLog(logSeq, requestClaimVo);
+        updateMonitoringLog(logSeq, claimDataVo);
     }
 
     @Override
@@ -68,7 +69,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
 
     @Override
     public void updateClaimData(ClaimDataVo claimDataVo) {
-
+        claimTrxMapper.updateOpClmInfo(claimDataVo.getOpClmInfoModelList());
     }
 
     public ClaimDataVo manipulateClaimData(ClaimDataVo claimDataVo, String claimNumber) {

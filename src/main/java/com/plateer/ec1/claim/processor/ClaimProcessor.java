@@ -2,6 +2,7 @@ package com.plateer.ec1.claim.processor;
 
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
+import com.plateer.ec1.common.model.order.OpOrdClmMntLogModel;
 
 public interface ClaimProcessor {
 
@@ -29,5 +30,5 @@ public interface ClaimProcessor {
 
     void doPostProcess(ClaimDataVo claimDataVo);
 
-    void updateMonitoringLog(Long logSeq, RequestClaimVo requestClaimVo);
+    void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo);
 }

@@ -25,9 +25,10 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
-        long logSeq = insertMonitoringLog(requestClaimVo);
+        Long logSeq = insertMonitoringLog(requestClaimVo);
+        ClaimDataVo claimDataVo = new ClaimDataVo();
         if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = getClaimData(requestClaimVo);
+            claimDataVo = getClaimData(requestClaimVo);
             insertClaimData(claimDataVo);
             updateClaimData(claimDataVo);
             if (isValidAmount(requestClaimVo)) {
@@ -37,7 +38,7 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
                 }
             }
         }
-        updateMonitoringLog(logSeq, requestClaimVo);
+        updateMonitoringLog(logSeq, claimDataVo);
     }
 
     @Override
