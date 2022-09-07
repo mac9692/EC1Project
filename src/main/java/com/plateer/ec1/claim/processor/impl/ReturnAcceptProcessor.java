@@ -10,21 +10,28 @@ import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
+import com.plateer.ec1.common.code.order.OPT0004;
+import com.plateer.ec1.common.model.order.OpClmInfoModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Component
-public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implements ClaimProcessor {
+public class ReturnAcceptProcessor extends AbstractClaimProcessor implements ClaimProcessor {
 
     private final ClaimTrxMapper claimTrxMapper;
 
-    public GeneraCancelCompleteProcessor(ClaimValidator claimValidator, ClaimMapper claimMapper, MonitoringLogHelper monitoringLogHelper, IFCallHelper ifCallHelper, ClaimTrxMapper claimTrxMapper) {
+    public ReturnAcceptProcessor(ClaimValidator claimValidator, ClaimMapper claimMapper, MonitoringLogHelper monitoringLogHelper, IFCallHelper ifCallHelper, ClaimTrxMapper claimTrxMapper) {
         super(claimValidator, claimMapper, monitoringLogHelper, ifCallHelper);
         this.claimTrxMapper = claimTrxMapper;
     }
 
     @Override
     public String getType() {
-        return ProcessorType.GENERALORDERCANCEL.getType();
+        return ProcessorType.RETURNACCEPT.getType();
     }
 
     @Override
@@ -34,14 +41,13 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
         if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = getClaimData(requestClaimVo);
+            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
             insertData = insertClaimData(claimDataVo);
             updateData = updateClaimData(claimDataVo);
             if (isValidAmount(requestClaimVo)) {
-                interfaceCall(requestClaimVo);
-                if (true) {
-                    doPostProcess(claimDataVo);
-                }
+                log.info("E쿠폰 주문취소 접수 성공");
+            } else {
+                log.info("E쿠폰 주문취소 접수 실패");
             }
         }
         updateMonitoringLog(logSeq, insertData, updateData);
@@ -55,5 +61,15 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         return null;
+    }
+
+    public ClaimDataVo manipulateClaimData(ClaimDataVo claimDataVo, String claimNumber) {
+        claimDataVo.setClaimNo(claimNumber);
+        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList()
+                .stream()
+                .filter(opClmInfoModel -> OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
+                .collect(Collectors.toList());
+        claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
+        return claimDataVo;
     }
 }

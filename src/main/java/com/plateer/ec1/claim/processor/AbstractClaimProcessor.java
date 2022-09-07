@@ -64,8 +64,8 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
     }
 
     @Override
-    public void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
-        monitoringLogHelper.updateMonitoringLog(logSeq, claimDataVo);
+    public void updateMonitoringLog(Long logSeq, ClaimDataVo insertData, ClaimDataVo updateData) {
+        monitoringLogHelper.updateMonitoringLog(logSeq, insertData, updateData);
     }
 
     @Override

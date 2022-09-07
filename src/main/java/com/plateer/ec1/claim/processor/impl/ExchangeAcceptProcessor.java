@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor implements ClaimProcessor {
+public class ExchangeAcceptProcessor extends AbstractClaimProcessor implements ClaimProcessor {
 
     private final ClaimTrxMapper claimTrxMapper;
 
-    public ECouponCancelAcceptProcessor(ClaimValidator claimValidator, ClaimMapper claimMapper, MonitoringLogHelper monitoringLogHelper, IFCallHelper ifCallHelper, ClaimTrxMapper claimTrxMapper) {
+    public ExchangeAcceptProcessor(ClaimValidator claimValidator, ClaimMapper claimMapper, MonitoringLogHelper monitoringLogHelper, IFCallHelper ifCallHelper, ClaimTrxMapper claimTrxMapper) {
         super(claimValidator, claimMapper, monitoringLogHelper, ifCallHelper);
         this.claimTrxMapper = claimTrxMapper;
     }
 
     @Override
     public String getType() {
-        return ProcessorType.ECOUPONCANCELACCEPT.getType();
+        return ProcessorType.EXCHANGEACCEPT.getType();
     }
 
     @Override
@@ -46,9 +46,9 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
             insertData = insertClaimData(claimDataVo);
             updateData = updateClaimData(claimDataVo);
             if (isValidAmount(requestClaimVo)) {
-                log.info("E쿠폰 주문취소 접수 성공");
+                log.info("교환 접수 성공");
             } else {
-                log.info("E쿠폰 주문취소 접수 실패");
+                log.info("교환 접수 실패");
             }
         }
         updateMonitoringLog(logSeq, insertData, updateData);
@@ -57,7 +57,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
-                opClmInfoModelList
+        opClmInfoModelList
                 .forEach(opClmInfoModel -> {
                     opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
                     opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
@@ -65,22 +65,21 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
                     opClmInfoModel.setOrdPrgsScd(OPT0004.CANCEL_REQUEST.getType());
                     opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
                 });
-                claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
-                claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
+        claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
+        claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         return claimDataVo;
     }
 
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
-        claimTrxMapper.updateOpClmInfoCnclCnt(claimDataVo.getOpClmInfoModelList());
-        return claimDataVo;
+        return null;
     }
 
     public ClaimDataVo manipulateClaimData(ClaimDataVo claimDataVo, String claimNumber) {
         claimDataVo.setClaimNo(claimNumber);
         List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList()
                 .stream()
-                .filter(opClmInfoModel -> OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
+                .filter(opClmInfoModel -> OPT0004.DELIVERY_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
                 .collect(Collectors.toList());
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         return claimDataVo;

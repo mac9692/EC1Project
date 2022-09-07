@@ -20,9 +20,9 @@ public interface ClaimProcessor {
 
     ClaimDataVo getClaimData(RequestClaimVo requestClaimVo);
 
-    void insertClaimData(ClaimDataVo claimDataVo);
+    ClaimDataVo insertClaimData(ClaimDataVo claimDataVo);
 
-    void updateClaimData(ClaimDataVo claimDataVo);
+    ClaimDataVo updateClaimData(ClaimDataVo claimDataVo);
 
     boolean isValidAmount(RequestClaimVo requestClaimVo);
 
@@ -30,5 +30,5 @@ public interface ClaimProcessor {
 
     void doPostProcess(ClaimDataVo claimDataVo);
 
-    void updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo);
+    void updateMonitoringLog(Long logSeq, ClaimDataVo insertData, ClaimDataVo updateData);
 }

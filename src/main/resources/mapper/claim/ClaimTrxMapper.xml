@@ -21,6 +21,7 @@
     <update id="updateMonitoringLog" parameterType="com.plateer.ec1.common.model.order.OpOrdClmMntLogModel">
         UPDATE op_ord_clm_mnt_log
         SET ins_data = (#{insData})::json
+          , upt_data = (#{uptData})::json
           , sys_mod_dtime = now()
           , sys_modr_id = 'admin'
         WHERE
@@ -84,7 +85,7 @@
         </foreach>
     </insert>
 
-    <update id="updateOpClmInfo" parameterType="java.util.List">
+    <update id="updateOpClmInfoCnclCnt" parameterType="java.util.List">
         UPDATE op_clm_info
         SET
         <foreach collection="list" item="item">

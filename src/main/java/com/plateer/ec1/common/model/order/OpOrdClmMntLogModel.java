@@ -33,12 +33,13 @@ public class OpOrdClmMntLogModel {
                 .build();
     }
 
-    public OpOrdClmMntLogModel updateMonitoringLog(Long logSeq, ClaimDataVo claimDataVo) {
+    public OpOrdClmMntLogModel updateMonitoringLog(Long logSeq, ClaimDataVo insertData, ClaimDataVo updateData) {
         return OpOrdClmMntLogModel
                 .builder()
                 .logSeq(logSeq)
-                .ordNo(claimDataVo.getOrderNo())
-                .insData(Utils.convertObjectToJson(claimDataVo))
+                .ordNo(insertData.getOrderNo())
+                .insData(Utils.convertObjectToJson(insertData))
+                .uptData(Utils.convertObjectToJson(updateData))
                 .build();
     }
 }
