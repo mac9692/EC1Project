@@ -61,7 +61,46 @@ public class ClaimTest {
 
     @Test
     @DisplayName("1. ECoupon 취소접수 테스트")
-    void gccTest1() throws Exception {
+    void eCouponCancelAcceptTest() throws Exception {
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("2. 반품접수 테스트")
+    void returnAcceptTest() throws Exception {
+        requestClaimVo.setProcessorType("60");
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("3. 반품철회 테스트")
+    void returnWithdrawalTest() throws Exception {
+        requestClaimVo.setProcessorType("70");
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("4. 교환접수 테스트")
+    void exchangeAcceptTest() throws Exception {
+        requestClaimVo.setProcessorType("40");
         String jsonData = objectMapper.writeValueAsString(requestClaimVo);
         mockMvc.perform(
                         post("/api/claim")
