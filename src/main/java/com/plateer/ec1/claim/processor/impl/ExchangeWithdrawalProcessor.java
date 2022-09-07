@@ -14,6 +14,7 @@ import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class ExchangeWithdrawalProcessor extends AbstractClaimProcessor implemen
         return ProcessorType.EXCHANGEWITHDRAWAL.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -52,11 +54,13 @@ public class ExchangeWithdrawalProcessor extends AbstractClaimProcessor implemen
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         return null;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         return null;

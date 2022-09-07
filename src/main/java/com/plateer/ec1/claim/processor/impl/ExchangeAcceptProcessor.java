@@ -16,6 +16,7 @@ import com.plateer.ec1.common.model.order.OpClmInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,11 +32,13 @@ public class ExchangeAcceptProcessor extends AbstractClaimProcessor implements C
         this.claimTrxMapper = claimTrxMapper;
     }
 
+    @Transactional
     @Override
     public String getType() {
         return ProcessorType.EXCHANGEACCEPT.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -53,6 +56,7 @@ public class ExchangeAcceptProcessor extends AbstractClaimProcessor implements C
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getExchangeAcceptInsertData(claimDataVo);

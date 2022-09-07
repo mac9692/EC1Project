@@ -3,13 +3,12 @@ package com.plateer.ec1.claim.processor;
 import com.plateer.ec1.claim.helper.IFCallHelper;
 import com.plateer.ec1.claim.helper.MonitoringLogHelper;
 import com.plateer.ec1.claim.mapper.ClaimMapper;
-import com.plateer.ec1.claim.mapper.ClaimTrxMapper;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
-import com.plateer.ec1.common.model.order.OpOrdClmMntLogModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -30,6 +29,7 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
         return claimMapper.getClaimNo();
     }
 
+    @Transactional
     @Override
     public Long insertMonitoringLog(RequestClaimVo requestClaimVo) {
         return monitoringLogHelper.insertMonitoringLog(requestClaimVo);
@@ -60,6 +60,7 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
 
     }
 
+    @Transactional
     @Override
     public void updateMonitoringLog(Long logSeq, ClaimDataVo insertData, ClaimDataVo updateData) {
         monitoringLogHelper.updateMonitoringLog(logSeq, insertData, updateData);

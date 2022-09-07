@@ -16,6 +16,7 @@ import com.plateer.ec1.common.model.order.OpOrdBnfRelInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +37,7 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
         return ProcessorType.RETURNACCEPT.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -53,6 +55,7 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getReturnAcceptInsertData(claimDataVo);
@@ -69,9 +72,10 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
         return claimDataVo;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
-//        claimTrxMapper. -> 원주문 취소수량 업데이트
+        claimTrxMapper.updateOpClmInfoRtgsCnt(claimDataVo.getOpClmInfoModelList());
         //        claimTrxMapper. 혜택업데이트
         return claimDataVo;
     }

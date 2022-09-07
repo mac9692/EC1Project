@@ -11,6 +11,7 @@ import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implements ClaimProcessor {
@@ -27,6 +28,7 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
         return ProcessorType.GENERALORDERCANCEL.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -46,11 +48,13 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         return null;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         return null;

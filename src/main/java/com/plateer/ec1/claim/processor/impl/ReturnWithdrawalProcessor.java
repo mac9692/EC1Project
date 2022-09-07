@@ -17,6 +17,7 @@ import com.plateer.ec1.common.model.order.OpOrdBnfRelInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class ReturnWithdrawalProcessor extends AbstractClaimProcessor implements
         return ProcessorType.RETURNWITHDRAWAL.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -55,6 +57,7 @@ public class ReturnWithdrawalProcessor extends AbstractClaimProcessor implements
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getReturnWithdrawalInsertData(claimDataVo);
@@ -71,6 +74,7 @@ public class ReturnWithdrawalProcessor extends AbstractClaimProcessor implements
         return claimDataVo;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         List<OpOrdBnfInfoModel> opOrdBnfInfoModelList = new OpOrdBnfInfoModel().getReturnAcceptData(claimDataVo);

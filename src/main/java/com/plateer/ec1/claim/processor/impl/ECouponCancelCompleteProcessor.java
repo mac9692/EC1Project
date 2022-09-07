@@ -12,6 +12,7 @@ import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -29,6 +30,7 @@ public class ECouponCancelCompleteProcessor extends AbstractClaimProcessor imple
         return ProcessorType.ECOUPONCANCELCOMPLETE.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         Long logSeq = insertMonitoringLog(requestClaimVo);
@@ -46,11 +48,13 @@ public class ECouponCancelCompleteProcessor extends AbstractClaimProcessor imple
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         return null;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         return null;

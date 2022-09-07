@@ -14,6 +14,7 @@ import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +35,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
         return ProcessorType.ECOUPONCANCELACCEPT.getType();
     }
 
+    @Transactional
     @Override
     public void claimProcess(RequestClaimVo requestClaimVo) {
         String claimNumber = getClaimNumber();
@@ -52,6 +54,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
+    @Transactional
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getECouponCancelAcceptInsertData(claimDataVo);
@@ -62,6 +65,7 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
         return claimDataVo;
     }
 
+    @Transactional
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         claimTrxMapper.updateOpClmInfoCnclCnt(claimDataVo.getOpClmInfoModelList());
