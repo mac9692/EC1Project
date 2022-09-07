@@ -1,6 +1,8 @@
 package com.plateer.ec1.common.model.order;
 
 import com.plateer.ec1.common.code.product.DVP0001;
+import com.plateer.ec1.common.code.product.DVP0002;
+import com.plateer.ec1.common.code.product.PRD0002;
 import com.plateer.ec1.order.vo.CombinedDeliveryVo;
 import com.plateer.ec1.order.vo.DeliveryAddressVo;
 import lombok.*;
@@ -29,7 +31,7 @@ public class OpDvpInfoModel {
     public OpDvpInfoModel mobileCouponOrder(DeliveryAddressVo deliveryAddressVo, CombinedDeliveryVo combinedDeliveryVo) {
         setDvGrpNo(combinedDeliveryVo.getCombinedDeliveryNo());
         setDvpSeq(deliveryAddressVo.getDvpSeq());
-        setDvMthdCd(DVP0001.NON_DELIVERY.getType());
+        setDvMthdCd(PRD0002.NON_DELIVERY.getType());
         return this;
     }
 }

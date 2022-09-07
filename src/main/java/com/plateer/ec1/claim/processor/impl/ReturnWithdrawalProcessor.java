@@ -43,16 +43,15 @@ public class ReturnWithdrawalProcessor extends AbstractClaimProcessor implements
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                log.info("반품철회 성공");
-            } else {
-                log.info("반품철회 실패");
-            }
+        ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            log.info("반품철회 성공");
+        } else {
+            log.info("반품철회 실패");
         }
+
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 

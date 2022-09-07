@@ -33,17 +33,16 @@ public class GeneraCancelCompleteProcessor extends AbstractClaimProcessor implem
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = getClaimData(requestClaimVo);
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                interfaceCall(requestClaimVo);
-                if (true) {
-                    doPostProcess(claimDataVo);
-                }
+        ClaimDataVo claimDataVo = getClaimData(requestClaimVo);
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            interfaceCall(requestClaimVo);
+            if (true) {
+                doPostProcess(claimDataVo);
             }
         }
+
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 

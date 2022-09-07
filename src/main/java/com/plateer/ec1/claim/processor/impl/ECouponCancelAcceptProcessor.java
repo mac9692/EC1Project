@@ -10,7 +10,6 @@ import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
-import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
 import lombok.extern.slf4j.Slf4j;
@@ -41,23 +40,24 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                log.info("E쿠폰 주문취소 접수 성공");
-            } else {
-                log.info("E쿠폰 주문취소 접수 실패");
-            }
+        ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            log.info("E쿠폰 주문취소 접수 성공");
+        } else {
+            log.info("E쿠폰 주문취소 접수 실패");
         }
+
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
-        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getECouponCancelAcceptData(claimDataVo);
+        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getECouponCancelAcceptInsertData(claimDataVo);
+
         claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
+
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         return claimDataVo;
     }

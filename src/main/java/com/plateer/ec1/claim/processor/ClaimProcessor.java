@@ -16,8 +16,6 @@ public interface ClaimProcessor {
 
     Long insertMonitoringLog(RequestClaimVo requestClaimVo);
 
-    boolean isValidStatus(RequestClaimVo requestClaimVo);
-
     ClaimDataVo getClaimData(RequestClaimVo requestClaimVo);
 
     ClaimDataVo insertClaimData(ClaimDataVo claimDataVo);

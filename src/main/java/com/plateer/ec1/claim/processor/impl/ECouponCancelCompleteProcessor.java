@@ -34,16 +34,14 @@ public class ECouponCancelCompleteProcessor extends AbstractClaimProcessor imple
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = new ClaimDataVo();
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                log.info("E쿠폰 주문취소 접수 성공");
-                interfaceCall(requestClaimVo);
-            } else {
-                log.info("E쿠폰 주문취소 접수 실패");
-            }
+        ClaimDataVo claimDataVo = new ClaimDataVo();
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            log.info("E쿠폰 주문취소 접수 성공");
+            interfaceCall(requestClaimVo);
+        } else {
+            log.info("E쿠폰 주문취소 접수 실패");
         }
         updateMonitoringLog(logSeq, insertData, updateData);
     }

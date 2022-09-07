@@ -60,7 +60,7 @@ public class ClaimTest {
     }
 
     @Test
-    @DisplayName("1. 일반상품주문취소완료 테스트")
+    @DisplayName("1. ECoupon 취소접수 테스트")
     void gccTest1() throws Exception {
         String jsonData = objectMapper.writeValueAsString(requestClaimVo);
         mockMvc.perform(

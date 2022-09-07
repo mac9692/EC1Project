@@ -5,12 +5,10 @@ import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.code.product.DVP0001;
 import com.plateer.ec1.order.vo.CombinedDeliveryVo;
-import com.plateer.ec1.order.vo.DeliveryAddressVo;
 import com.plateer.ec1.order.vo.OrderGoodsVo;
 import lombok.*;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Builder
@@ -103,7 +101,7 @@ public class OpClmInfoModel {
                 .build();
     }
 
-    public List<OpClmInfoModel> getECouponCancelAcceptData(ClaimDataVo claimDataVo) {
+    public List<OpClmInfoModel> getECouponCancelAcceptInsertData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
         opClmInfoModelList
                 .forEach(opClmInfoModel -> {
@@ -116,7 +114,13 @@ public class OpClmInfoModel {
         return opClmInfoModelList;
     }
 
-    public List<OpClmInfoModel> getReturnAcceptData(ClaimDataVo claimDataVo) {
+    public List<OpClmInfoModel> getExchangeAcceptInsertData(ClaimDataVo claimDataVo) {
+        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
+
+        return opClmInfoModelList;
+    }
+
+    public List<OpClmInfoModel> getReturnAcceptInsertData(ClaimDataVo claimDataVo) {
         List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
         opClmInfoModelList
                 .forEach(opClmInfoModel -> {

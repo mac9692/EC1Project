@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum DVP0002 {
     FREE("10"),
-    CHARGED("20");
+    CHARGED("20"),
+    COLLECTIBLE("30");
 
     private String type;
 

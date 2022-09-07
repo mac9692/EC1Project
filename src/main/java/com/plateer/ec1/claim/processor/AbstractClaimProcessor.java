@@ -36,11 +36,6 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
     }
 
     @Override
-    public boolean isValidStatus(RequestClaimVo requestClaimVo) {
-        return claimValidator.isValidStatus(requestClaimVo);
-    }
-
-    @Override
     public ClaimDataVo getClaimData(RequestClaimVo requestClaimVo) {
         return ClaimDataVo
                 .builder()

@@ -10,11 +10,8 @@ import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
-import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
-import com.plateer.ec1.common.code.product.DVP0001;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
-import com.plateer.ec1.common.model.order.OpOrdBnfInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdBnfRelInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
@@ -45,22 +42,20 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                log.info("반품접수 성공");
-            } else {
-                log.info("반품접수 실패");
-            }
+        ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            log.info("반품접수 성공");
+        } else {
+            log.info("반품접수 실패");
         }
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
-        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getReturnAcceptData(claimDataVo);
+        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getReturnAcceptInsertData(claimDataVo);
         List<OpOrdCostInfoModel> opOrdCostInfoModelList = new OpOrdCostInfoModel().getReturnAcceptData(claimDataVo);
         List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList = new OpOrdBnfRelInfoModel().getReturnAcceptData(claimDataVo);
 

@@ -13,6 +13,7 @@ import com.plateer.ec1.claim.vo.request.RequestClaimVo;
 import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
+import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -41,32 +42,27 @@ public class ExchangeAcceptProcessor extends AbstractClaimProcessor implements C
         Long logSeq = insertMonitoringLog(requestClaimVo);
         ClaimDataVo insertData = new ClaimDataVo();
         ClaimDataVo updateData = new ClaimDataVo();
-        if (isValidStatus(requestClaimVo)) {
-            ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
-            insertData = insertClaimData(claimDataVo);
-            updateData = updateClaimData(claimDataVo);
-            if (isValidAmount(requestClaimVo)) {
-                log.info("교환 접수 성공");
-            } else {
-                log.info("교환 접수 실패");
-            }
+        ClaimDataVo claimDataVo = manipulateClaimData(getClaimData(requestClaimVo), claimNumber);
+        insertData = insertClaimData(claimDataVo);
+        updateData = updateClaimData(claimDataVo);
+        if (isValidAmount(requestClaimVo)) {
+            log.info("교환 접수 성공");
+        } else {
+            log.info("교환 접수 실패");
         }
         updateMonitoringLog(logSeq, insertData, updateData);
     }
 
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
-        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
-        opClmInfoModelList
-                .forEach(opClmInfoModel -> {
-                    opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
-                    opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
-                    opClmInfoModel.setOrdClmTpCd(OPT0003.CANCEL.getType());
-                    opClmInfoModel.setOrdPrgsScd(OPT0004.CANCEL_REQUEST.getType());
-                    opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
-                });
-        claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
+        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getExchangeAcceptInsertData(claimDataVo);
+        List<OpOrdCostInfoModel> opOrdCostInfoModelList = new OpOrdCostInfoModel().getExchangeAcceptInsertData(claimDataVo);
+
+//        claimTrxMapper.
+//        claimTrxMapper.
+
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
+        claimDataVo.setOpOrdCostInfoModelList(opOrdCostInfoModelList);
         return claimDataVo;
     }
 

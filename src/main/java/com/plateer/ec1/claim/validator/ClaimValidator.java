@@ -1,9 +1,12 @@
 package com.plateer.ec1.claim.validator;
 
+import com.plateer.ec1.claim.enums.ProcessorType;
 import com.plateer.ec1.claim.mapper.ClaimMapper;
 import com.plateer.ec1.claim.vo.OrderClaimInfoVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
+import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.code.product.PRD0003;
+import com.plateer.ec1.common.model.order.OpClmInfoModel;
 import com.plateer.ec1.product.vo.ProductVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,7 @@ public class ClaimValidator implements Validator {
     public void validate(Object target, Errors errors) {
         RequestClaimVo requestClaimVo = (RequestClaimVo) target;
         isValidProduct(errors, requestClaimVo);
+        isValidStatus(errors, requestClaimVo);
     }
 
     private void isValidProduct(Errors errors, RequestClaimVo requestClaimVo) {
@@ -50,8 +54,31 @@ public class ClaimValidator implements Validator {
         }
     }
 
-    public boolean isValidStatus(RequestClaimVo requestClaimVo) {
-        return true;
+    public void isValidStatus(Errors errors, RequestClaimVo requestClaimVo) {
+        List<OpClmInfoModel> opClmInfoModelList = claimMapper.getOpClmInfoModelList(requestClaimVo);
+        switch (requestClaimVo.getProcessorType()) {
+            case "10": case "20": case "30":
+                opClmInfoModelList.forEach(opClmInfoModel -> {
+                    if (!(OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd())) || (OPT0004.ORDER_WAIT.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
+                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                    }
+                });
+                break;
+            case "40": case "50": case "60":
+                opClmInfoModelList.forEach(opClmInfoModel -> {
+                    if (!(OPT0004.DELIVERY_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
+                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                    }
+                });
+                break;
+            case "70":
+                opClmInfoModelList.forEach(opClmInfoModel -> {
+                    if (!(OPT0004.RETURN_REQUEST.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
+                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                    }
+                });
+                break;
+        }
     }
 
     public boolean isValidAmount(RequestClaimVo requestClaimVo) {
