@@ -60,21 +60,21 @@ public class ClaimValidator implements Validator {
             case "10": case "20": case "30":
                 opClmInfoModelList.forEach(opClmInfoModel -> {
                     if (!(OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd())) || (OPT0004.ORDER_WAIT.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
-                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                        errors.reject("ordPrgsScdError", "주문 상태(취소)가 클레임에 맞지 않습니다.");
                     }
                 });
                 break;
             case "40": case "50": case "60":
                 opClmInfoModelList.forEach(opClmInfoModel -> {
                     if (!(OPT0004.DELIVERY_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
-                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                        errors.reject("ordPrgsScdError", "주문 상태(교환&반품)가 클레임에 맞지 않습니다.");
                     }
                 });
                 break;
             case "70":
                 opClmInfoModelList.forEach(opClmInfoModel -> {
                     if (!(OPT0004.RETURN_REQUEST.getType().equals(opClmInfoModel.getOrdPrgsScd()))) {
-                        errors.reject("ordPrgsScdError", "주문 상태가 클레임에 맞지 않습니다.");
+                        errors.reject("ordPrgsScdError", "주문 상태(반품철회)가 클레임에 맞지 않습니다.");
                     }
                 });
                 break;

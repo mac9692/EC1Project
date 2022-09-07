@@ -54,6 +54,7 @@ public class ClaimValidateTest {
     void init() {
         OrderClaimInfoVo orderClaimInfoVo = new OrderClaimInfoVo();
         orderClaimInfoVo.setGoodsNo("P001");
+        orderClaimInfoVo.setItemNo("1");
 
         List<OrderClaimInfoVo> orderClaimInfoVoList = new ArrayList<>();
         orderClaimInfoVoList.add(orderClaimInfoVo);
@@ -73,8 +74,50 @@ public class ClaimValidateTest {
     }
 
     @Test
-    @DisplayName("1-1. 상품 존재여부 테스트")
-    void gccTest() throws Exception {
+    @DisplayName("1-1. 주문상태(취소) 검증 테스트")
+    void ordPrgsCcdCancelTest() throws Exception {
+        requestClaimVo.setProcessorType("10");
+        requestClaimVo.setOrderNo("TEST01");
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("1-2. 주문상태(교환&반품) 검증 테스트")
+    void ordPrgsCcdExchangeAndReturnTest() throws Exception {
+        requestClaimVo.setProcessorType("40");
+        requestClaimVo.setOrderNo("TEST01");
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("1-3. 주문상태(반품철회) 검증 테스트")
+    void ordPrgsCcdReturnWithdrawalTest() throws Exception {
+        requestClaimVo.setProcessorType("70");
+        requestClaimVo.setOrderNo("TEST01");
+        String jsonData = objectMapper.writeValueAsString(requestClaimVo);
+        mockMvc.perform(
+                        post("/api/claim")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(String.valueOf(jsonData)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("1-4. 상품 존재여부 검증 테스트")
+    void productIsPresentTest() throws Exception {
         List<OrderClaimInfoVo> orderClaimInfoVoList = requestClaimVo.getOrderClaimInfoVoList();
         orderClaimInfoVoList.get(0).setGoodsNo("P");    //존재하지 않는 상품 번호 작성 후 테스트 진행
         String jsonData = objectMapper.writeValueAsString(requestClaimVo);
@@ -96,7 +139,7 @@ public class ClaimValidateTest {
     }
 
     @Test
-    @DisplayName("2-2. requestClaimVo 주문번호 NotBlank 테스트(null)")
+    @DisplayName("2-2. requestClaimVo 주문번호 NotBlank 테스트(blank)")
     void orderRequestOrdNoBlankTest() {
         requestClaimVo.setOrderNo("");
         Set<ConstraintViolation<RequestClaimVo>> violations = validator.validate(requestClaimVo);
@@ -105,7 +148,7 @@ public class ClaimValidateTest {
     }
 
     @Test
-    @DisplayName("2-3. requestClaimVo 주문번호 NotBlank 테스트(null)")
+    @DisplayName("2-3. requestClaimVo 주문번호 NotBlank 테스트(space)")
     void orderRequestOrdNoSpaceTest() {
         requestClaimVo.setOrderNo(" ");
         Set<ConstraintViolation<RequestClaimVo>> violations = validator.validate(requestClaimVo);
