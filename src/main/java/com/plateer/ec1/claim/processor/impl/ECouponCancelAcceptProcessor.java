@@ -56,17 +56,9 @@ public class ECouponCancelAcceptProcessor extends AbstractClaimProcessor impleme
 
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
-        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
-                opClmInfoModelList
-                .forEach(opClmInfoModel -> {
-                    opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
-                    opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
-                    opClmInfoModel.setOrdClmTpCd(OPT0003.CANCEL.getType());
-                    opClmInfoModel.setOrdPrgsScd(OPT0004.CANCEL_REQUEST.getType());
-                    opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
-                });
-                claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
-                claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
+        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getECouponCancelAcceptData(claimDataVo);
+        claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
+        claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         return claimDataVo;
     }
 

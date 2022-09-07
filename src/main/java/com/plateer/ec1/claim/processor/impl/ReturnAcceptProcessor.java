@@ -10,8 +10,12 @@ import com.plateer.ec1.claim.processor.ClaimProcessor;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
+import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
+import com.plateer.ec1.common.code.product.DVP0001;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
+import com.plateer.ec1.common.model.order.OpOrdBnfRelInfoModel;
+import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +59,18 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
 
     @Override
     public ClaimDataVo insertClaimData(ClaimDataVo claimDataVo) {
-        return null;
+        List<OpClmInfoModel> opClmInfoModelList = new OpClmInfoModel().getReturnAcceptData(claimDataVo);
+        List<OpOrdCostInfoModel> opOrdCostInfoModelList = new OpOrdCostInfoModel().getReturnAcceptData(claimDataVo);
+        List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList = new OpOrdBnfRelInfoModel().getReturnAcceptData(claimDataVo);
+
+        claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
+//        claimTrxMapper.
+//        claimTrxMapper.
+
+        claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
+        claimDataVo.setOpOrdCostInfoModelList(opOrdCostInfoModelList);
+        claimDataVo.setOpOrdBnfRelInfoModelList(opOrdBnfRelInfoModelList);
+        return claimDataVo;
     }
 
     @Override
@@ -69,6 +84,7 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
                 .stream()
                 .filter(opClmInfoModel -> OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
                 .collect(Collectors.toList());
+
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         return claimDataVo;
     }

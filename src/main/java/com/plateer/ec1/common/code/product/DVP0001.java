@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum DVP0001 {
     DELIVERY("10"),
-    NON_DELIVERY("20");
+    DELIVERY_WITHDRAW("20");
 
     private String type;
 

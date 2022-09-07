@@ -31,4 +31,5 @@ public class RequestClaimVo {
 
     @NotNull(message = "isAllGrpChecked 는 Null 입력이 불가능합니다.")
     private boolean isAllGrpChecked;
+    private String imtnRsnCcd; //귀책구분코드 OPT0008
 }

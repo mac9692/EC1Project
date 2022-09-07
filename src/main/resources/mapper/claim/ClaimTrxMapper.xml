@@ -98,4 +98,18 @@
             proc_seq = #{item.orgProcSeq}
         </foreach>
     </update>
+
+    <update id="updateOpClmInfoRtgsCnt" parameterType="java.util.List">
+        UPDATE op_clm_info
+        SET
+        <foreach collection="list" item="item">
+            rtgs_cnt = #{item.ordCnt}
+            WHERE
+            ord_no = #{item.ordNo}
+            AND
+            ord_seq = #{item.ordSeq}
+            AND
+            proc_seq = #{item.orgProcSeq}
+        </foreach>
+    </update>
 </mapper>

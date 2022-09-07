@@ -3,6 +3,7 @@ package com.plateer.ec1.claim.processor;
 import com.plateer.ec1.claim.helper.IFCallHelper;
 import com.plateer.ec1.claim.helper.MonitoringLogHelper;
 import com.plateer.ec1.claim.mapper.ClaimMapper;
+import com.plateer.ec1.claim.mapper.ClaimTrxMapper;
 import com.plateer.ec1.claim.validator.ClaimValidator;
 import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.claim.vo.request.RequestClaimVo;
@@ -48,6 +49,7 @@ public abstract class AbstractClaimProcessor implements ClaimProcessor{
                 .opOrdCostInfoModelList(claimMapper.getOpOrdCostInfoModelList(requestClaimVo))
                 .opOrdBnfRelInfoModelList(claimMapper.getOpOrdBnfRelInfoModelList(requestClaimVo))
                 .opOrdBnfInfoModelList(claimMapper.getOpOrdBnfInfoModelList(requestClaimVo))
+                .imtnRsnCcd(requestClaimVo.getImtnRsnCcd())
                 .build();
     }
 

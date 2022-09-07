@@ -1,5 +1,6 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.code.product.DVP0001;
@@ -10,6 +11,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Builder
 @Setter
@@ -99,5 +101,33 @@ public class OpClmInfoModel {
                 .ordClmAcptDtime(now)
                 .ordClmCmtDtime(now)
                 .build();
+    }
+
+    public List<OpClmInfoModel> getECouponCancelAcceptData(ClaimDataVo claimDataVo) {
+        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
+        opClmInfoModelList
+                .forEach(opClmInfoModel -> {
+                    opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
+                    opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
+                    opClmInfoModel.setOrdClmTpCd(OPT0003.CANCEL.getType());
+                    opClmInfoModel.setOrdPrgsScd(OPT0004.CANCEL_REQUEST.getType());
+                    opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
+                });
+        return opClmInfoModelList;
+    }
+
+    public List<OpClmInfoModel> getReturnAcceptData(ClaimDataVo claimDataVo) {
+        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
+        opClmInfoModelList
+                .forEach(opClmInfoModel -> {
+                    opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
+                    opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
+                    opClmInfoModel.setOrdClmTpCd(OPT0003.RETURN.getType());
+                    opClmInfoModel.setDvRvtCcd(DVP0001.DELIVERY_WITHDRAW.getType());
+                    opClmInfoModel.setDvGrpNo(opClmInfoModel.getDvGrpNo() + 1);
+                    opClmInfoModel.setOrdPrgsScd(OPT0004.RETURN_REQUEST.getType());
+                    opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
+                });
+        return opClmInfoModelList;
     }
 }

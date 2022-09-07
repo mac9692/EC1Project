@@ -14,4 +14,6 @@ public interface ClaimTrxMapper {
     void insertOpClmInfo(List<OpClmInfoModel> opClmInfoModelList);
 
     void updateOpClmInfoCnclCnt(List<OpClmInfoModel> opClmInfoModelList);
+
+    void updateOpClmInfoRtgsCnt(List<OpClmInfoModel> opClmInfoModelList);
 }
