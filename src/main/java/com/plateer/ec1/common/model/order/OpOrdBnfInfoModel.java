@@ -1,10 +1,12 @@
 package com.plateer.ec1.common.model.order;
 
+import com.plateer.ec1.claim.vo.ClaimDataVo;
 import com.plateer.ec1.common.code.promotion.PRM0012;
 import com.plateer.ec1.order.vo.OrderBenefitVo;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Builder
 @Setter
@@ -49,5 +51,13 @@ public class OpOrdBnfInfoModel {
                 .ordBnfAmt(orderBenefitVo.getOrdCnclBnfAmt())
                 .ordCnclBnfAmt(0)
                 .build();
+    }
+
+    public List<OpOrdBnfInfoModel> getReturnAcceptData(ClaimDataVo claimDataVo) {
+        List<OpOrdBnfInfoModel> opOrdBnfInfoModelList = claimDataVo.getOpOrdBnfInfoModelList();
+        opOrdBnfInfoModelList.forEach(opOrdBnfInfoModel -> {
+            opOrdBnfInfoModel.setOrdCnclBnfAmt(opOrdBnfInfoModel.getOrdBnfAmt());
+        });
+        return opOrdBnfInfoModelList;
     }
 }

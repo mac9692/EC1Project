@@ -130,4 +130,18 @@ public class OpClmInfoModel {
                 });
         return opClmInfoModelList;
     }
+
+    public List<OpClmInfoModel> getReturnWithdrawalInsertData(ClaimDataVo claimDataVo) {
+        List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList();
+        opClmInfoModelList
+                .forEach(opClmInfoModel -> {
+                    opClmInfoModel.setOrgProcSeq(opClmInfoModel.getProcSeq());
+                    opClmInfoModel.setProcSeq(opClmInfoModel.getProcSeq() + 1);
+                    opClmInfoModel.setOrdClmTpCd(OPT0003.RETURN_CANCEL.getType());
+                    opClmInfoModel.setDvGrpNo(opClmInfoModel.getDvGrpNo() + 1);
+                    opClmInfoModel.setOrdPrgsScd(OPT0004.RETURN_WITHDRAWAL_COMPLETE.getType());
+                    opClmInfoModel.setClmNo(claimDataVo.getClaimNo());
+                });
+        return opClmInfoModelList;
+    }
 }

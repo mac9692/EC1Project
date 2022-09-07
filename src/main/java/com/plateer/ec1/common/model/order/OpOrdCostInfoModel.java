@@ -75,7 +75,7 @@ public class OpOrdCostInfoModel {
 
     public List<OpOrdCostInfoModel> getReturnAcceptData(ClaimDataVo claimDataVo) {
         List<OpOrdCostInfoModel> opOrdCostInfoModelList = claimDataVo.getOpOrdCostInfoModelList();
-        opOrdCostInfoModelList.stream()
+        opOrdCostInfoModelList
                 .forEach(opOrdCostInfoModel -> {
                     opOrdCostInfoModel.setOrdCstNo(opOrdCostInfoModel.getOrdCstNo() + 1);
                     opOrdCostInfoModel.setDvGrpNo(opOrdCostInfoModel.getDvGrpNo() + 1);
@@ -94,6 +94,16 @@ public class OpOrdCostInfoModel {
                         log.info("귀책구분코드 오류 발생");
                     }
                 });
+        return opOrdCostInfoModelList;
+    }
+
+    public List<OpOrdCostInfoModel> getReturnWithdrawalInsertData(ClaimDataVo claimDataVo) {
+        List<OpOrdCostInfoModel> opOrdCostInfoModelList = claimDataVo.getOpOrdCostInfoModelList();
+        opOrdCostInfoModelList.forEach(opOrdCostInfoModel -> {
+            opOrdCostInfoModel.setOrdCstNo(opOrdCostInfoModel.getOrdCstNo() + 1);
+            opOrdCostInfoModel.setClmNo(opOrdCostInfoModel.getClmNo());
+        });
+
         return opOrdCostInfoModelList;
     }
 }

@@ -56,7 +56,23 @@ public class OpOrdBnfRelInfoModel {
 
     public List<OpOrdBnfRelInfoModel> getReturnAcceptData(ClaimDataVo claimDataVo) {
         List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList = claimDataVo.getOpOrdBnfRelInfoModelList();
+        opOrdBnfRelInfoModelList
+                .forEach(opOrdBnfRelInfoModel -> {
+                    opOrdBnfRelInfoModel.setProcSeq(opOrdBnfRelInfoModel.getProcSeq() + 1);
+                    opOrdBnfRelInfoModel.setAplyCnclCcd(OPT0005.CANCEL.getType());
+                    opOrdBnfRelInfoModel.setClmNo(claimDataVo.getClaimNo());
+                });
+        return opOrdBnfRelInfoModelList;
+    }
 
+    public List<OpOrdBnfRelInfoModel> getReturnWithdrawalInsertData(ClaimDataVo claimDataVo) {
+        List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList = claimDataVo.getOpOrdBnfRelInfoModelList();
+        opOrdBnfRelInfoModelList
+                .forEach(opOrdBnfRelInfoModel -> {
+                    opOrdBnfRelInfoModel.setProcSeq(opOrdBnfRelInfoModel.getProcSeq() + 1);
+                    opOrdBnfRelInfoModel.setAplyCnclCcd(OPT0005.APPLY.getType());
+                    opOrdBnfRelInfoModel.setClmNo(claimDataVo.getClaimNo());
+                });
         return opOrdBnfRelInfoModelList;
     }
 }

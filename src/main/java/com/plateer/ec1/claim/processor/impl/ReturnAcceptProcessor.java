@@ -14,6 +14,7 @@ import com.plateer.ec1.common.code.order.OPT0003;
 import com.plateer.ec1.common.code.order.OPT0004;
 import com.plateer.ec1.common.code.product.DVP0001;
 import com.plateer.ec1.common.model.order.OpClmInfoModel;
+import com.plateer.ec1.common.model.order.OpOrdBnfInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdBnfRelInfoModel;
 import com.plateer.ec1.common.model.order.OpOrdCostInfoModel;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +50,9 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
             insertData = insertClaimData(claimDataVo);
             updateData = updateClaimData(claimDataVo);
             if (isValidAmount(requestClaimVo)) {
-                log.info("E쿠폰 주문취소 접수 성공");
+                log.info("반품접수 성공");
             } else {
-                log.info("E쿠폰 주문취소 접수 실패");
+                log.info("반품접수 실패");
             }
         }
         updateMonitoringLog(logSeq, insertData, updateData);
@@ -75,14 +76,16 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
 
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
-        return null;
+//        claimTrxMapper. -> 원주문 취소수량 업데이트
+        //        claimTrxMapper. 혜택업데이트
+        return claimDataVo;
     }
 
     public ClaimDataVo manipulateClaimData(ClaimDataVo claimDataVo, String claimNumber) {
         claimDataVo.setClaimNo(claimNumber);
         List<OpClmInfoModel> opClmInfoModelList = claimDataVo.getOpClmInfoModelList()
                 .stream()
-                .filter(opClmInfoModel -> OPT0004.ORDER_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
+                .filter(opClmInfoModel -> OPT0004.DELIVERY_COMPLETE.getType().equals(opClmInfoModel.getOrdPrgsScd()))
                 .collect(Collectors.toList());
 
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
