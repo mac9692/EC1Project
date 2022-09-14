@@ -60,31 +60,13 @@ public class PointProcessor implements PaymentProcessor {
 
     @Transactional
     public void insertApproveDataOpPayInfo(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
-                .ordNo(orderInfoVo.getOrdNo())
-                .payMnCd(OPT0009.POINT.getType())
-                .payCcd(OPT0010.PAYMENT.getType())
-                .payPrgsScd(OPT0011.PAYMENT_COMPLETE.getType())
-                .payAmt(payInfoVo.getPayAmount())
-                .cnclAmt(0L)
-                .rfndAvlAmt(payInfoVo.getPayAmount())
-                .build();
-
+        OpPayInfoModel opPayInfoModel = new OpPayInfoModel().insertPointApproveDataOpPayInfo(orderInfoVo, payInfoVo);
         paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfoModel);
     }
 
     @Transactional
     public void insertCancelDataOpPayInfo(RequestCancelVo requestCancelVo) {
-        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
-                .ordNo(requestCancelVo.getOrdNo())
-                .payMnCd(OPT0009.POINT.getType())
-                .payCcd(OPT0010.CANCEL.getType())
-                .payPrgsScd(OPT0011.REFUND_COMPLETE.getType())
-                .payAmt(requestCancelVo.getCnclAmt())
-                .cnclAmt(0L)
-                .rfndAvlAmt(0L)
-                .build();
-
+        OpPayInfoModel opPayInfoModel = new OpPayInfoModel().insertCancelDataOpPayInfo(requestCancelVo);
         paymentTrxMapper.insertOpPayInfoPointApprove(opPayInfoModel);
     }
 }

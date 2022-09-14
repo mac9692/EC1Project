@@ -1,7 +1,5 @@
 package com.plateer.ec1.payment.processor.impl;
 
-import com.plateer.ec1.common.code.order.OPT0009;
-import com.plateer.ec1.common.code.order.OPT0010;
 import com.plateer.ec1.common.code.order.OPT0011;
 import com.plateer.ec1.common.model.order.OpPayInfoModel;
 import com.plateer.ec1.payment.enums.PaymentType;
@@ -120,22 +118,7 @@ public class InicisProcessor implements PaymentProcessor {
 
     @Transactional
     public void insertApproveDataOpPayInfo(ResponseApproveVo responseApproveVo, OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {
-        OpPayInfoModel opPayInfoModel = OpPayInfoModel.builder()
-                .ordNo(orderInfoVo.getOrdNo())
-                .payMnCd(OPT0009.VIRTUAL_ACCOUNT.getType())
-                .payCcd(OPT0010.PAYMENT.getType())
-                .payPrgsScd(OPT0011.PAYMENT_REQUEST.getType())
-                .payAmt(Long.valueOf(responseApproveVo.getPrice()))
-                .cnclAmt(0L)
-                .rfndAvlAmt(0L)
-                .trsnId(responseApproveVo.getTid())
-                .vrValDt(responseApproveVo.getValidDate())
-                .vrValTt(responseApproveVo.getValidTime())
-                .vrAcct(responseApproveVo.getVacct())
-                .vrAcctNm(responseApproveVo.getVacctName())
-                .vrBnkCd(responseApproveVo.getVacctBankCode())
-                .build();
-
+        OpPayInfoModel opPayInfoModel = new OpPayInfoModel().insertInicisApproveDataOpPayInfo(responseApproveVo, orderInfoVo, payInfoVo);
         paymentTrxMapper.insertOpPayInfo(opPayInfoModel);
     }
 }
