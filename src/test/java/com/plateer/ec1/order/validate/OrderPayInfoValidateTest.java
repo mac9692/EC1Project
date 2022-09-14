@@ -126,7 +126,7 @@ public class OrderPayInfoValidateTest {
                 .builder()
                 .payAmount(19000L)
                 .bankCode("04")
-                .paymentType(PaymentType.INICIS)
+                .paymentType("10")
                 .depositorName("박진성")
                 .rfndBnkCk("04")
                 .rfndAcctNo("700102-01-111")

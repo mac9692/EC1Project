@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 public class RequestCancelVo {
 
     @NotEmpty
-    private PaymentType paymentType;
+    private String paymentType;
 
     @NotEmpty
     private String ordNo;

@@ -3,11 +3,8 @@ package com.plateer.ec1.order.validate;
 import com.plateer.ec1.common.code.order.OPT0001;
 import com.plateer.ec1.common.code.order.OPT0002;
 import com.plateer.ec1.common.code.promotion.PRM0004;
-import com.plateer.ec1.order.enums.AfterStrategyType;
-import com.plateer.ec1.order.enums.DataStrategyType;
 import com.plateer.ec1.order.vo.*;
 import com.plateer.ec1.order.vo.request.RequestOrderVo;
-import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
@@ -121,7 +118,7 @@ public class OrderTypeValidateTest {
                 .builder()
                 .payAmount(19000L)
                 .bankCode("04")
-                .paymentType(PaymentType.INICIS)
+                .paymentType("10")
                 .depositorName("박진성")
                 .rfndBnkCk("04")
                 .rfndAcctNo("700102-01-111")

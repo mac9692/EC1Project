@@ -1,4 +1,4 @@
-package com.plateer.ec1.payment.service.impl;
+package com.plateer.ec1.payment.processor.impl;
 
 import com.plateer.ec1.common.code.order.OPT0009;
 import com.plateer.ec1.common.code.order.OPT0010;
@@ -7,7 +7,7 @@ import com.plateer.ec1.common.model.order.OpPayInfoModel;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.mapper.PaymentMapper;
 import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
-import com.plateer.ec1.payment.service.PaymentService;
+import com.plateer.ec1.payment.processor.PaymentProcessor;
 import com.plateer.ec1.payment.vo.OrderBaseVo;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
@@ -16,7 +16,6 @@ import com.plateer.ec1.payment.vo.context.FullRefundContextVo;
 import com.plateer.ec1.payment.vo.context.PartialRefundContextVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.context.ApproveContextVo;
-import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
 import com.plateer.ec1.payment.vo.response.ResponseApproveVo;
 import com.plateer.ec1.payment.vo.response.ResponseFullRefundVo;
 import com.plateer.ec1.payment.vo.response.ResponsePartialRefundVo;
@@ -37,14 +36,14 @@ import java.util.List;
 @Service
 @Primary
 @RequiredArgsConstructor
-public class Inicis implements PaymentService {
+public class InicisProcessor implements PaymentProcessor {
 
     private final PaymentMapper paymentMapper;
     private final PaymentTrxMapper paymentTrxMapper;
 
     @Override
-    public PaymentType getType() {
-        return PaymentType.INICIS;
+    public String getType() {
+        return PaymentType.INICIS.getType();
     }
 
 
@@ -90,16 +89,6 @@ public class Inicis implements PaymentService {
                 ResponsePartialRefundVo responsePartialRefundVo = partialRefundRequest(orderBaseVo, requestCancelVo);
             }
         }
-    }
-
-    @Override
-    public void netCancel(RequestNetCancelVo requestNetCancelVo) {
-        log.info("결제사 : 이니시스 망취소 서비스 시작");
-        log.info("승인 취소 IF 전문 생성");
-        log.info("승인 취소 요청 이력 저장(망취소)");
-        log.info("승인 취소 IF");
-        log.info("승인 취소 요청 결과 이력(망취소) 업데이트");
-        log.info("결제사 : 이니시스 망취소 서비스 종료");
     }
 
     public ResponseApproveVo approveRequest(OrderInfoVo orderInfoVo, PayInfoVo payInfoVo) {

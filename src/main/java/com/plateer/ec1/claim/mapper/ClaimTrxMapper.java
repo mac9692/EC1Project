@@ -13,7 +13,13 @@ public interface ClaimTrxMapper {
 
     void insertOpClmInfo(List<OpClmInfoModel> opClmInfoModelList);
 
+    void insertOpOrdBnfRelInfoModel(List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList);
+
+    void insertOpOrdCostInfoModel(List<OpOrdCostInfoModel> opOrdCostInfoModelList);
+
     void updateOpClmInfoCnclCnt(List<OpClmInfoModel> opClmInfoModelList);
 
     void updateOpClmInfoRtgsCnt(List<OpClmInfoModel> opClmInfoModelList);
+
+    void updateOpOrdBnfInfo(List<OpOrdBnfInfoModel> opOrdBnfInfoModelList);
 }

@@ -1,4 +1,4 @@
-package com.plateer.ec1.payment.service.impl;
+package com.plateer.ec1.payment.processor.impl;
 
 import com.plateer.ec1.common.code.order.OPT0009;
 import com.plateer.ec1.common.code.order.OPT0010;
@@ -7,13 +7,12 @@ import com.plateer.ec1.common.model.order.OpPayInfoModel;
 import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.mapper.PaymentMapper;
 import com.plateer.ec1.payment.mapper.PaymentTrxMapper;
-import com.plateer.ec1.payment.service.PaymentService;
+import com.plateer.ec1.payment.processor.PaymentProcessor;
 import com.plateer.ec1.payment.vo.OrderBaseVo;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayApproveResponseVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
-import com.plateer.ec1.payment.vo.request.RequestNetCancelVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,14 +23,14 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class Point implements PaymentService {
+public class PointProcessor implements PaymentProcessor {
 
     private final PaymentMapper paymentMapper;
     private final PaymentTrxMapper paymentTrxMapper;
 
     @Override
-    public PaymentType getType() {
-        return PaymentType.POINT;
+    public String getType() {
+        return PaymentType.POINT.getType();
     }
 
     @Override
@@ -57,16 +56,6 @@ public class Point implements PaymentService {
         OrderBaseVo orderBaseVo = paymentMapper.getOpPayPointInfo(requestCancelVo);
         paymentTrxMapper.updateOpPayInfoPointCancel(requestCancelVo);
         insertCancelDataOpPayInfo(requestCancelVo);
-    }
-
-    @Override
-    public void netCancel(RequestNetCancelVo requestNetCancelVo) {
-        log.info("결제 : 포인트 망취소 서비스 시작");
-        log.info("승인 취소 IF 전문 생성");
-        log.info("승인 취소 요청 이력 저장(망취소)");
-        log.info("승인 취소 IF");
-        log.info("승인 취소 요청 결과 이력(망취소) 업데이트");
-        log.info("결제 : 포인트 망취소 서비스 종료");
     }
 
     @Transactional

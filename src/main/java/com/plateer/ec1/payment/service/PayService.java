@@ -15,6 +15,4 @@ public interface PayService {
     public void approveComplete(RequestApproveCompleteVo requestApproveCompleteVo);
 
     public void cancel(RequestCancelVo requestCancelVo);
-
-    public void netCancel(RequestNetCancelVo requestNetCancelVo);
 }

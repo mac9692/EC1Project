@@ -2,7 +2,6 @@ package com.plateer.ec1.payment;
 
 import com.plateer.ec1.common.code.order.OPT0013;
 import com.plateer.ec1.payment.controller.PaymentController;
-import com.plateer.ec1.payment.enums.PaymentType;
 import com.plateer.ec1.payment.vo.OrderInfoVo;
 import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
@@ -43,7 +42,7 @@ public class PaymentTest {
 
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();
-        payInfoVo1.setPaymentType(PaymentType.INICIS);
+        payInfoVo1.setPaymentType("10");
         payInfoVo1.setPayAmount(20000L);
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
@@ -90,7 +89,7 @@ public class PaymentTest {
     @DisplayName("3. 이니시스 취소 테스트")
     void cancelTest() {
         RequestCancelVo requestCancelVo = new RequestCancelVo();
-        requestCancelVo.setPaymentType(PaymentType.INICIS);
+        requestCancelVo.setPaymentType("10");
         requestCancelVo.setOrdNo("5");
         requestCancelVo.setClmNo(1L);
         requestCancelVo.setCnclAmt(1L);
@@ -114,7 +113,7 @@ public class PaymentTest {
 
         List<PayInfoVo> payInfoVoList = new ArrayList<>();
         PayInfoVo payInfoVo1 = new PayInfoVo();
-        payInfoVo1.setPaymentType(PaymentType.POINT);
+        payInfoVo1.setPaymentType("20");
         payInfoVo1.setPayAmount(20000L);
         payInfoVo1.setBankCode(OPT0013.NH.getType());
         payInfoVo1.setDepositorName("박진성");
@@ -131,45 +130,11 @@ public class PaymentTest {
     @DisplayName("5. 포인트 취소 테스트")
     void cancelPointTest() {
         RequestCancelVo requestCancelVo = new RequestCancelVo();
-        requestCancelVo.setPaymentType(PaymentType.POINT);
+        requestCancelVo.setPaymentType("20");
         requestCancelVo.setOrdNo("7");
         requestCancelVo.setClmNo(1L);
         requestCancelVo.setCnclAmt(1L);
 
         paymentController.cancel(requestCancelVo);
     }
-
-//    @Test
-//    @DisplayName("2. 결제 취소 테스트")
-//    void cancelTest() {
-//        log.info("2. 결제 취소 테스트 시작");
-//        //POINT 테스트
-//        CancelRequestVo cancelRequestVo = new CancelRequestVo();
-//        cancelRequestVo.setPaymentType(PaymentType.POINT);
-//
-//        paymentController.cancel(cancelRequestVo);
-//
-//        //ININCIS 테스트
-//        cancelRequestVo.setPaymentType(PaymentType.INICIS);
-//        paymentController.cancel(cancelRequestVo);
-//
-//        log.info("2. 결제 취소 테스트 종료");
-//    }
-//
-//    @Test
-//    @DisplayName("3. 결제 망 취소 테스트")
-//    void netCancelTest() {
-//        log.info("3. 결제 망 취소 테스트 시작");
-//        //POINT 테스트
-//        CancelRequestVo cancelRequestVo = new CancelRequestVo();
-//        cancelRequestVo.setPaymentType(PaymentType.POINT);
-//
-//        paymentController.netCancel(cancelRequestVo);
-//
-//        //ININCIS 테스트
-//        cancelRequestVo.setPaymentType(PaymentType.INICIS);
-//        paymentController.netCancel(cancelRequestVo);
-//
-//        log.info("3. 결제 망 취소 테스트 종료");
-//    }
 }

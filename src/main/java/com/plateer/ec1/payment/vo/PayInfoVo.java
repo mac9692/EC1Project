@@ -19,7 +19,7 @@ public class PayInfoVo {
     private String bankCode;
 
     @NotNull
-    private PaymentType paymentType;
+    private String paymentType;
 
     @NotNull
     private String depositorName;

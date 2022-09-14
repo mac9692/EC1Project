@@ -63,8 +63,8 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
         List<OpOrdBnfRelInfoModel> opOrdBnfRelInfoModelList = new OpOrdBnfRelInfoModel().getReturnAcceptData(claimDataVo);
 
         claimTrxMapper.insertOpClmInfo(opClmInfoModelList);
-//        claimTrxMapper.
-//        claimTrxMapper.
+        claimTrxMapper.insertOpOrdCostInfoModel(opOrdCostInfoModelList);
+        claimTrxMapper.insertOpOrdBnfRelInfoModel(opOrdBnfRelInfoModelList);
 
         claimDataVo.setOpClmInfoModelList(opClmInfoModelList);
         claimDataVo.setOpOrdCostInfoModelList(opOrdCostInfoModelList);
@@ -76,7 +76,7 @@ public class ReturnAcceptProcessor extends AbstractClaimProcessor implements Cla
     @Override
     public ClaimDataVo updateClaimData(ClaimDataVo claimDataVo) {
         claimTrxMapper.updateOpClmInfoRtgsCnt(claimDataVo.getOpClmInfoModelList());
-        //        claimTrxMapper. 혜택업데이트
+        claimTrxMapper.updateOpOrdBnfInfo(claimDataVo.getOpOrdBnfInfoModelList());
         return claimDataVo;
     }
 

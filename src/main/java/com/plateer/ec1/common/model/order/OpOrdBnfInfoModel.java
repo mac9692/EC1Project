@@ -27,6 +27,7 @@ public class OpOrdBnfInfoModel {
     private Timestamp sysModDtime;
     private String sysModrId;
     private String cpnKndCd;
+    private String ordNo;
 
     public OpOrdBnfInfoModel generalOrder(OrderBenefitVo orderBenefitVo) {
         return OpOrdBnfInfoModel

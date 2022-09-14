@@ -37,10 +37,4 @@ public class PaymentController {
     public void cancel(RequestCancelVo requestCancelVo) {
         payService.cancel(requestCancelVo);
     }
-
-    @RequestMapping(path = "netcancel")
-    public void netCancel(RequestNetCancelVo requestNetCancelVo) {
-        payService.netCancel(requestNetCancelVo);
-    }
-
 }

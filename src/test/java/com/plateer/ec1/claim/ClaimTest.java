@@ -56,6 +56,7 @@ public class ClaimTest {
                 .prodAmt(1000L)
                 .rfndAmt(1000L)
                 .dlvAmt(1000L)
+                .imtnRsnCcd("10")
                 .build();
     }
 
