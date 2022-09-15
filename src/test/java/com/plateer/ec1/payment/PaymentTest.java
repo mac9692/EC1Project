@@ -7,7 +7,6 @@ import com.plateer.ec1.payment.vo.PayInfoVo;
 import com.plateer.ec1.payment.vo.request.RequestApproveCompleteVo;
 import com.plateer.ec1.payment.vo.request.RequestCancelVo;
 import com.plateer.ec1.payment.vo.request.RequestPaymentVo;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
 @SpringBootTest
 @TestMethodOrder(value = MethodOrderer.DisplayName.class)
 public class PaymentTest {
